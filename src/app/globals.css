@@ -454,3 +454,29 @@ html:active-view-transition-type(page)::view-transition-new(root) {
     navigation: none;
   }
 }
+
+/* Sound toggle: a resting level meter that starts to move when sound is on. */
+.sound-bar {
+  transform-origin: bottom;
+  opacity: 0.55;
+  transition: opacity 0.4s;
+}
+.sound-bar.is-on {
+  opacity: 1;
+}
+.sound-bar.is-on {
+  animation: sound-bar 0.9s ease-in-out infinite alternate;
+}
+@keyframes sound-bar {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* WebGL redraws these images (gl-media.tsx); the <img> stays for a11y/fallback. */
+.gl-media [data-gl][data-gl-on] img {
+  opacity: 0;
+}

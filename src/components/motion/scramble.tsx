@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const glyphs = {
   fa: "ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی",
@@ -42,6 +42,31 @@ export function Scramble({ text, active, locale }: { text: string; active: boole
         {out}
       </span>
       <span className="sr-only">{text}</span>
+    </span>
+  );
+}
+
+/** Decodes from noise into its text the first time it scrolls into view. */
+export function DecodeOnView({ text, locale }: { text: string; locale: "fa" | "en" }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setSeen(true);
+        io.disconnect();
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <span ref={ref}>
+      <Scramble text={text} active={seen} locale={locale} />
     </span>
   );
 }

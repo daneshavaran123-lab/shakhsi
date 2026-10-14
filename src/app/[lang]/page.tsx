@@ -16,6 +16,7 @@ import { ContentProvider } from "@/content/provider";
 import { CommandMenu } from "@/components/command-menu";
 import { SectionRail } from "@/components/section-rail";
 import { Intro } from "@/components/intro";
+import { GlLayer } from "@/components/gl-layer";
 import { getContent } from "@/content/read";
 import { isLocale } from "@/i18n/config";
 import { dictionaries } from "@/i18n/dictionary";
@@ -80,6 +81,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <Intro />
       <Header />
       <SectionRail />
+      <GlLayer />
       <main id="main">
         <Hero />
         <Marquee />

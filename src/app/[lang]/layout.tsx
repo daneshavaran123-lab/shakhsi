@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { SoundProvider } from "@/components/providers/sound";
 import { themeScript } from "@/components/providers/theme";
 import { Cursor } from "@/components/cursor";
 import { dirOf, isLocale, locales } from "@/i18n/config";
@@ -112,7 +113,9 @@ export default async function RootLayout({
       </head>
       <body>
         <I18nProvider locale={lang}>
-          <SmoothScroll>{children}</SmoothScroll>
+          <SoundProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+          </SoundProvider>
           <Cursor />
         </I18nProvider>
         {/* Vercel Web Analytics: only in Vercel builds (enable it in the dashboard); skipped elsewhere. */}

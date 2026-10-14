@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 import { Split } from "@/components/motion/split";
+import { GlLayer } from "@/components/gl-layer";
 import { LanguageSwitch, ThemeToggle } from "@/components/sections/header";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/content/provider";
@@ -64,6 +65,7 @@ export function CaseStudy({ id }: { id: string }) {
         </div>
       </motion.div>
 
+      <GlLayer />
       <main ref={root} id="main" className="px-4 pt-36 sm:px-6 md:pt-44">
         <div className="mx-auto max-w-[100rem]">
           {/* Title */}
@@ -191,7 +193,7 @@ export function CaseStudy({ id }: { id: string }) {
             </h2>
             <div className="mt-8 columns-1 gap-4 md:columns-2 [&>*]:mb-4">
               {gallery.map((img, i) => (
-                <div key={img.src} data-reveal className="break-inside-avoid overflow-hidden rounded-2xl bg-card ring-1 ring-border">
+                <div key={img.src} data-gl data-gl-host className="break-inside-avoid overflow-hidden rounded-2xl bg-card ring-1 ring-border">
                   <Image
                     src={img}
                     alt={t.sheet.imageOf(n(i + 2), n(p.images.length), copy.title)}

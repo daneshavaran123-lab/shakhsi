@@ -112,6 +112,10 @@ const fa = {
   tehran: "تهران",
   theme: { toLight: "حالت روز", toDark: "حالت شب" },
   langSwitch: "تغییر زبان",
+  loader: { label: "پرتفولیو و رزومه", states: ["بارگذاری حروف", "آماده‌سازی صحنه", "آماده"] },
+  menu: { open: "منو", close: "بستن", contact: "تماس", follow: "شبکه‌ها" },
+  sound: { on: "صدا روشن", off: "صدا خاموش" },
+  hud: { scroll: "پیمایش" },
   hero: {
     index: "(۰۰) — پورتفولیو ۱۴۰۵",
     projects: "پروژه منتخب",
@@ -307,6 +311,10 @@ const en: Dictionary = {
   tehran: "Tehran",
   theme: { toLight: "Day mode", toDark: "Night mode" },
   langSwitch: "Switch language",
+  loader: { label: "Portfolio & résumé", states: ["Loading type", "Preparing the scene", "Ready"] },
+  menu: { open: "Menu", close: "Close", contact: "Contact", follow: "Elsewhere" },
+  sound: { on: "Sound on", off: "Sound off" },
+  hud: { scroll: "Scroll" },
   hero: {
     index: "(00) — Portfolio 2026",
     projects: "Selected projects",

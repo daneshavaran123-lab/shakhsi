@@ -8,16 +8,19 @@ import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/rea
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useContent } from "@/content/provider";
 import { useI18n } from "@/i18n/provider";
-import { INTRO_SECONDS, introActive } from "@/components/intro";
+import { afterIntro, introActive } from "@/components/intro";
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
 import { useTheme } from "@/components/providers/theme";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 
-const DotField = dynamic(() => import("@/components/three/dot-field"), {
-  ssr: false,
-});
+const Fluid = dynamic(() => import("@/components/three/fluid"), { ssr: false });
+
+const inks = {
+  dark: ["#d8bb8a", "#ede8df", "#c0884a", "#8f8471"],
+  light: ["#8c6635", "#3b3833", "#b0874c"],
+};
 
 export function Hero() {
   const { t, n, locale } = useI18n();
@@ -25,21 +28,12 @@ export function Hero() {
   const { theme } = useTheme();
   const root = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(true);
-  const [colors, setColors] = useState({ ink: "#ede8df", accent: "#d8bb8a" });
   const reduced = useReducedMotion();
 
   // Soft champagne light that drifts toward the pointer.
   const gx = useSpring(useMotionValue(70), { stiffness: 40, damping: 20 });
   const gy = useSpring(useMotionValue(40), { stiffness: 40, damping: 20 });
   const glow = useMotionTemplate`radial-gradient(42rem 30rem at ${gx}% ${gy}%, var(--glow), transparent 70%)`;
-
-  useEffect(() => {
-    const css = getComputedStyle(document.documentElement);
-    setColors({
-      ink: css.getPropertyValue("--dot").trim() || "#ede8df",
-      accent: css.getPropertyValue("--accent").trim() || "#d8bb8a",
-    });
-  }, [theme]);
 
   // Only render WebGL frames while the hero is on screen.
   useEffect(() => {
@@ -56,8 +50,8 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // Wait for the first-visit curtain when it is showing.
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: introActive() ? INTRO_SECONDS : 0.15 });
+        // Starts as the preloader splits open (or right away when there is none).
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, paused: true });
         tl.fromTo(".hero-canvas", { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 2.6 }, 0)
           .set("[data-split]", { autoAlpha: 1 }, 0)
           .fromTo(
@@ -80,6 +74,9 @@ export function Hero() {
           ease: "none",
           scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 1 },
         });
+
+        const delay = introActive() ? 0 : 0.15;
+        return afterIntro(() => tl.delay(delay).play());
       });
       mm.add("(prefers-reduced-motion: reduce)", () => {
         gsap.set(["[data-split]", "[data-reveal]", ".hero-canvas"], { autoAlpha: 1 });
@@ -104,16 +101,10 @@ export function Hero() {
     >
       <motion.div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: glow }} />
       <div
-        className="hero-canvas pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent_0%,black_32%,black_70%,transparent_100%)]"
+        className="hero-canvas pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black_0%,black_75%,transparent_100%)]"
         style={{ visibility: "hidden" }}
       >
-        <DotField
-          active={inView}
-          still={reduced}
-          ink={colors.ink}
-          accent={colors.accent}
-          eventSource={root}
-        />
+        <Fluid active={inView} still={reduced} colors={inks[theme]} light={theme === "light"} eventSource={root} />
       </div>
 
       <div className="relative mx-auto flex w-full max-w-[100rem] flex-1 flex-col">
