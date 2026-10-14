@@ -15,6 +15,9 @@ import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+// The standalone HTML export (npm run export:html) ships one file per language.
+const localeHref = (l: string) => (process.env.NEXT_PUBLIC_STATIC_HTML ? `./${l}.html` : `/${l}`);
+
 function LanguageSwitch({ className }: { className?: string }) {
   const { locale, t } = useI18n();
   return (
@@ -28,7 +31,7 @@ function LanguageSwitch({ className }: { className?: string }) {
         return (
           <a
             key={l}
-            href={`/${l}`}
+            href={localeHref(l)}
             hrefLang={l}
             lang={l}
             aria-current={current ? "page" : undefined}
@@ -36,7 +39,7 @@ function LanguageSwitch({ className }: { className?: string }) {
               // Keep the reader's place when switching language.
               if (!current && location.hash) {
                 e.preventDefault();
-                location.href = `/${l}${location.hash}`;
+                location.href = `${localeHref(l)}${location.hash}`;
               }
             }}
             className={cn(

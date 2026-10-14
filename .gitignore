@@ -51,3 +51,7 @@ next-env.d.ts
 !/.claude/skills/tailwindcss/
 
 !.env.example
+
+# standalone HTML export
+/.next-html/
+/html/
