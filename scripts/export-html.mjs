@@ -26,6 +26,8 @@ const locales = ["fa", "en"];
 const parked = [
   ["src/app/keystatic", "src/app/_keystatic"],
   ["src/app/api", "src/app/_api"],
+  // Case-study pages: the offline copy opens each project in its sheet instead.
+  ["src/app/[lang]/work", "src/app/[lang]/_work"],
 ];
 
 function build() {
@@ -107,7 +109,9 @@ function inline(html) {
 
   // Images: both the server-rendered <img> tags and the copies inside the
   // React payload that hydrates the page.
-  html = html.replace(/\/images\/[\w\-/]+\.(?:webp|png|jpe?g|avif|gif)/g, (url) => dataUri(fileFor(url)));
+  // Only site-relative paths: an absolute URL (e.g. in the JSON-LD) sits inside
+  // a length-prefixed payload row, and rewriting it would corrupt the stream.
+  html = html.replace(/(?<![\w:])\/images\/[\w\-/]+\.(?:webp|png|jpe?g|avif|gif)/g, (url) => dataUri(fileFor(url)));
 
   // Résumé previews are small enough to inline; the PDFs are copied into
   // html/files/ and linked relatively, so they aren't embedded five times over.

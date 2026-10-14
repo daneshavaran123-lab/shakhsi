@@ -11,6 +11,7 @@ import { SectionLabel } from "@/components/section-label";
 import { TehranClock } from "@/components/tehran-clock";
 import { useLenis } from "@/components/providers/smooth-scroll";
 import { useSectionMotion } from "@/hooks/use-section-motion";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 import { formatPhone } from "@/lib/phone";
@@ -24,6 +25,27 @@ export function Contact() {
 
   const phone = formatPhone(profile.phone, locale);
   useSectionMotion(root);
+
+  // Curtain: the closing section rises over the page while its content
+  // settles from slightly behind, as if the page were being lifted away.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          ".contact-inner",
+          { yPercent: -14, opacity: 0.4 },
+          { yPercent: 0, opacity: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "top 25%", scrub: true } },
+        );
+        gsap.fromTo(
+          root.current,
+          { clipPath: "inset(0% 4% 0% 4% round 3rem 3rem 0 0)" },
+          { clipPath: "inset(0% 0% 0% 0% round 3rem 3rem 0 0)", ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "top 40%", scrub: true } },
+        );
+      });
+    },
+    { scope: root },
+  );
 
   const copy = async () => {
     try {
@@ -50,8 +72,8 @@ export function Contact() {
         aria-hidden
         className="pointer-events-none absolute -bottom-1/3 start-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] rtl:translate-x-1/2"
       />
-      <div className="relative mx-auto max-w-[100rem]">
-        <SectionLabel index={n("05")}>{t.contact.label}</SectionLabel>
+      <div className="contact-inner relative mx-auto max-w-[100rem]">
+        <SectionLabel index={n("09")}>{t.contact.label}</SectionLabel>
 
         <h2 className="mt-12 font-display text-[clamp(3.4rem,11vw,12rem)] leading-[0.9]">
           <Split as="span" lines={[t.contact.heading[0]]} className="block" />

@@ -12,6 +12,9 @@ export type ProjectCopy = {
   role: string;
   status: string;
   summary: string;
+  challenge: string;
+  process: string[];
+  outcome: string;
   intro: string;
   value: string;
   hardware: string;
@@ -28,6 +31,7 @@ export type Project = {
   eng: string;
   group: Exclude<ProjectGroup, "all">;
   url?: string;
+  video?: string;
   live: boolean;
   images: Img[];
 } & Record<Locale, ProjectCopy>;
@@ -78,7 +82,17 @@ export type ServicesCopy = {
   packagesTitle: string;
   packages: { title: string; body: string; projects: string[] }[];
   cta: string;
+  process: { title: string; body: string }[];
+  showcase: { project: string; device: "table" | "display" | "kiosk"; title: string; body: string }[];
 };
+
+export type ExtrasCopy = {
+  faq: { q: string; a: string }[];
+  testimonials: { quote: string; name: string; role: string }[];
+  clients: string[];
+};
+
+export type Extras = Record<Locale, ExtrasCopy>;
 
 export type Services = Record<Locale, ServicesCopy>;
 
@@ -87,4 +101,5 @@ export type SiteContent = {
   certificates: Certificate[];
   profile: Profile;
   services: Services;
+  extras: Extras;
 };

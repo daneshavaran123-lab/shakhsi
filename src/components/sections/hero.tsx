@@ -192,7 +192,7 @@ export function Hero() {
               </a>
             </Magnetic>
             <a
-              href="#services"
+              href="#order"
               className="inline-flex h-12 items-center rounded-full px-5 text-sm ring-1 ring-border transition-colors duration-500 hover:bg-foreground hover:text-background"
             >
               {t.hero.order}

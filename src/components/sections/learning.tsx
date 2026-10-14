@@ -111,7 +111,7 @@ export function Learning() {
     <section ref={root} id="learning" className="chapter">
       <div className="px-4 pt-28 pb-16 sm:px-6 md:pt-40">
         <div className="mx-auto grid max-w-[100rem] gap-12 md:grid-cols-12">
-          <SectionLabel index={n("04")} className="md:col-span-3">
+          <SectionLabel index={n("06")} className="md:col-span-3">
             {t.learning.label}
           </SectionLabel>
           <div className="md:col-span-9">

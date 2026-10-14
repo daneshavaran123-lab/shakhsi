@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { AppWindow, ArrowUpRight, Mail, MonitorSmartphone, Package, Phone, Sparkles } from "lucide-react";
+import { AppWindow, ArrowUpRight, ClipboardList, Mail, MonitorSmartphone, Package, Phone, Sparkles } from "lucide-react";
 
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
+import { Tilt } from "@/components/motion/tilt";
 import { SectionLabel } from "@/components/section-label";
 import { useContent } from "@/content/provider";
 import { useSectionMotion } from "@/hooks/use-section-motion";
@@ -29,7 +30,7 @@ export function Services() {
     <section ref={root} id="services" className="px-4 pb-28 sm:px-6 md:pb-40">
       <div className="mx-auto max-w-[100rem]">
         <div className="grid gap-10 md:grid-cols-12">
-          <SectionLabel index={n("02")} className="md:col-span-4 lg:col-span-3">
+          <SectionLabel index={n("03")} className="md:col-span-4 lg:col-span-3">
             {t.services.label}
           </SectionLabel>
           <div className="md:col-span-8 lg:col-span-9">
@@ -70,11 +71,8 @@ export function Services() {
           {copy.items.map((s, i) => {
             const Icon = icons[i % icons.length];
             return (
-              <article
-                key={s.title}
-                data-reveal
-                className="edge group relative overflow-hidden rounded-2xl bg-card/60 p-7 transition-colors duration-500 hover:bg-card md:p-10"
-              >
+              <div key={s.title} data-reveal>
+              <Tilt className="edge group h-full overflow-hidden rounded-2xl bg-card/60 p-7 transition-[background-color,transform] duration-500 hover:bg-card md:p-10">
                 <span
                   aria-hidden
                   className="pointer-events-none absolute -end-16 -top-16 size-56 rounded-full bg-accent/0 blur-3xl transition-colors duration-700 group-hover:bg-accent/15"
@@ -95,7 +93,8 @@ export function Services() {
                     </li>
                   ))}
                 </ul>
-              </article>
+              </Tilt>
+              </div>
             );
           })}
         </div>
@@ -159,6 +158,13 @@ export function Services() {
                   </a>
                 </Magnetic>
               )}
+              <a
+                href="#order"
+                className="inline-flex h-12 items-center gap-2 rounded-full px-6 text-sm ring-1 ring-border transition-colors hover:bg-foreground hover:text-background"
+              >
+                <ClipboardList className="size-4" />
+                {t.hero.order}
+              </a>
               <a
                 href={`mailto:${profile.email}`}
                 className="inline-flex h-12 items-center gap-2 rounded-full px-6 text-sm ring-1 ring-border transition-colors hover:bg-foreground hover:text-background"

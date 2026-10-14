@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/
 import { Moon, Search, Sun } from "lucide-react";
 
 import { navKeys } from "@/data/site";
+import { Scramble } from "@/components/motion/scramble";
 import { useContent } from "@/content/provider";
 import { locales } from "@/i18n/config";
 import { useI18n } from "@/i18n/provider";
@@ -129,7 +130,7 @@ export function ThemeToggle() {
 }
 
 export function Header() {
-  const { t, n } = useI18n();
+  const { t, n, locale } = useI18n();
   const { profile } = useContent();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -188,7 +189,7 @@ export function Header() {
                     onFocus={() => setHovered(key)}
                     className="relative z-10 block px-4 py-1.5 text-sm text-foreground-2 transition-colors hover:text-foreground"
                   >
-                    {t.nav[key]}
+                    <Scramble text={t.nav[key]} active={hovered === key} locale={locale} />
                   </a>
                   {hovered === key && (
                     <motion.span

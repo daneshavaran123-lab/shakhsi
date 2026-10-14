@@ -32,7 +32,22 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     gsap.ticker.lagSmoothing(0);
     setLenis(instance);
 
+    // The browser jumps to #anchors before fonts and the 3D stage settle the
+    // layout; land on the section again once it has.
+    let settle = 0;
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (id && !id.startsWith("project-")) {
+      document.fonts.ready.then(() => {
+        settle = window.setTimeout(() => {
+          ScrollTrigger.refresh();
+          const target = document.getElementById(id);
+          if (target) instance.scrollTo(target, { offset: -24, immediate: true });
+        }, 150);
+      });
+    }
+
     return () => {
+      window.clearTimeout(settle);
       gsap.ticker.remove(tick);
       instance.destroy();
       setLenis(null);

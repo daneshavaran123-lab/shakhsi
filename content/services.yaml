@@ -63,6 +63,30 @@ fa:
     projects:
     - zaer
   cta: برای سفارش نرم‌افزار، تهیه کیوسک یا یک پکیج کامل، تماس بگیرید؛ اول نیازتان را دقیق می‌شنوم.
+  process:
+  - title: کشف نیاز
+    body: گفت‌وگو با کارفرما و مخاطب؛ پیدا کردن نیاز اصلی پشت هر درخواست.
+  - title: طراحی تجربه
+    body: سناریوی کاربر و طراحی رابط در Figma؛ ساده، روشن و قابل فهم در چند ثانیه.
+  - title: طراحی سخت‌افزار
+    body: انتخاب یا طراحی بدنه، نمایشگر و تجهیزات، متناسب با فضا و مخاطب.
+  - title: ساخت نرم‌افزار
+    body: توسعه با Next.js و React، همراه پنل مدیریت محتوا و داده.
+  - title: تحویل و اجرا
+    body: راه‌اندازی روی دستگاه واقعی، در فضای واقعی، برای کاربر واقعی.
+  showcase:
+  - project: kids
+    device: table
+    title: میز لمسی کودک
+    body: بدنه، صفحه لمسی و لانچر امن کودک؛ همه از یک طراحی واحد، از ایده تا محصول.
+  - project: mora
+    device: display
+    title: مُورا روی نمایشگر ۶۵ اینچ
+    body: میز کار دیجیتال مدیر؛ جلسات، وظایف و تصمیم‌ها روی یک صفحه بزرگ لمسی.
+  - project: museum
+    device: kiosk
+    title: موزه کشتی روی کیوسک
+    body: روایت قهرمانان با آواتار سخنگو، برای بازدیدکننده‌ای که مقابل کیوسک می‌ایستد.
 en:
   heading:
   - From idea to a kiosk
@@ -128,3 +152,27 @@ en:
     projects:
     - zaer
   cta: To order software, source a kiosk or get a complete package, get in touch — I start by listening closely to what you need.
+  process:
+  - title: Discover
+    body: Talking with the client and the audience to find the real need behind the request.
+  - title: Design the experience
+    body: User scenarios and interface design in Figma — clear and understandable in seconds.
+  - title: Design the hardware
+    body: Choosing or designing the body, display and equipment to suit the space and audience.
+  - title: Build the software
+    body: Built with Next.js and React, with content management and data.
+  - title: Deliver
+    body: Running on real hardware, in a real space, for real users.
+  showcase:
+  - project: kids
+    device: table
+    title: Kids’ touch table
+    body: Body, touch screen and safe kids’ launcher — one design, from idea to product.
+  - project: mora
+    device: display
+    title: MORA on a 65″ display
+    body: An executive’s digital desk — meetings, tasks and decisions on one large touch screen.
+  - project: museum
+    device: kiosk
+    title: Wrestling museum on a kiosk
+    body: Champions tell their stories through talking avatars, for visitors standing at the kiosk.
