@@ -1,6 +1,7 @@
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
 import { Marquee } from "@/components/sections/marquee";
+import { Manifesto } from "@/components/sections/manifesto";
 import { About } from "@/components/sections/about";
 import { Services } from "@/components/sections/services";
 import { Work } from "@/components/sections/work";
@@ -85,6 +86,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <main id="main">
         <Hero />
         <Marquee />
+        <Manifesto />
         <About />
         <Trust />
         <Process />
