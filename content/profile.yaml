@@ -2,6 +2,8 @@ portrait: /images/profile/portrait.webp
 email: nargestabatabaii679@gmail.com
 phone: '09151236596'
 linkedin: https://www.linkedin.com/in/narges-tabatabaii-a16b48284/
+telegram: nargestabatabaii
+companyUrl: https://www.daneshavaran.ir
 stack:
 - group: طراحی
   groupEn: Design
@@ -58,6 +60,7 @@ fa:
   - title: قائم‌مقام مدیرعامل
     org: شرکت دانش‌آوران
     period: اکنون
+    url: https://www.daneshavaran.ir
   - title: نرم‌افزار و مدیریت محصول
     org: شرکت دانش‌آوران
     period: ۳ تا ۴ سال
@@ -97,6 +100,7 @@ en:
   - title: Deputy CEO
     org: Daneshavaran
     period: Present
+    url: https://www.daneshavaran.ir
   - title: Software & product management
     org: Daneshavaran
     period: 3–4 years

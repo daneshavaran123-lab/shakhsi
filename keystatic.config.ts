@@ -76,6 +76,7 @@ const profileCopy = (lang: "fa" | "en") => {
           title: fields.text({ label: fa ? "سمت" : "Role" }),
           org: fields.text({ label: fa ? "سازمان" : "Organisation" }),
           period: fields.text({ label: fa ? "مدت یا بازه" : "Period" }),
+          url: fields.url({ label: fa ? "لینک سازمان (اختیاری)" : "Organisation link (optional)" }),
         }),
         { label: fa ? "سوابق" : "Experience", itemLabel: (p) => p.fields.title.value || "—" },
       ),
@@ -233,6 +234,8 @@ export default config({
         email: fields.text({ label: "ایمیل", validation: { isRequired: true } }),
         phone: fields.text({ label: "شماره تماس", description: "مثلاً 09151236596" }),
         linkedin: fields.url({ label: "لینک لینکدین" }),
+        telegram: fields.text({ label: "آیدی تلگرام", description: "بدون @؛ مثلاً nargestabatabaii" }),
+        companyUrl: fields.url({ label: "وب‌سایت شرکت" }),
         stack: fields.array(
           fields.object({
             group: fields.text({ label: "دسته (فارسی)" }),

@@ -2,7 +2,8 @@
 /**
  * Standalone HTML export.
  *
- *   npm run export:html   →   html/fa.html, html/en.html, html/index.html
+ *   npm run export:html   →   html/fa.html, en.html, index.html (= fa),
+ *                             fa-resume.html, en-resume.html
  *
  * Each file is fully self-contained: CSS, fonts, scripts (including the
  * Three.js scene) and every image are inlined, so it opens straight from
@@ -139,9 +140,12 @@ function inline(html) {
 
 build();
 mkdirSync(destDir, { recursive: true });
-for (const locale of locales) {
-  const html = inline(readFileSync(path.join(outDir, `${locale}.html`), "utf8"));
-  writeFileSync(path.join(destDir, `${locale}.html`), html);
-  if (locale === "fa") writeFileSync(path.join(destDir, "index.html"), html);
-  console.log(`html/${locale}.html  ${(Buffer.byteLength(html) / 1024 / 1024).toFixed(1)} MB`);
+const pages = locales.flatMap((locale) => [
+  { from: `${locale}.html`, to: [`${locale}.html`, ...(locale === "fa" ? ["index.html"] : [])] },
+  { from: `${locale}/resume.html`, to: [`${locale}-resume.html`] },
+]);
+for (const page of pages) {
+  const html = inline(readFileSync(path.join(outDir, page.from), "utf8"));
+  for (const name of page.to) writeFileSync(path.join(destDir, name), html);
+  console.log(`html/${page.to[0]}  ${(Buffer.byteLength(html) / 1024 / 1024).toFixed(1)} MB`);
 }

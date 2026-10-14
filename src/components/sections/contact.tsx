@@ -120,20 +120,33 @@ export function Contact() {
                 <span className="link-draw ltr font-mono text-[clamp(1rem,2.2vw,1.6rem)]">{phone.display}</span>
               </a>
             )}
-            {profile.linkedin && (
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer me"
-                className="group inline-flex h-11 basis-full items-center justify-start gap-3 md:justify-end"
-              >
-                <span className="grid size-11 place-items-center rounded-full ring-1 ring-border text-[0.8rem] font-semibold transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
-                  in
-                </span>
-                <span className="link-draw text-[clamp(1rem,2vw,1.4rem)]">{t.contact.linkedin}</span>
-                <ArrowUpRight className="size-4 text-muted-foreground rtl:-scale-x-100" />
-              </a>
-            )}
+            {/* Social and company links share one compact row. */}
+            <ul className="flex basis-full flex-wrap gap-2 md:justify-end">
+              {[
+                profile.telegram && { href: `https://t.me/${profile.telegram}`, label: t.contact.telegram, hint: `@${profile.telegram}` },
+                profile.linkedin && { href: profile.linkedin, label: t.contact.linkedin },
+                profile.companyUrl && {
+                  href: profile.companyUrl,
+                  label: t.contact.company,
+                  hint: profile.companyUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""),
+                },
+              ]
+                .filter((l): l is { href: string; label: string; hint?: string } => !!l)
+                .map((l) => (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer me"
+                      className="group inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground hover:ring-accent"
+                    >
+                      {l.label}
+                      {l.hint && <span className="ltr font-mono text-xs opacity-60">{l.hint}</span>}
+                      <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45 rtl:-scale-x-100" />
+                    </a>
+                  </li>
+                ))}
+            </ul>
           </div>
         </div>
 

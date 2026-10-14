@@ -8,6 +8,7 @@ import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/rea
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useContent } from "@/content/provider";
 import { useI18n } from "@/i18n/provider";
+import { INTRO_SECONDS, introActive } from "@/components/intro";
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
 import { useTheme } from "@/components/providers/theme";
@@ -55,7 +56,8 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: 0.15 });
+        // Wait for the first-visit curtain when it is showing.
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: introActive() ? INTRO_SECONDS : 0.15 });
         tl.fromTo(".hero-canvas", { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 2.6 }, 0)
           .set("[data-split]", { autoAlpha: 1 }, 0)
           .fromTo(

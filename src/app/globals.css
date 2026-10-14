@@ -186,6 +186,11 @@ html.lenis body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* First-visit curtain only exists while <html> carries .intro (head script). */
+html:not(.intro) .intro-overlay {
+  display: none;
+}
+
 /* Motion system: hide only when JS has opted in, so no-JS stays readable. */
 html.has-motion [data-reveal],
 html.has-motion [data-split] {
@@ -279,6 +284,16 @@ html.has-motion [data-split] {
   unicode-bidi: isolate;
 }
 
+/* Day/night switch: the new theme is revealed by a growing circle (JS). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+
 /* shadcn dialog keyframes */
 @keyframes overlay-in {
   from {
@@ -330,5 +345,40 @@ html.has-motion [data-split] {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* Print: the résumé goes onto A4 in day colours, without page chrome. */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+@media print {
+  :root,
+  [data-theme] {
+    --background: #ffffff;
+    --foreground: #111111;
+    --foreground-2: #2a2a2a;
+    --muted-foreground: #5c5c5c;
+    --card: transparent;
+    --accent: #7a5628;
+    --accent-strong: #5f421d;
+    --border: rgb(0 0 0 / 0.14);
+    color-scheme: light;
+  }
+  html,
+  body {
+    background: #fff !important;
+    font-size: 11px;
+  }
+  .grain,
+  .edge::before {
+    display: none !important;
+  }
+  .resume-block {
+    break-inside: avoid;
+  }
+  a {
+    text-decoration: none;
   }
 }

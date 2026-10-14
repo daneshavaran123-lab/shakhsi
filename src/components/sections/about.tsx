@@ -9,6 +9,8 @@ import { useSectionMotion } from "@/hooks/use-section-motion";
 import { useI18n } from "@/i18n/provider";
 import { useContent } from "@/content/provider";
 import { cn } from "@/lib/utils";
+import { pageHref } from "@/lib/routes";
+import { ArrowUpRight, FileText } from "lucide-react";
 
 export function About() {
   const { t, n, locale } = useI18n();
@@ -47,6 +49,15 @@ export function About() {
                 <span className="font-display text-xl">{t.name.full}</span>
                 <span className="font-mono text-[0.7rem] text-accent">{t.tehran}</span>
               </figcaption>
+              <a
+                data-reveal
+                href={pageHref(locale, "resume")}
+                className="group mt-4 inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground hover:ring-accent"
+              >
+                <FileText className="size-4" />
+                {t.command.resume}
+                <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45 rtl:-scale-x-100" />
+              </a>
             </figure>
           )}
         </div>
@@ -69,7 +80,7 @@ export function About() {
           <div data-reveal-group className="mt-16 grid gap-4 lg:grid-cols-2">
             <FactCard title={t.about.experience}>
               {copy.experience.map((e) => (
-                <FactRow key={e.title + e.org} primary={e.title} secondary={e.org} aside={e.period} />
+                <FactRow key={e.title + e.org} primary={e.title} secondary={e.org} href={e.url} aside={e.period} />
               ))}
             </FactCard>
             <FactCard title={t.about.education}>
@@ -152,12 +163,34 @@ function FactCard({
   );
 }
 
-function FactRow({ primary, secondary, aside }: { primary: string; secondary?: string; aside?: string }) {
+function FactRow({
+  primary,
+  secondary,
+  href,
+  aside,
+}: {
+  primary: string;
+  secondary?: string;
+  href?: string;
+  aside?: string;
+}) {
   return (
     <li className="flex items-baseline justify-between gap-4 py-3">
       <span>
         <span className="block font-display text-2xl leading-tight">{primary}</span>
-        {secondary && <span className="mt-0.5 block text-sm text-muted-foreground">{secondary}</span>}
+        {secondary &&
+          (href ? (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-draw mt-0.5 inline-block text-sm text-muted-foreground hover:text-accent"
+            >
+              {secondary} ↗
+            </a>
+          ) : (
+            <span className="mt-0.5 block text-sm text-muted-foreground">{secondary}</span>
+          ))}
       </span>
       {aside && <span className="shrink-0 font-mono text-xs text-muted-foreground">{aside}</span>}
     </li>

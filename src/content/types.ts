@@ -51,7 +51,7 @@ export type ProfileCopy = {
   about: string[];
   bio: string;
   principles: { title: string; body: string }[];
-  experience: { title: string; org: string; period: string }[];
+  experience: { title: string; org: string; period: string; url?: string }[];
   education: { degree: string; school: string }[];
   languages: { name: string; level: string }[];
   fields: string;
@@ -62,6 +62,8 @@ export type Profile = {
   email: string;
   phone: string;
   linkedin?: string;
+  telegram?: string;
+  companyUrl?: string;
   stack: { group: string; groupEn: string; items: string[] }[];
   available: boolean;
   specialistFields: number;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Search, Sun } from "lucide-react";
 
 import { navKeys } from "@/data/site";
 import { useContent } from "@/content/provider";
@@ -10,15 +10,15 @@ import { locales } from "@/i18n/config";
 import { useI18n } from "@/i18n/provider";
 import { TehranClock } from "@/components/tehran-clock";
 import { useLenis } from "@/components/providers/smooth-scroll";
-import { useTheme } from "@/components/providers/theme";
+import { useSystemThemeSync, useTheme } from "@/components/providers/theme";
 import { cn } from "@/lib/utils";
+import { pageHref, type Page } from "@/lib/routes";
+import { useOpenCommandMenu } from "@/components/command-menu";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-// The standalone HTML export (npm run export:html) ships one file per language.
-const localeHref = (l: string) => (process.env.NEXT_PUBLIC_STATIC_HTML ? `./${l}.html` : `/${l}`);
-
-function LanguageSwitch({ className }: { className?: string }) {
+export function LanguageSwitch({ className, page = "home" }: { className?: string; page?: Page }) {
+  const localeHref = (l: string) => pageHref(l, page);
   const { locale, t } = useI18n();
   return (
     <div
@@ -62,15 +62,55 @@ function LanguageSwitch({ className }: { className?: string }) {
   );
 }
 
-function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+function CommandTrigger() {
+  const open = useOpenCommandMenu();
   const { t } = useI18n();
-  const next = theme === "dark" ? "light" : "dark";
   return (
     <button
       type="button"
-      onClick={() => setTheme(next)}
+      onClick={open}
+      aria-label={t.command.open}
+      aria-keyshortcuts="Control+K Meta+K"
+      className="group inline-flex h-9 cursor-pointer items-center gap-2 rounded-full px-2.5 text-muted-foreground ring-1 ring-border transition-colors hover:bg-foreground/5 hover:text-foreground"
+    >
+      <Search className="size-4" />
+      <kbd className="ltr hidden rounded bg-foreground/[0.06] px-1.5 py-0.5 font-mono text-[0.65rem] md:inline">Ctrl K</kbd>
+    </button>
+  );
+}
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const { t } = useI18n();
+  useSystemThemeSync(setTheme);
+  const next = theme === "dark" ? "light" : "dark";
+
+  // Day ↔ night as a circle of light spreading from the button (View
+  // Transitions API); browsers without it, or reduced motion, switch instantly.
+  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+    if (!doc.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTheme(next);
+      return;
+    }
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = r.left + r.width / 2;
+    const y = r.top + r.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    doc.startViewTransition(() => setTheme(next)).ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 750, easing: "cubic-bezier(0.16, 1, 0.3, 1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    });
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
       aria-label={next === "light" ? t.theme.toLight : t.theme.toDark}
+      title={next === "light" ? t.theme.toLight : t.theme.toDark}
       className="relative grid size-9 cursor-pointer place-items-center overflow-hidden rounded-full ring-1 ring-border transition-colors hover:bg-foreground/5"
     >
       <AnimatePresence mode="popLayout" initial={false}>
@@ -164,6 +204,7 @@ export function Header() {
 
           <div className="flex items-center gap-2">
             <TehranClock className="hidden pe-2 font-mono text-xs text-muted-foreground xl:inline" />
+            <CommandTrigger />
             <LanguageSwitch className="hidden sm:flex" />
             <ThemeToggle />
             {profile.available && <a

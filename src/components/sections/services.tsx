@@ -47,6 +47,21 @@ export function Services() {
             <p data-reveal className="mt-8 max-w-2xl text-lg leading-9 text-foreground-2">
               {copy.intro}
             </p>
+            {profile.companyUrl && (
+              <a
+                data-reveal
+                href={profile.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground hover:ring-accent"
+              >
+                {t.services.company}
+                <span className="ltr font-mono text-xs opacity-70">
+                  {profile.companyUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                </span>
+                <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45 rtl:-scale-x-100" />
+              </a>
+            )}
           </div>
         </div>
 

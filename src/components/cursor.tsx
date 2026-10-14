@@ -64,7 +64,7 @@ export function Cursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed top-0 left-0 z-[80]"
+      className="pointer-events-none fixed top-0 left-0 z-[80] print:hidden"
       style={{ x: sx, y: sy }}
     >
       <motion.div
