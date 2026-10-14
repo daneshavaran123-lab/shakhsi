@@ -589,6 +589,18 @@
       "skillPath": "agent-skills/codex/publish-project-to-github/SKILL.md",
       "computedHash": "a3571ab53ffe40264a1be19bb2c7c3d02d888405f44da6daa9d4df1f23d58946"
     },
+    "resume-ats-optimizer": {
+      "source": "paramchoudhary/resumeskills",
+      "sourceType": "github",
+      "skillPath": "skills/resume-ats-optimizer/SKILL.md",
+      "computedHash": "2e3782b6176807b6d714213a14258bd86ca988d442757674eb86181d81465abd"
+    },
+    "resume-bullet-writer": {
+      "source": "paramchoudhary/resumeskills",
+      "sourceType": "github",
+      "skillPath": "skills/resume-bullet-writer/SKILL.md",
+      "computedHash": "c66df886c061907f50672f506120f716f64c3319ebd7ba306b70e9bb523d1ea8"
+    },
     "reveal-hover-effect": {
       "source": "SoftwareInFocus/threejs-skills",
       "sourceType": "github",
@@ -618,6 +630,12 @@
       "sourceType": "github",
       "skillPath": "agent-skills/web-design/scroll-world-storytelling/SKILL.md",
       "computedHash": "c2a0a3ee21af016fcf61dabd30735eb9a7ac6be219accbc72649a3591b852b7b"
+    },
+    "shadcn": {
+      "source": "shadcn-ui/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "b864a958765563321f485a96f4d59c0bb6539f4286ab6d8b8b66895b7ebd302d"
     },
     "shaders-cursor-ripples": {
       "source": "SoftwareInFocus/threejs-skills",

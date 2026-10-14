@@ -55,3 +55,6 @@ next-env.d.ts
 # standalone HTML export
 /.next-html/
 /html/
+!/.claude/skills/shadcn/
+!/.claude/skills/resume-ats-optimizer/
+!/.claude/skills/resume-bullet-writer/
