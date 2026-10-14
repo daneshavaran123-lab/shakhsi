@@ -141,6 +141,12 @@ export default config({
       path: "content/profile",
       format: { data: "yaml" },
       schema: {
+        portrait: fields.image({
+          label: "عکس پرتره",
+          description: "مربعی یا عمودی، حداقل ۸۰۰ پیکسل",
+          directory: "public/images/profile",
+          publicPath: "/images/profile/",
+        }),
         email: fields.text({ label: "ایمیل", validation: { isRequired: true } }),
         available: fields.checkbox({ label: "نشان «آماده همکاری» نمایش داده شود", defaultValue: true }),
         specialistFields: fields.integer({ label: "تعداد حوزه‌های تخصصی (آمار بخش آموزش)", defaultValue: 6 }),

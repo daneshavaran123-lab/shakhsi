@@ -52,6 +52,7 @@ export type ProfileCopy = {
 };
 
 export type Profile = {
+  portrait?: Img;
   email: string;
   available: boolean;
   specialistFields: number;

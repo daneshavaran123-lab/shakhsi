@@ -78,6 +78,7 @@ export const getContent = cache(async (): Promise<SiteContent> => {
     fields: p.fields,
   });
   const profile: Profile = {
+    portrait: (await toImg(profileEntry.portrait)) ?? undefined,
     email: profileEntry.email,
     available: profileEntry.available,
     specialistFields: profileEntry.specialistFields ?? 6,

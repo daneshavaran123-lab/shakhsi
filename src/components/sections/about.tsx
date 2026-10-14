@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 
 import { Split } from "@/components/motion/split";
 import { SectionLabel } from "@/components/section-label";
@@ -10,18 +11,46 @@ import { useContent } from "@/content/provider";
 
 export function About() {
   const { t, n, locale } = useI18n();
-  const copy = useContent().profile[locale];
+  const { profile } = useContent();
+  const copy = profile[locale];
   const root = useRef<HTMLElement>(null);
   useSectionMotion(root);
 
   return (
     <section ref={root} id="about" className="px-4 py-28 sm:px-6 md:py-40">
       <div className="mx-auto grid max-w-[100rem] gap-12 md:grid-cols-12">
-        <SectionLabel index={n("01")} className="md:col-span-3">
-          {t.about.label}
-        </SectionLabel>
+        <div className="flex flex-col gap-10 md:col-span-4 lg:col-span-3">
+          <SectionLabel index={n("01")}>{t.about.label}</SectionLabel>
 
-        <div className="md:col-span-9">
+          {profile.portrait && (
+            <figure className="w-2/3 max-w-xs md:sticky md:top-28 md:w-full">
+              <div
+                data-portrait
+                className="edge relative aspect-[4/5] overflow-hidden rounded-2xl bg-card shadow-[0_30px_80px_-30px_var(--glow)]"
+              >
+                <Image
+                  data-parallax="0.08"
+                  src={profile.portrait}
+                  alt={t.name.full}
+                  sizes="(min-width: 768px) 22rem, 66vw"
+                  placeholder="blur"
+                  className="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover object-[50%_30%]"
+                />
+                {/* A whisper of champagne so the photo sits in the palette. */}
+                <span
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent mix-blend-multiply"
+                />
+              </div>
+              <figcaption data-reveal className="mt-4 flex items-baseline justify-between gap-3 text-sm">
+                <span className="font-display text-xl">{t.name.full}</span>
+                <span className="font-mono text-[0.7rem] text-accent">{t.tehran}</span>
+              </figcaption>
+            </figure>
+          )}
+        </div>
+
+        <div className="md:col-span-8 lg:col-span-9">
           <Split
             mode="scrub"
             as="p"
