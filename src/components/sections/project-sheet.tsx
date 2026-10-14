@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
-import type { Project, ProjectCopy } from "@/data/projects";
+import type { Project, ProjectCopy } from "@/content/types";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useLenis } from "@/components/providers/smooth-scroll";

@@ -1,0 +1,60 @@
+title: اطلس شرکت‌های پارک فناوری
+order: 20
+eng: Fava Park — Interactive Technology Atlas
+group: culture
+url: https://favapark.liara.run/
+live: true
+images:
+- /images/projects/fava/images/0.webp
+- /images/projects/fava/images/1.webp
+fa:
+  category: اطلاع‌رسانی و نمایشگاه
+  status: نسخه آنلاین
+  summary: پلتفرم معرفی و جست‌وجوی شرکت‌های فناور همراه با نمایشگاه مجازی، شاخه‌های تخصصی فناوری، نقشه پارک‌ها و مدیریت اطلاعات شرکت‌ها.
+  intro: اطلس شرکت‌های پارک فناوری، یک نمایشگاه دیجیتال برای معرفی شرکت‌های فناور، ظرفیت پارک‌ها و حوزه‌های تخصصی است. بازدیدکننده می‌تواند به‌جای مراجعه به فهرست‌های پراکنده، اطلاعات را در قالبی منظم جست‌وجو کند.
+  value: تبدیل نمایشگر و استند به راهنمای هوشمند اکوسیستم فناوری.
+  hardware: نمایشگر ۶۵ اینچ / استند و کیوسک لمسی
+  services:
+  - معرفی شرکت‌ها، محصولات و حوزه فعالیت آن‌ها
+  - معرفی پارک‌های فناوری و موقعیت روی نقشه
+  - دسترسی به جست‌وجوی نمایشگاه مجازی و دستیار هوشمند
+  features:
+  - کارت معرفی شرکت با لوگو و اطلاعات فارسی و انگلیسی
+  - دسته‌بندی شرکت‌ها براساس شاخه فناوری
+  - نقشه پارک‌ها و اطلاعات آن‌ها
+  - پنل ثبت و ویرایش، بارگذاری لوگو و وضعیت تأیید
+  tech:
+  - وب‌اپلیکیشن تحت شبکه
+  - رابط کاربری فارسی RTL
+  - بخش عمومی نمایشگاه و بخش مدیریت محتوا
+  - قابل نمایش در کیوسک و نمایشگر بزرگ دارای مرورگر
+  uses:
+  - لابی پارک‌های علم و فناوری
+  - نمایشگاه‌های تخصصی و رویدادهای B2B
+  - مراکز رشد و مراکز نوآوری
+en:
+  title: Technology Park Atlas
+  category: Exhibition & information
+  status: Live
+  summary: A platform to discover and search technology companies — with a virtual exhibition, technology verticals, park maps and company data management.
+  intro: The atlas is a digital exhibition of technology companies, park capacities and specialist fields. Instead of scattered lists, visitors search everything in one organised, browsable format.
+  value: Turns displays and stands into a smart guide to the technology ecosystem.
+  hardware: 65″ display / touch stand and kiosk
+  services:
+  - Showcasing companies, products and fields of activity
+  - Introducing technology parks and their locations on a map
+  - Virtual exhibition search and a smart assistant
+  features:
+  - Company cards with logo and Persian/English details
+  - Companies grouped by technology vertical
+  - Park maps and park information
+  - Admin panel for editing, logo upload and approval status
+  tech:
+  - Networked web application
+  - Persian RTL interface
+  - Public exhibition plus content management
+  - Runs on kiosks and large browser-enabled displays
+  uses:
+  - Science and technology park lobbies
+  - Trade shows and B2B events
+  - Incubators and innovation centres

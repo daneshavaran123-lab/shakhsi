@@ -1,0 +1,58 @@
+title: مُورا | مغز دوم مدیران
+order: 10
+eng: MORA — Executive Second Brain
+group: management
+url: http://aisecondbrain.me/
+live: true
+images:
+- /images/projects/mora/images/0.webp
+- /images/projects/mora/images/1.webp
+fa:
+  category: مدیریت هوشمند
+  status: نسخه آنلاین
+  summary: محیط دیجیتال یکپارچه برای برنامه‌ریزی فردی و سازمانی، مدیریت جلسات، وظایف، پروژه‌ها و دسترسی سریع مدیران به اطلاعات موردنیاز تصمیم‌گیری.
+  intro: مُورا یک فضای کاری متمرکز برای مدیرانی است که تصمیم‌ها، جلسات، وظایف و اطلاعات سازمانی را در چند ابزار متفاوت مدیریت می‌کنند. محیط واحد آن برای مرور روزانه امور و آماده‌سازی جلسات طراحی شده است.
+  value: تبدیل نمایشگر لمسی ۶۵ اینچ به میز کار و مرکز فرماندهی مدیریتی.
+  hardware: نمایشگر لمسی ۶۵ اینچ + OPS یا رایانه
+  services:
+  - سازمان‌دهی فعالیت‌های فردی، حرفه‌ای و سازمانی
+  - آماده‌سازی و تحلیل موضوع جلسه با جست‌وجوی منابع مرتبط
+  - گردآوری ایده‌ها، وظایف، پروژه‌ها و داده‌های مدیریتی در یک محیط
+  features:
+  - داشبورد وضعیت امروز و فعالیت‌های اخیر
+  - برنامه‌ریزی سازمانی با نمایش فهرست، تقویم، کانبان و ماتریس
+  - فرم تحلیل موضوع پیش از جلسه و ورود توضیحات
+  - جست‌وجوی اطلاعات، تقویم و دسترسی سریع
+  tech:
+  - وب‌اپلیکیشن فارسی راست‌به‌چپ
+  - اجرا در مرورگر سازگار روی رایانه/OPS
+  - استفاده روی نمایشگر لمسی ۶۵ اینچ با اتصال شبکه
+  uses:
+  - اتاق مدیرعامل و هیئت‌مدیره
+  - جلسات مدیریتی و سازمانی
+  - مرکز کنترل و پیگیری فعالیت‌ها
+en:
+  title: MORA — Executive Second Brain
+  category: Smart management
+  status: Live
+  summary: A unified digital workspace for personal and organisational planning — meetings, tasks, projects and the information executives need to make decisions, in one place.
+  intro: MORA is a focused workspace for executives who juggle decisions, meetings, tasks and organisational knowledge across too many tools. One environment for the daily review and for walking into every meeting prepared.
+  value: Turns a 65″ touch display into an executive desk and command centre.
+  hardware: 65″ touch display + OPS or PC
+  services:
+  - Organising personal, professional and organisational activity
+  - Preparing and analysing meeting topics with related sources
+  - Collecting ideas, tasks, projects and management data in one place
+  features:
+  - Today’s status dashboard and recent activity
+  - Organisational planning as list, calendar, kanban and matrix
+  - Pre-meeting topic analysis form with notes
+  - Search, calendar and quick access
+  tech:
+  - Persian right-to-left web application
+  - Runs in a modern browser on a PC or OPS module
+  - Designed for a networked 65″ touch display
+  uses:
+  - CEO and board rooms
+  - Management and organisational meetings
+  - Command centres and follow-up desks

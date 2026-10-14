@@ -49,3 +49,5 @@ next-env.d.ts
 !/.claude/skills/gsap/
 !/.claude/skills/cinematic-gsap-lenis-motion-system/
 !/.claude/skills/tailwindcss/
+
+!.env.example

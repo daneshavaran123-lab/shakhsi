@@ -1,0 +1,60 @@
+title: تشریفات‌یار | رزرو مراسم
+order: 30
+eng: TashrifatYar — Smart Ceremony Booking
+group: retail
+url: https://wedding-menu-kiosk.liara.run/
+live: true
+images:
+- /images/projects/wedding/images/0.webp
+- /images/projects/wedding/images/1.webp
+fa:
+  category: رزرو و خدمات
+  status: نسخه آنلاین
+  summary: سامانه سفارش‌گیری مرحله‌ای برای انتخاب نوع مراسم، سالن، تاریخ و سانس، غذا و خدمات تشریفاتی همراه با نمایش خلاصه سفارش و پیش‌فاکتور.
+  intro: تشریفات‌یار مسیر انتخاب و سفارش خدمات برگزاری مراسم را در یک رابط مرحله‌ای ساده می‌کند. مشتری نوع مراسم، سالن، تاریخ، پذیرایی و خدمات جانبی را انتخاب کرده و در پایان ریز هزینه‌ها را مشاهده می‌کند.
+  value: تبدیل کیوسک به پیشخوان دیجیتال رزرو و فروش خدمات تالار.
+  hardware: کیوسک لمسی / استند هوشمند
+  services:
+  - معرفی سالن‌ها و خدمات تشریفاتی مجموعه
+  - انتخاب زمان، سانس، پذیرایی و خدمات جانبی
+  - تهیه خلاصه سفارش و پیش‌فاکتور برای مشتری
+  features:
+  - فرایند مرحله‌ای با نمایش پیشرفت سفارش
+  - انتخاب مراسم عروسی یا ترحیم
+  - تقویم شمسی با وضعیت تاریخ‌ها و سانس‌ها
+  - ثبت اطلاعات تماس و تعداد مهمانان
+  - نمایش جمع هزینه‌ها و حق سرویس
+  tech:
+  - وب‌اپلیکیشن لمسی با رابط فارسی
+  - اجرای تمام‌صفحه در مرورگر کیوسک
+  - تقویم و فرم‌های ورود داده
+  uses:
+  - تالار و باغ‌تالار
+  - هتل‌ها و مراکز همایش
+  - کیوسک پیش‌پذیرش تشریفات
+en:
+  title: TashrifatYar — Ceremony Booking
+  category: Booking & services
+  status: Live
+  summary: A step-by-step ordering flow to choose the ceremony type, hall, date and session, catering and services — ending in an order summary and quote.
+  intro: TashrifatYar simplifies booking an event into one guided flow. Guests pick the ceremony, hall, date, catering and extras, and see a clear cost breakdown at the end.
+  value: Turns a kiosk into a digital front desk for venue bookings and sales.
+  hardware: Touch kiosk / smart stand
+  services:
+  - Presenting halls and ceremony services
+  - Choosing date, session, catering and extras
+  - Generating an order summary and quote
+  features:
+  - Stepped flow with order progress
+  - Wedding or memorial ceremony paths
+  - Persian calendar with date and session availability
+  - Contact details and guest count
+  - Totals with service charge
+  tech:
+  - Touch-first web application, Persian UI
+  - Full-screen kiosk browser mode
+  - Calendar and data-entry forms
+  uses:
+  - Banquet halls and garden venues
+  - Hotels and conference centres
+  - Pre-reception kiosks

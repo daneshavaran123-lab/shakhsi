@@ -4,7 +4,8 @@ import { useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 
-import { navKeys, site } from "@/data/site";
+import { navKeys } from "@/data/site";
+import { useContent } from "@/content/provider";
 import { locales } from "@/i18n/config";
 import { useI18n } from "@/i18n/provider";
 import { TehranClock } from "@/components/tehran-clock";
@@ -86,6 +87,7 @@ function ThemeToggle() {
 
 export function Header() {
   const { t, n } = useI18n();
+  const { profile } = useContent();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -161,8 +163,8 @@ export function Header() {
             <TehranClock className="hidden pe-2 font-mono text-xs text-muted-foreground xl:inline" />
             <LanguageSwitch className="hidden sm:flex" />
             <ThemeToggle />
-            <a
-              href={`mailto:${site.email}`}
+            {profile.available && <a
+              href={`mailto:${profile.email}`}
               className="hidden h-9 items-center gap-2 rounded-full bg-foreground px-4 text-sm text-background transition-colors duration-300 hover:bg-accent hover:text-accent-foreground lg:inline-flex"
             >
               <span className="relative flex size-1.5">
@@ -170,7 +172,7 @@ export function Header() {
                 <span className="relative inline-flex size-1.5 rounded-full bg-[#7fd18b]" />
               </span>
               {t.available}
-            </a>
+            </a>}
             <button
               type="button"
               className="relative z-50 grid size-10 cursor-pointer place-items-center rounded-full md:hidden"
@@ -233,8 +235,8 @@ export function Header() {
               className="flex items-end justify-between gap-4 text-sm"
             >
               <div className="space-y-2">
-                <a href={`mailto:${site.email}`} className="ltr block font-mono text-xs">
-                  {site.email}
+                <a href={`mailto:${profile.email}`} className="ltr block font-mono text-xs">
+                  {profile.email}
                 </a>
                 <TehranClock className="block font-mono text-xs text-muted-foreground" />
               </div>

@@ -5,7 +5,8 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
-import { projectGroups, projects, type Project, type ProjectGroup } from "@/data/projects";
+import { projectGroups, type Project, type ProjectGroup } from "@/content/types";
+import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
 import { SectionLabel } from "@/components/section-label";
 import { ProjectSheet } from "@/components/sections/project-sheet";
@@ -18,6 +19,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Work() {
   const { t, n, locale } = useI18n();
+  const { projects } = useContent();
   const root = useRef<HTMLElement>(null);
   const preview = useRef<HTMLDivElement>(null);
   const [group, setGroup] = useState<ProjectGroup>("all");
@@ -37,7 +39,7 @@ export function Work() {
     fromHash();
     window.addEventListener("hashchange", fromHash);
     return () => window.removeEventListener("hashchange", fromHash);
-  }, []);
+  }, [projects]);
 
   const open = useCallback((p: Project) => {
     setActive(p);

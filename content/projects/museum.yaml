@@ -1,0 +1,60 @@
+title: موزه افتخارات کشتی ایران
+order: 40
+eng: Iran Wrestling — Interactive Digital Museum
+group: culture
+url: https://koshtyiran.liara.run/
+live: true
+images:
+- /images/projects/museum/images/0.webp
+- /images/projects/museum/images/1.webp
+fa:
+  category: فرهنگی و موزه‌ای
+  status: نسخه آنلاین
+  summary: موزه دیجیتال تعاملی برای معرفی قهرمانان، تاریخچه و تألیفات کشتی. آواتار و کلیپ معرفی هر کشتی‌گیر، روایت اول‌شخص از زندگی و افتخارات او ارائه می‌کند.
+  intro: موزه افتخارات کشتی ایران، روایت دیجیتال تاریخ و افتخارات این ورزش است. پروفایل قهرمانان در کنار تصاویر و آثار تاریخی، کلیپ‌های معرفی اول‌شخص با آواتار سخنگو را در اختیار بازدیدکننده قرار می‌دهد.
+  value: خلق تجربه موزه‌ای چندرسانه‌ای و تعاملی با روایت قهرمانان.
+  hardware: کیوسک موزه / نمایشگر لمسی ۶۵ اینچ
+  services:
+  - معرفی قهرمانان و افتخارات کشتی ایران
+  - نمایش کلیپ معرفی هر قهرمان با آواتار دیجیتال
+  - مرور تاریخچه، بناهای مرتبط و منابع مکتوب
+  features:
+  - جست‌وجو و فیلتر کشتی‌گیران
+  - پروفایل با زندگینامه، افتخارات، مسیر موفقیت و رسانه‌ها
+  - کلیپ سخنگوی معرفی از زبان قهرمان
+  - بخش تألیفات و محتوای فرهنگی
+  tech:
+  - وب‌اپلیکیشن تعاملی با نمایش محتوای چندرسانه‌ای
+  - رابط فارسی مناسب کیوسک لمسی
+  - پخش ویدئو، تصویر و محتوای متنی
+  - قابلیت نصب در مرورگر (PWA)
+  uses:
+  - موزه‌های ورزشی
+  - فدراسیون‌ها و سالن افتخارات
+  - نمایشگاه‌های فرهنگی ورزشی
+en:
+  title: Iran Wrestling Hall of Fame
+  category: Culture & museums
+  status: Live
+  summary: An interactive digital museum of wrestling champions, history and literature. Each champion’s avatar clip tells their life and achievements in the first person.
+  intro: A digital narrative of the history and glory of Iranian wrestling. Champion profiles sit alongside historic images and artefacts, with first-person introduction clips voiced by talking avatars.
+  value: A multimedia, interactive museum experience told by the champions themselves.
+  hardware: Museum kiosk / 65″ touch display
+  services:
+  - Introducing Iran’s wrestling champions and honours
+  - An avatar introduction clip for every champion
+  - History, related landmarks and written sources
+  features:
+  - Search and filter wrestlers
+  - Profiles with biography, honours, journey and media
+  - Talking introduction clip in the champion’s voice
+  - Publications and cultural content
+  tech:
+  - Interactive multimedia web application
+  - Persian UI tuned for touch kiosks
+  - Video, image and text playback
+  - Installable in the browser (PWA)
+  uses:
+  - Sports museums
+  - Federations and halls of fame
+  - Cultural and sports exhibitions

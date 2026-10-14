@@ -17,8 +17,6 @@ const fa = {
   langSwitch: "تغییر زبان",
   hero: {
     index: "(۰۰) — پورتفولیو ۱۴۰۵",
-    tagline:
-      "طراح محصول و تجربه‌های دیجیتال تعاملی؛ از نمایشگر لمسی ۶۵ اینچی اتاق مدیران تا کیوسک موزه — طراحی برای مسئله واقعی، با سادگی و کارایی.",
     projects: "پروژه منتخب",
     courses: "دوره تخصصی",
     cta: "دیدن نمونه‌کارها",
@@ -34,17 +32,6 @@ const fa = {
   ],
   about: {
     label: "درباره",
-    lines: [
-      "طراحی و توسعه راهکارهای دیجیتال برای مدیریت، خدمات عمومی، موزه‌ها، فروشگاه‌ها و فضاهای تعاملی.",
-      "هدف هر پروژه، ساده‌ترکردن یک فرایند و ساختن تجربه‌ای روشن و قابل فهم برای کاربر است.",
-    ],
-    principles: [
-      { title: "مسئله واقعی", body: "هر پروژه از یک گره مشخص شروع می‌شود؛ جلسه‌ای که آماده نیست، بازدیدکننده‌ای که مسیر را گم کرده، سفارشی که پیچیده است." },
-      { title: "سادگی", body: "رابطی که روی نمایشگر عمومی کار می‌کند باید در چند ثانیه فهمیده شود — بدون راهنما، بدون حدس." },
-      { title: "کارایی", body: "از ایده تا نسخه قابل استفاده؛ محصولی که روی سخت‌افزار واقعی، در فضای واقعی اجرا می‌شود." },
-    ],
-    fields:
-      "حوزه‌های کاری: نرم‌افزارهای تحت وب، طراحی رابط و تجربه کاربری، هوش مصنوعی کاربردی، راهکارهای نمایشگر لمسی، کیوسک‌های اطلاع‌رسانی و سامانه‌های خدماتی. در پروژه‌های مرتبط، سخت‌افزارهای تعاملی KARAKO بستر اجرای محصول هستند.",
   },
   work: {
     label: "نمونه‌کارها",
@@ -108,8 +95,6 @@ const en: Dictionary = {
   langSwitch: "Switch language",
   hero: {
     index: "(00) — Portfolio 2026",
-    tagline:
-      "Product and interactive experience designer — from 65″ touch displays in boardrooms to museum kiosks. Designing for real problems, with simplicity and purpose.",
     projects: "Selected projects",
     courses: "Certified courses",
     cta: "See the work",
@@ -118,17 +103,6 @@ const en: Dictionary = {
   marquee: ["Product design", "User experience", "Interactive kiosks", "Applied AI", "Touch displays", "Branding"],
   about: {
     label: "About",
-    lines: [
-      "Designing and building digital solutions for management, public services, museums, retail and interactive spaces.",
-      "Every project sets out to simplify one process and leave the user with a clear, understandable experience.",
-    ],
-    principles: [
-      { title: "Real problems", body: "Each project starts from a concrete knot — a meeting nobody prepared for, a visitor who lost their way, an order that got complicated." },
-      { title: "Simplicity", body: "An interface on a public screen has to make sense in seconds — no manual, no guessing." },
-      { title: "Usefulness", body: "From idea to a working release — products that run on real hardware, in real spaces." },
-    ],
-    fields:
-      "Fields: web software, UI and UX design, applied AI, touch-display solutions, information kiosks and service systems. Where relevant, KARAKO interactive hardware is the platform the products run on.",
   },
   work: {
     label: "Selected work",

@@ -6,8 +6,7 @@ import { ArrowDown } from "lucide-react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/react";
 
 import { gsap, useGSAP } from "@/lib/gsap";
-import { projects } from "@/data/projects";
-import { certificates } from "@/data/certificates";
+import { useContent } from "@/content/provider";
 import { useI18n } from "@/i18n/provider";
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
@@ -21,6 +20,7 @@ const DotField = dynamic(() => import("@/components/three/dot-field"), {
 
 export function Hero() {
   const { t, n, locale } = useI18n();
+  const { projects, certificates, profile } = useContent();
   const { theme } = useTheme();
   const root = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(true);
@@ -163,7 +163,7 @@ export function Hero() {
 
         <div className="grid gap-8 pt-6 md:grid-cols-12 md:items-end">
           <p data-reveal className="max-w-md text-lg leading-8 text-foreground-2 md:col-span-5">
-            {t.hero.tagline}
+            {profile[locale].tagline}
           </p>
 
           <dl data-reveal className="flex gap-10 text-xs text-muted-foreground md:col-span-4 md:justify-center">

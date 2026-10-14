@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUp, Check, Copy } from "lucide-react";
 
-import { site } from "@/data/site";
+import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
 import { SectionLabel } from "@/components/section-label";
@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 
 export function Contact() {
   const { t, n, locale } = useI18n();
+  const { profile } = useContent();
   const root = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
   const lenis = useLenis();
@@ -23,11 +24,11 @@ export function Contact() {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(site.email);
+      await navigator.clipboard.writeText(profile.email);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      window.location.href = `mailto:${site.email}`;
+      window.location.href = `mailto:${profile.email}`;
     }
   };
 
@@ -67,10 +68,10 @@ export function Contact() {
           <div data-reveal className="flex flex-wrap items-center gap-3 md:col-span-7 md:justify-end">
             <Magnetic strength={0.15}>
               <a
-                href={`mailto:${site.email}`}
+                href={`mailto:${profile.email}`}
                 className="link-draw ltr inline-block font-mono text-[clamp(1rem,2.2vw,1.6rem)]"
               >
-                {site.email}
+                {profile.email}
               </a>
             </Magnetic>
             <button

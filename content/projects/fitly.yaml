@@ -1,0 +1,59 @@
+title: فیتلی | FITLY
+order: 90
+eng: Virtual try-on & personal styling
+group: retail
+live: false
+images:
+- /images/projects/fitly/images/0.webp
+- /images/projects/fitly/images/1.webp
+fa:
+  category: مد و خرده‌فروشی
+  status: نسخه نمایشی
+  summary: تجربه پرو مجازی پوشاک و انتخاب استایل با پشتیبانی از کمد دیجیتال، ثبت تصویر، پیشنهاد ست لباس و مشاوره تعاملی.
+  intro: فیتلی یک دستیار دیجیتال انتخاب پوشاک است که کمد لباس شخصی، پیشنهاد ترکیب‌های پوششی، مشاوره استایل و مسیر پرو مجازی را در کنار هم قرار می‌دهد.
+  value: تبدیل کیوسک فروشگاهی به نقطه مشاوره استایل و تجربه پرو مجازی لباس.
+  hardware: کیوسک و نمایشگر لمسی با دوربین و اینترنت مناسب
+  services:
+  - مرور و دسته‌بندی لباس‌ها در کمد دیجیتال
+  - مشاوره استایل متناسب با سلیقه و اطلاعات پروفایل
+  - انتخاب لباس و ثبت یا بارگذاری عکس برای پرو مجازی
+  features:
+  - کمد لباس با دسته‌بندی پوشاک و اکسسوری
+  - چت مشاور استایل و پیشنهاد ست‌ها
+  - پروفایل ویژگی‌های ظاهری و ترجیحات پوشش
+  - مسیر مرحله‌ای پرو مجازی و دسترسی به دوربین
+  - نمایش ست‌های پیشنهادی و آیتم‌های ذخیره‌شده
+  tech:
+  - وب‌اپلیکیشن فارسی و واکنش‌گرا
+  - ورود عکس از دوربین یا گالری
+  - برای اجرای نسخه فروشگاهی، دستگاه دارای مرورگر و دوربین پیشنهاد می‌شود
+  uses:
+  - فروشگاه‌های پوشاک و مزون‌ها
+  - کیوسک‌های پرو مجازی
+  - پلتفرم‌های فروش آنلاین مد و لباس
+en:
+  title: FITLY — Virtual Try-on
+  category: Fashion & retail
+  status: Demo
+  summary: A virtual try-on and styling experience — a digital wardrobe, photo capture, outfit suggestions and interactive styling advice.
+  intro: FITLY is a digital styling assistant that brings a personal wardrobe, outfit suggestions, style advice and a virtual try-on flow together.
+  value: Turns a store kiosk into a styling point with virtual try-on.
+  hardware: Touch kiosk / display with camera and internet
+  services:
+  - Browsing and organising clothes in a digital wardrobe
+  - Style advice matched to taste and profile
+  - Choosing pieces and capturing a photo for try-on
+  features:
+  - Wardrobe sorted by clothing and accessories
+  - Style-advisor chat and outfit suggestions
+  - Profile of appearance and preferences
+  - Stepped try-on flow with camera access
+  - Suggested looks and saved items
+  tech:
+  - Responsive web application, Persian UI
+  - Photo input from camera or gallery
+  - 'In-store: a device with browser and camera recommended'
+  uses:
+  - Fashion stores and boutiques
+  - Virtual try-on kiosks
+  - Online fashion retail platforms

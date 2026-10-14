@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Maximize2 } from "lucide-react";
 
-import { certificates, totalHours, type Certificate } from "@/data/certificates";
+import type { Certificate } from "@/content/types";
+import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
 import { SectionLabel } from "@/components/section-label";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -16,6 +17,8 @@ import { cn } from "@/lib/utils";
 
 export function Learning() {
   const { t, n, locale, dir } = useI18n();
+  const { certificates, profile } = useContent();
+  const totalHours = certificates.reduce((sum, c) => sum + (c.hours ?? 0), 0);
   const root = useRef<HTMLElement>(null);
   const pin = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLUListElement>(null);
@@ -26,7 +29,7 @@ export function Learning() {
   const stats = [
     { value: certificates.length, suffix: "" },
     { value: totalHours, suffix: "+" },
-    { value: 6, suffix: "" },
+    { value: profile.specialistFields, suffix: "" },
   ];
 
   useEffect(() => {
