@@ -5,15 +5,20 @@ import { About } from "@/components/sections/about";
 import { Work } from "@/components/sections/work";
 import { Learning } from "@/components/sections/learning";
 import { Contact } from "@/components/sections/contact";
+import { isLocale } from "@/i18n/config";
+import { dictionaries } from "@/i18n/dictionary";
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const t = dictionaries[isLocale(lang) ? lang : "fa"];
+
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:right-3 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+        className="sr-only focus:not-sr-only focus:fixed focus:start-3 focus:top-3 focus:z-50 focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-background"
       >
-        رفتن به محتوا
+        {t.skip}
       </a>
       <Header />
       <main id="main">

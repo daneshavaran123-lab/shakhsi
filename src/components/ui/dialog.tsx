@@ -30,7 +30,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-ink/55 backdrop-blur-[2px]",
+        "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm",
         "data-[state=open]:animate-[overlay-in_.5s_var(--ease-out-expo)] data-[state=closed]:animate-[overlay-out_.3s_ease-in_forwards]",
         className,
       )}
@@ -40,8 +40,8 @@ function DialogOverlay({
 }
 
 /**
- * shadcn/ui Dialog content. `variant="sheet"` docks it to the left edge
- * (the reading end in RTL) as a full-height panel.
+ * shadcn/ui Dialog content. `variant="sheet"` docks it as a full-height
+ * panel on the reading-end edge: left in RTL, right in LTR.
  */
 function DialogContent({
   className,
@@ -61,16 +61,18 @@ function DialogContent({
         className={cn(
           "fixed z-50 bg-background text-foreground outline-none",
           variant === "center" &&
-            "top-1/2 left-1/2 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 -translate-y-1/2 rounded-lg p-3 shadow-2xl data-[state=open]:animate-[dialog-in_.6s_var(--ease-out-expo)] data-[state=closed]:animate-[dialog-out_.25s_ease-in_forwards]",
+            "top-1/2 left-1/2 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 -translate-y-1/2 rounded-xl p-3 shadow-2xl data-[state=open]:animate-[dialog-in_.6s_var(--ease-out-expo)] data-[state=closed]:animate-[dialog-out_.25s_ease-in_forwards]",
           variant === "sheet" &&
-            "inset-y-0 left-0 flex w-full max-w-[min(100%,58rem)] flex-col shadow-2xl data-[state=open]:animate-[sheet-in_.75s_var(--ease-out-expo)] data-[state=closed]:animate-[sheet-out_.4s_cubic-bezier(.7,0,.84,0)_forwards]",
+            "inset-y-0 end-0 flex w-full max-w-[min(100%,58rem)] flex-col shadow-2xl",
+          variant === "sheet" &&
+            "rtl:data-[state=open]:animate-[sheet-in-left_.75s_var(--ease-out-expo)] rtl:data-[state=closed]:animate-[sheet-out-left_.4s_cubic-bezier(.7,0,.84,0)_forwards] ltr:data-[state=open]:animate-[sheet-in-right_.75s_var(--ease-out-expo)] ltr:data-[state=closed]:animate-[sheet-out-right_.4s_cubic-bezier(.7,0,.84,0)_forwards]",
           className,
         )}
         {...props}
       >
         {children}
         <DialogPrimitive.Close
-          className="group absolute top-4 left-4 z-10 grid size-11 cursor-pointer place-items-center rounded-full bg-background/80 text-foreground ring-1 ring-border backdrop-blur transition-colors hover:bg-foreground hover:text-background"
+          className="group absolute top-4 end-4 z-10 grid size-11 cursor-pointer place-items-center rounded-full bg-background/80 text-foreground ring-1 ring-border backdrop-blur transition-colors hover:bg-foreground hover:text-background"
         >
           <XIcon className="size-4 transition-transform duration-500 ease-out-expo group-hover:rotate-90" />
           <span className="sr-only">{closeLabel}</span>

@@ -50,11 +50,11 @@ const fragment = /* glsl */ `
     if (r > 0.5) discard;
     float a = smoothstep(0.5, 0.32, r);
     vec3 col = mix(uInk, uAccent, smoothstep(0.25, 0.85, vLift));
-    gl_FragColor = vec4(col, a * (0.55 + vLift * 0.45));
+    gl_FragColor = vec4(col, a * (0.42 + vLift * 0.58));
   }
 `;
 
-function Field({ still }: { still: boolean }) {
+function Field({ still, ink, accent }: { still: boolean; ink: string; accent: string }) {
   const material = useRef<THREE.ShaderMaterial>(null);
   const pointer = useRef(new THREE.Vector2(0, 2));
   const press = useRef(0);
@@ -88,11 +88,16 @@ function Field({ still }: { still: boolean }) {
       uPointer: { value: new THREE.Vector2(0, 2) },
       uPress: { value: 0 },
       uPixelRatio: { value: Math.min(gl.getPixelRatio(), 2) },
-      uInk: { value: new THREE.Color("#161512") },
-      uAccent: { value: new THREE.Color("#c8461d") },
+      uInk: { value: new THREE.Color() },
+      uAccent: { value: new THREE.Color() },
     }),
     [gl],
   );
+
+  useEffect(() => {
+    uniforms.uInk.value.set(ink);
+    uniforms.uAccent.value.set(accent);
+  }, [uniforms, ink, accent]);
 
   useEffect(() => {
     const move = (e: PointerEvent) => {
@@ -157,10 +162,14 @@ function Field({ still }: { still: boolean }) {
 export default function DotField({
   active,
   still,
+  ink,
+  accent,
   eventSource,
 }: {
   active: boolean;
   still: boolean;
+  ink: string;
+  accent: string;
   /** Element that feeds pointer coordinates, so overlaid text doesn't block them. */
   eventSource: RefObject<HTMLElement | null>;
 }) {
@@ -175,7 +184,7 @@ export default function DotField({
       eventSource={eventSource as RefObject<HTMLElement>}
       eventPrefix="client"
     >
-      <Field still={still} />
+      <Field still={still} ink={ink} accent={accent} />
     </Canvas>
   );
 }
