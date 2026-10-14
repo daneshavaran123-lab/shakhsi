@@ -166,7 +166,7 @@ export function Hero() {
             {profile[locale].tagline}
           </p>
 
-          <dl data-reveal className="flex gap-10 text-xs text-muted-foreground md:col-span-4 md:justify-center">
+          <dl data-reveal className="flex gap-10 text-xs text-muted-foreground md:col-span-3 md:justify-center">
             <div>
               <dt>{t.hero.projects}</dt>
               <dd className="mt-1 font-display text-5xl text-foreground">{n(projects.length)}</dd>
@@ -177,7 +177,7 @@ export function Hero() {
             </div>
           </dl>
 
-          <div data-reveal className="flex items-center gap-3 md:col-span-3 md:justify-end">
+          <div data-reveal className="flex flex-wrap items-center gap-3 md:col-span-4 md:justify-end">
             <Magnetic>
               <a
                 href="#work"
@@ -189,6 +189,12 @@ export function Hero() {
                 </span>
               </a>
             </Magnetic>
+            <a
+              href="#services"
+              className="inline-flex h-12 items-center rounded-full px-5 text-sm ring-1 ring-border transition-colors duration-500 hover:bg-foreground hover:text-background"
+            >
+              {t.hero.order}
+            </a>
           </div>
         </div>
       </div>

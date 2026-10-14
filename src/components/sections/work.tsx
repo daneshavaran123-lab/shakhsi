@@ -75,7 +75,7 @@ export function Work() {
     >
       <div className="mx-auto max-w-[100rem]">
         <div className="grid gap-10 md:grid-cols-12">
-          <SectionLabel index={n("02")} className="md:col-span-3">
+          <SectionLabel index={n("03")} className="md:col-span-3">
             {t.work.label}
           </SectionLabel>
           <div className="md:col-span-9">

@@ -99,13 +99,42 @@ const profileCopy = (lang: "fa" | "en") => {
   );
 };
 
+const servicesCopy = (lang: "fa" | "en") => {
+  const fa = lang === "fa";
+  return fields.object(
+    {
+      heading: list(fa ? "عنوان (هر خط جدا)" : "Heading (one line each)", fa ? "خط" : "Line"),
+      intro: fields.text({ label: fa ? "معرفی" : "Intro", multiline: true }),
+      items: fields.array(
+        fields.object({
+          title: fields.text({ label: fa ? "عنوان خدمت" : "Service" }),
+          body: fields.text({ label: fa ? "توضیح" : "Description", multiline: true }),
+          points: list(fa ? "جزئیات" : "Details", fa ? "مورد" : "Item"),
+        }),
+        { label: fa ? "خدمات" : "Services", itemLabel: (p) => p.fields.title.value || "—" },
+      ),
+      packagesTitle: fields.text({ label: fa ? "عنوان بخش پکیج‌ها" : "Packages heading" }),
+      packages: fields.array(
+        fields.object({
+          title: fields.text({ label: fa ? "فضا / صنعت" : "Space / industry" }),
+          body: fields.text({ label: fa ? "توضیح" : "Description", multiline: true }),
+          projects: list(fa ? "شناسه پروژه‌های نمونه (مثلاً museum)" : "Example project ids", fa ? "شناسه" : "id"),
+        }),
+        { label: fa ? "پکیج‌ها بر اساس فضا" : "Packages by space", itemLabel: (p) => p.fields.title.value || "—" },
+      ),
+      cta: fields.text({ label: fa ? "دعوت به سفارش" : "Call to action", multiline: true }),
+    },
+    { label: fa ? "فارسی" : "English" },
+  );
+};
+
 export default config({
   storage,
   ui: {
     brand: { name: "پنل مدیریت سایت" },
     navigation: {
       "محتوا": ["projects", "certificates"],
-      "تنظیمات": ["profile"],
+      "تنظیمات": ["profile", "services"],
     },
   },
   collections: {
@@ -180,6 +209,16 @@ export default config({
   },
 
   singletons: {
+    services: singleton({
+      label: "خدمات",
+      path: "content/services",
+      format: { data: "yaml" },
+      schema: {
+        fa: servicesCopy("fa"),
+        en: servicesCopy("en"),
+      },
+    }),
+
     profile: singleton({
       label: "پروفایل و متن‌های اصلی",
       path: "content/profile",
@@ -193,7 +232,15 @@ export default config({
         }),
         email: fields.text({ label: "ایمیل", validation: { isRequired: true } }),
         phone: fields.text({ label: "شماره تماس", description: "مثلاً 09151236596" }),
-        tools: list("ابزارها", "ابزار"),
+        linkedin: fields.url({ label: "لینک لینکدین" }),
+        stack: fields.array(
+          fields.object({
+            group: fields.text({ label: "دسته (فارسی)" }),
+            groupEn: fields.text({ label: "Group (English)" }),
+            items: list("ابزارها و فناوری‌ها", "مورد"),
+          }),
+          { label: "مهارت‌ها و ابزارها", itemLabel: (p) => p.fields.group.value || "—" },
+        ),
         available: fields.checkbox({ label: "نشان «آماده همکاری» نمایش داده شود", defaultValue: true }),
         specialistFields: fields.integer({ label: "تعداد حوزه‌های تخصصی (آمار بخش آموزش)", defaultValue: 6 }),
         fa: profileCopy("fa"),

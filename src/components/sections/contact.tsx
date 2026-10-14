@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUp, Check, Copy, Phone } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Check, Copy, Phone } from "lucide-react";
 
 import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
@@ -13,6 +13,7 @@ import { useLenis } from "@/components/providers/smooth-scroll";
 import { useSectionMotion } from "@/hooks/use-section-motion";
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
+import { formatPhone } from "@/lib/phone";
 
 export function Contact() {
   const { t, n, locale } = useI18n();
@@ -21,20 +22,7 @@ export function Contact() {
   const [copied, setCopied] = useState(false);
   const lenis = useLenis();
 
-  // 0915… → +98915… for the tel: link; grouped digits for display.
-  const digits = profile.phone.replace(/\D/g, "");
-  const phone = digits
-    ? {
-        intl: digits.startsWith("0") ? `+98${digits.slice(1)}` : `+${digits}`,
-        display:
-          locale === "fa"
-            ? n(digits.replace(/^(\d{4})(\d{3})(\d{4})$/, "$1 $2 $3"))
-            : (digits.startsWith("0") ? `+98 ${digits.slice(1)}` : `+${digits}`).replace(
-                /^(\+98) (\d{3})(\d{3})(\d{4})$/,
-                "$1 $2 $3 $4",
-              ),
-      }
-    : null;
+  const phone = formatPhone(profile.phone, locale);
   useSectionMotion(root);
 
   const copy = async () => {
@@ -63,7 +51,7 @@ export function Contact() {
         className="pointer-events-none absolute -bottom-1/3 start-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] rtl:translate-x-1/2"
       />
       <div className="relative mx-auto max-w-[100rem]">
-        <SectionLabel index={n("04")}>{t.contact.label}</SectionLabel>
+        <SectionLabel index={n("05")}>{t.contact.label}</SectionLabel>
 
         <h2 className="mt-12 font-display text-[clamp(3.4rem,11vw,12rem)] leading-[0.9]">
           <Split as="span" lines={[t.contact.heading[0]]} className="block" />
@@ -122,7 +110,7 @@ export function Contact() {
             </button>
             {phone && (
               <a
-                href={`tel:${phone.intl}`}
+                href={phone.href}
                 aria-label={`${t.contact.call}: ${phone.display}`}
                 className="group inline-flex h-11 basis-full items-center justify-start gap-3 md:justify-end"
               >
@@ -130,6 +118,20 @@ export function Contact() {
                   <Phone className="size-4" />
                 </span>
                 <span className="link-draw ltr font-mono text-[clamp(1rem,2.2vw,1.6rem)]">{phone.display}</span>
+              </a>
+            )}
+            {profile.linkedin && (
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="group inline-flex h-11 basis-full items-center justify-start gap-3 md:justify-end"
+              >
+                <span className="grid size-11 place-items-center rounded-full ring-1 ring-border text-[0.8rem] font-semibold transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
+                  in
+                </span>
+                <span className="link-draw text-[clamp(1rem,2vw,1.4rem)]">{t.contact.linkedin}</span>
+                <ArrowUpRight className="size-4 text-muted-foreground rtl:-scale-x-100" />
               </a>
             )}
           </div>

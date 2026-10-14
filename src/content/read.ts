@@ -8,7 +8,7 @@ import { imageSize } from "image-size";
 import sharp from "sharp";
 
 import keystaticConfig from "../../keystatic.config";
-import type { Certificate, Img, Profile, Project, SiteContent } from "./types";
+import type { Certificate, Img, Profile, Project, Services, ServicesCopy, SiteContent } from "./types";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
@@ -28,10 +28,11 @@ async function toImg(src: string | null | undefined): Promise<Img | null> {
 const byOrder = <T extends { order: number | null }>(a: T, b: T) => (a.order ?? 999) - (b.order ?? 999);
 
 export const getContent = cache(async (): Promise<SiteContent> => {
-  const [projectEntries, certEntries, profileEntry] = await Promise.all([
+  const [projectEntries, certEntries, profileEntry, servicesEntry] = await Promise.all([
     reader.collections.projects.all(),
     reader.collections.certificates.all(),
     reader.singletons.profile.read(),
+    reader.singletons.services.read(),
   ]);
 
   const projects: Project[] = await Promise.all(
@@ -85,12 +86,24 @@ export const getContent = cache(async (): Promise<SiteContent> => {
     portrait: (await toImg(profileEntry.portrait)) ?? undefined,
     email: profileEntry.email,
     phone: profileEntry.phone,
-    tools: [...profileEntry.tools],
+    linkedin: profileEntry.linkedin || undefined,
+    stack: profileEntry.stack.map((g) => ({ ...g, items: [...g.items] })),
     available: profileEntry.available,
     specialistFields: profileEntry.specialistFields ?? 6,
     fa: copy(profileEntry.fa),
     en: copy(profileEntry.en),
   };
 
-  return { projects, certificates, profile };
+  if (!servicesEntry) throw new Error("content/services.yaml is missing");
+  const servicesCopy = (c: typeof servicesEntry.fa): ServicesCopy => ({
+    heading: [...c.heading],
+    intro: c.intro,
+    items: c.items.map((i) => ({ ...i, points: [...i.points] })),
+    packagesTitle: c.packagesTitle,
+    packages: c.packages.map((p) => ({ ...p, projects: [...p.projects] })),
+    cta: c.cta,
+  });
+  const services: Services = { fa: servicesCopy(servicesEntry.fa), en: servicesCopy(servicesEntry.en) };
+
+  return { projects, certificates, profile, services };
 });

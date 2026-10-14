@@ -1,9 +1,44 @@
 portrait: /images/profile/portrait.webp
 email: nargestabatabaii679@gmail.com
 phone: '09151236596'
-tools:
-- Figma
-- Blender
+linkedin: https://www.linkedin.com/in/narges-tabatabaii-a16b48284/
+stack:
+- group: طراحی
+  groupEn: Design
+  items:
+  - Figma
+  - Blender
+- group: فرانت‌اند
+  groupEn: Frontend
+  items:
+  - Next.js
+  - React
+- group: مهندسی
+  groupEn: Engineering
+  items:
+  - TypeScript
+- group: مهندسی طراحی
+  groupEn: Design Engineering
+  items:
+  - Tailwind CSS
+- group: سامانه طراحی
+  groupEn: Design Systems
+  items:
+  - shadcn/ui
+  - Material Design 3
+- group: داده
+  groupEn: Data
+  items:
+  - PostgreSQL
+  - Prisma
+- group: اتوماسیون
+  groupEn: Automation
+  items:
+  - n8n
+- group: توسعه با هوش مصنوعی
+  groupEn: AI Development
+  items:
+  - Cursor
 available: true
 specialistFields: 6
 fa:

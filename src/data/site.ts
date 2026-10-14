@@ -1,1 +1,1 @@
-export const navKeys = ["about", "work", "learning", "contact"] as const;
+export const navKeys = ["about", "services", "work", "learning", "contact"] as const;

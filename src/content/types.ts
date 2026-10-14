@@ -61,13 +61,26 @@ export type Profile = {
   portrait?: Img;
   email: string;
   phone: string;
-  tools: string[];
+  linkedin?: string;
+  stack: { group: string; groupEn: string; items: string[] }[];
   available: boolean;
   specialistFields: number;
 } & Record<Locale, ProfileCopy>;
+
+export type ServicesCopy = {
+  heading: string[];
+  intro: string;
+  items: { title: string; body: string; points: string[] }[];
+  packagesTitle: string;
+  packages: { title: string; body: string; projects: string[] }[];
+  cta: string;
+};
+
+export type Services = Record<Locale, ServicesCopy>;
 
 export type SiteContent = {
   projects: Project[];
   certificates: Certificate[];
   profile: Profile;
+  services: Services;
 };

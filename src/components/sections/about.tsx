@@ -8,6 +8,7 @@ import { SectionLabel } from "@/components/section-label";
 import { useSectionMotion } from "@/hooks/use-section-motion";
 import { useI18n } from "@/i18n/provider";
 import { useContent } from "@/content/provider";
+import { cn } from "@/lib/utils";
 
 export function About() {
   const { t, n, locale } = useI18n();
@@ -76,19 +77,30 @@ export function About() {
                 <FactRow key={e.degree} primary={e.degree} secondary={e.school} />
               ))}
             </FactCard>
-            <FactCard title={t.about.tools}>
-              <li className="flex flex-wrap gap-2 py-3">
-                {profile.tools.map((tool) => (
-                  <span key={tool} className="ltr rounded-full bg-foreground/[0.07] px-3 py-1.5 text-sm">
-                    {tool}
+            {/* Stack: one row per discipline, spanning both columns. */}
+            <FactCard title={t.about.tools} className="lg:col-span-2">
+              {profile.stack.map((g) => (
+                <li key={g.group} className="grid gap-2 py-3 sm:grid-cols-[12rem_1fr] sm:items-center">
+                  <span className="text-sm text-muted-foreground">{locale === "fa" ? g.group : g.groupEn}</span>
+                  <span className="flex flex-wrap gap-2">
+                    {g.items.map((item) => (
+                      <span key={item} className="ltr rounded-full bg-foreground/[0.07] px-3 py-1.5 text-sm">
+                        {item}
+                      </span>
+                    ))}
+                  </span>
+                </li>
+              ))}
+            </FactCard>
+            <FactCard title={t.about.languages} className="lg:col-span-2">
+              <li className="flex flex-wrap gap-x-10 gap-y-2 py-3">
+                {copy.languages.map((l) => (
+                  <span key={l.name} className="flex items-baseline gap-3">
+                    <span className="font-display text-2xl">{l.name}</span>
+                    <span className="font-mono text-xs text-muted-foreground">{l.level}</span>
                   </span>
                 ))}
               </li>
-            </FactCard>
-            <FactCard title={t.about.languages}>
-              {copy.languages.map((l) => (
-                <FactRow key={l.name} primary={l.name} aside={l.level} />
-              ))}
             </FactCard>
           </div>
 
@@ -123,9 +135,17 @@ export function About() {
   );
 }
 
-function FactCard({ title, children }: { title: string; children: React.ReactNode }) {
+function FactCard({
+  title,
+  className,
+  children,
+}: {
+  title: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section data-reveal className="edge rounded-xl bg-card/60 p-6 md:p-7">
+    <section data-reveal className={cn("edge rounded-xl bg-card/60 p-6 md:p-7", className)}>
       <h3 className="text-xs text-accent">{title}</h3>
       <ul className="mt-3 divide-y divide-border">{children}</ul>
     </section>
