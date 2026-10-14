@@ -126,23 +126,19 @@ export function Hero() {
               "hero-name font-display font-normal",
               // Line height goes last: tailwind-merge drops `leading-*` that precedes a font size.
               isFa
-                ? "text-[clamp(3.6rem,19vw,7rem)] md:text-[clamp(4.2rem,15.5vw,15rem)]"
-                : "text-[clamp(3.4rem,17vw,6.5rem)] tracking-[-0.03em] md:text-[clamp(4rem,13.5vw,14rem)]",
+                ? "text-[clamp(3.4rem,17vw,6.5rem)] md:text-[clamp(4rem,13.5vw,13.5rem)]"
+                : "text-[clamp(3.2rem,15vw,6rem)] tracking-[-0.03em] md:text-[clamp(4rem,12.5vw,13rem)]",
               "leading-[0.84]",
             )}
           >
-            <Split as="span" lines={[t.name.first]} className="block" />
-            <span className="flex flex-wrap items-end gap-x-[3vw]">
-              <Split
-                as="span"
-                lines={[t.name.last]}
-                className={cn("foil block ps-[9vw]", !isFa && "italic")}
-                delay={0.1}
-              />
+            {/* Short first name, indented, with the bilingual caption beside it;
+                the longer family name runs full width underneath. */}
+            <span className="flex flex-wrap items-end gap-x-[4vw]">
+              <Split as="span" lines={[t.name.first]} className="block ps-[9vw]" />
               <span
                 data-reveal
                 className={cn(
-                  "mb-[1.6vw] hidden text-[clamp(1rem,1.5vw,1.5rem)] leading-snug tracking-normal text-muted-foreground lg:block",
+                  "mb-[1.4vw] hidden text-[clamp(1rem,1.5vw,1.5rem)] tracking-normal text-muted-foreground lg:block",
                   isFa ? "ltr font-serif italic" : "rtl font-fa text-[clamp(1.2rem,1.9vw,1.9rem)]",
                   "leading-snug",
                 )}
@@ -154,6 +150,12 @@ export function Hero() {
                 </span>
               </span>
             </span>
+            <Split
+              as="span"
+              lines={[t.name.last]}
+              className={cn("foil block", !isFa && "italic")}
+              delay={0.1}
+            />
           </h1>
         </div>
 

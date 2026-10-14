@@ -6,7 +6,8 @@ const fa = {
     description:
       "طراحی و توسعه محصولات دیجیتال، کیوسک‌های تعاملی و تجربه‌های مبتنی بر هوش مصنوعی؛ با تمرکز بر مسئله واقعی، سادگی و کارایی.",
   },
-  name: { first: "نرگس جعفر", last: "طباطبایی", short: "نرگس طباطبایی", full: "نرگس جعفر طباطبایی" },
+  // First name: Narges. Family name: Jafar Tabatabaei.
+  name: { first: "نرگس", last: "جعفر طباطبایی", short: "نرگس جعفر طباطبایی", full: "نرگس جعفر طباطبایی" },
   role: "طراح محصول و تجربه‌های دیجیتال تعاملی",
   skip: "رفتن به محتوا",
   nav: { about: "درباره", work: "نمونه‌کارها", learning: "آموزش", contact: "ارتباط", label: "ناوبری اصلی", open: "باز کردن منو", close: "بستن منو" },
@@ -97,7 +98,7 @@ const en: Dictionary = {
     description:
       "Designing and building digital products, interactive kiosks and AI-powered experiences — focused on real problems, simplicity and usefulness.",
   },
-  name: { first: "Narges Jafar", last: "Tabatabaei", short: "Narges Tabatabaei", full: "Narges Jafar Tabatabaei" },
+  name: { first: "Narges", last: "Jafar Tabatabaei", short: "Narges Jafar Tabatabaei", full: "Narges Jafar Tabatabaei" },
   role: "Product & interactive experience designer",
   skip: "Skip to content",
   nav: { about: "About", work: "Work", learning: "Learning", contact: "Contact", label: "Main navigation", open: "Open menu", close: "Close menu" },
