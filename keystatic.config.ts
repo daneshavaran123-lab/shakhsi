@@ -38,6 +38,13 @@ const projectCopy = (lang: "fa" | "en") => {
       features: list(fa ? "امکانات نرم‌افزار" : "Features", fa ? "مورد" : "Item"),
       tech: list(fa ? "مشخصات فنی" : "Technical", fa ? "مورد" : "Item"),
       uses: list(fa ? "کاربردها" : "Where it’s used", fa ? "مورد" : "Item"),
+      links: fields.array(
+        fields.object({
+          label: fields.text({ label: fa ? "عنوان لینک" : "Link label" }),
+          url: fields.url({ label: fa ? "آدرس" : "URL" }),
+        }),
+        { label: fa ? "لینک‌های بیشتر (مثلاً صفحه محصول)" : "More links (e.g. product pages)", itemLabel: (p) => p.fields.label.value || "—" },
+      ),
     },
     { label: fa ? "محتوای فارسی" : "English content" },
   );
@@ -163,6 +170,7 @@ export default config({
             { label: "نمایشگاه و فرهنگ", value: "culture" },
             { label: "خدمات و خرده‌فروشی", value: "retail" },
             { label: "هوش مصنوعی", value: "ai" },
+            { label: "کودک و آموزش", value: "kids" },
           ],
           defaultValue: "management",
         }),
@@ -236,6 +244,17 @@ export default config({
         linkedin: fields.url({ label: "لینک لینکدین" }),
         telegram: fields.text({ label: "آیدی تلگرام", description: "بدون @؛ مثلاً nargestabatabaii" }),
         companyUrl: fields.url({ label: "وب‌سایت شرکت" }),
+        resumeFa: fields.file({
+          label: "فایل رزومه فارسی (PDF)",
+          description: "خالی بگذارید تا نسخه خودکار استفاده شود",
+          directory: "public/files",
+          publicPath: "/files/",
+        }),
+        resumeEn: fields.file({
+          label: "فایل رزومه انگلیسی (PDF)",
+          directory: "public/files",
+          publicPath: "/files/",
+        }),
         stack: fields.array(
           fields.object({
             group: fields.text({ label: "دسته (فارسی)" }),

@@ -4,6 +4,8 @@ phone: '09151236596'
 linkedin: https://www.linkedin.com/in/narges-tabatabaii-a16b48284/
 telegram: nargestabatabaii
 companyUrl: https://www.daneshavaran.ir
+resumeFa: /files/narges-jafar-tabatabaei-resume-fa.pdf
+resumeEn: /files/narges-jafar-tabatabaei-resume-en.pdf
 stack:
 - group: طراحی
   groupEn: Design
@@ -48,7 +50,7 @@ fa:
   about:
   - نرگس جعفر طباطبایی هستم؛ قائم‌مقام مدیرعامل شرکت دانش‌آوران و مدرس دانشگاه.
   - نرم‌افزارهایی می‌سازم که نمایشگر لمسی را از یک سخت‌افزار، به ابزاری کاربردی تبدیل می‌کنند.
-  bio: سه‌چهار سال است در حوزه نرم‌افزار و مدیریت محصول کار می‌کنم. شرکت دانش‌آوران نمایشگرهای لمسی عرضه می‌کند و کار من ساختن نرم‌افزارهایی است که روی همین نمایشگرها ارزش افزوده ایجاد می‌کنند. اپلیکیشن‌های این سایت را خودم و به سفارش کارفرمایان مختلف طراحی و ساخته‌ام — از فدراسیون کشتی تا پارک فناوری فاوا. مدتی هم برندینگ شرکت را بر عهده داشتم و شش سال است در دانشگاه تدریس می‌کنم.
+  bio: سه‌چهار سال است در حوزه نرم‌افزار و مدیریت محصول کار می‌کنم. شرکت دانش‌آوران نمایشگرهای لمسی عرضه می‌کند و کار من ساختن نرم‌افزارهایی است که روی همین نمایشگرها ارزش افزوده ایجاد می‌کنند. اپلیکیشن‌های این سایت را خودم و به سفارش کارفرمایان مختلف طراحی و ساخته‌ام — از فدراسیون کشتی تا پارک فناوری فاوا. میزها و کیوسک‌های لمسی کودک دانش‌آوران را هم، از ایده تا طراحی محصول و هم سخت‌افزار و هم نرم‌افزار، خودم طراحی کرده‌ام. مدتی هم برندینگ شرکت را بر عهده داشتم و شش سال است در دانشگاه تدریس می‌کنم.
   principles:
   - title: تفکر عمیق
     body: پیش از طراحی، مسئله را از چند زاویه می‌کاوم و تا وقتی تصویر روشنی از آن نداشته باشم، سراغ راه‌حل نمی‌روم.
@@ -88,7 +90,7 @@ en:
   about:
   - I’m Narges Jafar Tabatabaei — Deputy CEO at Daneshavaran and a university lecturer.
   - I build software that turns a touch display from a piece of hardware into a tool people actually use.
-  bio: For the past three to four years I’ve worked in software and product management. Daneshavaran supplies touch displays, and my work is building the software that adds value on top of them. I designed and built the apps on this site myself, commissioned by a range of clients — from the Iran Wrestling Federation to Fava Technology Park. I also led the company’s branding for a time, and I’ve been teaching at university for six years.
+  bio: For the past three to four years I’ve worked in software and product management. Daneshavaran supplies touch displays, and my work is building the software that adds value on top of them. I designed and built the apps on this site myself, commissioned by a range of clients — from the Iran Wrestling Federation to Fava Technology Park. I also designed Daneshavaran’s kids’ touch tables and kiosks from idea to product, hardware and software alike. I also led the company’s branding for a time, and I’ve been teaching at university for six years.
   principles:
   - title: Deep thinking
     body: Before designing anything I look at the problem from several angles, and I don’t reach for a solution until the picture is clear.

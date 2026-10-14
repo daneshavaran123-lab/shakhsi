@@ -172,6 +172,27 @@ export function ProjectSheet({
                 ))}
               </div>
 
+              {copy.links.length > 0 && (
+                <motion.div variants={item} className="mt-12">
+                  <h3 className="border-b pb-3 text-sm font-semibold">{t.sheet.links}</h3>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {copy.links.map((l) => (
+                      <li key={l.url}>
+                        <a
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground hover:ring-accent"
+                        >
+                          {l.label}
+                          <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45 rtl:-scale-x-100" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              )}
+
               <motion.div variants={item} className="mt-14 flex flex-wrap items-center gap-4 border-t pt-8">
                 {p.url ? (
                   <Button asChild variant="accent" size="lg" className="group">

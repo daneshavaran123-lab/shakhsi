@@ -6,6 +6,7 @@ import { Services } from "@/components/sections/services";
 import { Work } from "@/components/sections/work";
 import { Learning } from "@/components/sections/learning";
 import { Contact } from "@/components/sections/contact";
+import { ResumeDownload } from "@/components/sections/resume-download";
 import { ContentProvider } from "@/content/provider";
 import { CommandMenu } from "@/components/command-menu";
 import { SectionRail } from "@/components/section-rail";
@@ -39,6 +40,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <Services />
         <Work />
         <Learning />
+        <ResumeDownload />
         <Contact />
       </main>
       </CommandMenu>

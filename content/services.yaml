@@ -13,6 +13,7 @@ fa:
   - title: استند و کیوسک لمسی
     body: تأمین نمایشگر لمسی، استند و کیوسک از شرکت دانش‌آوران؛ متناسب با فضا و کاربرد شما.
     points:
+    - میز لمسی کودک با لانچر امن (۲۲، ۳۲ و ۴۳ اینچ)
     - نمایشگر لمسی ۶۵ اینچ برای اتاق مدیران و لابی
     - کیوسک ایستاده و استند نمایشگاهی
     - کیوسک مجهز به دوربین و میکروفون
@@ -30,6 +31,10 @@ fa:
     - اتوماسیون فرایندها با n8n
   packagesTitle: پکیج‌ها برای هر فضا
   packages:
+  - title: کودک و آموزش
+    body: میز و کیوسک لمسی کودک با لانچر امن؛ طراحی‌شده از ایده تا محصول.
+    projects:
+    - kids
   - title: موزه و فرهنگ
     body: روایت چندرسانه‌ای، فروش بلیت و خدمات بازدیدکننده.
     projects:
@@ -73,6 +78,7 @@ en:
   - title: Touch stands & kiosks
     body: Touch displays, stands and kiosks supplied through Daneshavaran, matched to your space and use.
     points:
+    - Kids’ touch tables with a safe launcher (22″, 32″, 43″)
     - 65″ touch displays for boardrooms and lobbies
     - Free-standing kiosks and exhibition stands
     - Kiosks with camera and microphone
@@ -90,6 +96,10 @@ en:
     - Process automation with n8n
   packagesTitle: Packages for every space
   packages:
+  - title: Kids & learning
+    body: Kids’ touch tables and kiosks with a safe launcher, designed from idea to product.
+    projects:
+    - kids
   - title: Museums & culture
     body: Multimedia storytelling, ticketing and visitor services.
     projects:

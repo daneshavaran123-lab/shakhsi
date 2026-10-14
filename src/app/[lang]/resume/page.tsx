@@ -167,9 +167,9 @@ export default async function ResumePage({ params }: { params: Promise<{ lang: s
                 </Block>
 
                 <Block title={t.resume.projects}>
-                  <ul className="divide-y">
+                  <ul className="divide-y print:grid print:grid-cols-2 print:gap-x-5 print:divide-y-0">
                     {projects.map((p) => (
-                      <li key={p.id} className="py-3 first:pt-0 print:py-1.5">
+                      <li key={p.id} className="py-3 first:pt-0 print:py-1">
                         <a href={`${home}#project-${p.id}`} className="group block print:pointer-events-none">
                           <span className="flex flex-wrap items-baseline justify-between gap-x-4">
                             <span className="font-medium transition-colors group-hover:text-accent">{p[locale].title}</span>

@@ -2,7 +2,7 @@ import type { Locale } from "@/i18n/config";
 
 export type Img = { src: string; width: number; height: number; blurDataURL: string };
 
-export const projectGroups = ["all", "management", "culture", "retail", "ai"] as const;
+export const projectGroups = ["all", "kids", "management", "culture", "retail", "ai"] as const;
 export type ProjectGroup = (typeof projectGroups)[number];
 
 export type ProjectCopy = {
@@ -19,6 +19,7 @@ export type ProjectCopy = {
   features: string[];
   tech: string[];
   uses: string[];
+  links: { label: string; url: string }[];
 };
 
 export type Project = {
@@ -64,6 +65,7 @@ export type Profile = {
   linkedin?: string;
   telegram?: string;
   companyUrl?: string;
+  resume: Partial<Record<Locale, string>>;
   stack: { group: string; groupEn: string; items: string[] }[];
   available: boolean;
   specialistFields: number;

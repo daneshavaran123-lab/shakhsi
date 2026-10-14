@@ -25,6 +25,9 @@ async function toImg(src: string | null | undefined): Promise<Img | null> {
   }
 }
 
+const linksOf = (links: readonly { label: string; url: string | null }[]) =>
+  links.filter((l): l is { label: string; url: string } => !!l.url).map((l) => ({ ...l }));
+
 const byOrder = <T extends { order: number | null }>(a: T, b: T) => (a.order ?? 999) - (b.order ?? 999);
 
 export const getContent = cache(async (): Promise<SiteContent> => {
@@ -46,8 +49,8 @@ export const getContent = cache(async (): Promise<SiteContent> => {
         url: p.url || undefined,
         live: p.live,
         images: (await Promise.all(p.images.map(toImg))).filter((i): i is Img => i !== null),
-        fa: { title: p.title, ...p.fa, services: [...p.fa.services], features: [...p.fa.features], tech: [...p.fa.tech], uses: [...p.fa.uses] },
-        en: { ...p.en, title: p.en.title || p.title, services: [...p.en.services], features: [...p.en.features], tech: [...p.en.tech], uses: [...p.en.uses] },
+        fa: { title: p.title, ...p.fa, services: [...p.fa.services], features: [...p.fa.features], tech: [...p.fa.tech], uses: [...p.fa.uses], links: linksOf(p.fa.links) },
+        en: { ...p.en, title: p.en.title || p.title, services: [...p.en.services], features: [...p.en.features], tech: [...p.en.tech], uses: [...p.en.uses], links: linksOf(p.en.links) },
       })),
   );
 
@@ -89,6 +92,10 @@ export const getContent = cache(async (): Promise<SiteContent> => {
     linkedin: profileEntry.linkedin || undefined,
     telegram: profileEntry.telegram?.replace(/^@/, "") || undefined,
     companyUrl: profileEntry.companyUrl || undefined,
+    resume: {
+      fa: profileEntry.resumeFa || undefined,
+      en: profileEntry.resumeEn || undefined,
+    },
     stack: profileEntry.stack.map((g) => ({ ...g, items: [...g.items] })),
     available: profileEntry.available,
     specialistFields: profileEntry.specialistFields ?? 6,

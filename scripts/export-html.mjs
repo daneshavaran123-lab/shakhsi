@@ -12,7 +12,7 @@
  * (/keystatic) and export again.
  */
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
@@ -108,6 +108,18 @@ function inline(html) {
   // Images: both the server-rendered <img> tags and the copies inside the
   // React payload that hydrates the page.
   html = html.replace(/\/images\/[\w\-/]+\.(?:webp|png|jpe?g|avif|gif)/g, (url) => dataUri(fileFor(url)));
+
+  // Résumé previews are small enough to inline; the PDFs are copied into
+  // html/files/ and linked relatively, so they aren't embedded five times over.
+  html = html.replace(/\/files\/[\w\-.]+\.(?:webp|png|jpe?g)/g, (url) =>
+    existsSync(fileFor(url)) ? dataUri(fileFor(url)) : url,
+  );
+  html = html.replace(/\/files\/([\w\-.]+\.pdf)/g, (url, name) => {
+    if (!existsSync(fileFor(url))) return url;
+    mkdirSync(path.join(destDir, "files"), { recursive: true });
+    copyFileSync(fileFor(url), path.join(destDir, "files", name));
+    return `files/${name}`;
+  });
 
   // Scripts: drop the external tags, then inline every chunk so webpack never
   // has to fetch one (dynamic imports such as the 3D scene resolve from memory).
