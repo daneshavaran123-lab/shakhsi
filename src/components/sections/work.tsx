@@ -3,27 +3,31 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-import { projectGroups, projects, type Project, type ProjectGroup } from "@/data/projects";
+import { projectGroups, type Project, type ProjectGroup } from "@/content/types";
+import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
 import { SectionLabel } from "@/components/section-label";
 import { ProjectSheet } from "@/components/sections/project-sheet";
 import { useSectionMotion } from "@/hooks/use-section-motion";
+import { useI18n } from "@/i18n/provider";
 import { gsap } from "@/lib/gsap";
-import { cn, toFa } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Work() {
+  const { t, n, locale } = useI18n();
+  const { projects } = useContent();
   const root = useRef<HTMLElement>(null);
   const preview = useRef<HTMLDivElement>(null);
-  const [group, setGroup] = useState<ProjectGroup>("همه");
+  const [group, setGroup] = useState<ProjectGroup>("all");
   const [hovered, setHovered] = useState<Project | null>(null);
   const [active, setActive] = useState<Project | null>(null);
   useSectionMotion(root);
 
-  const visible = projects.filter((p) => group === "همه" || p.group === group);
+  const visible = projects.filter((p) => group === "all" || p.group === group);
 
   // Deep links: #project-mora opens that project.
   useEffect(() => {
@@ -35,7 +39,7 @@ export function Work() {
     fromHash();
     window.addEventListener("hashchange", fromHash);
     return () => window.removeEventListener("hashchange", fromHash);
-  }, []);
+  }, [projects]);
 
   const open = useCallback((p: Project) => {
     setActive(p);
@@ -53,8 +57,8 @@ export function Work() {
     const list = root.current?.querySelector<HTMLElement>("[data-work-list]");
     if (!el || !list || !matchMedia("(pointer: fine)").matches) return;
 
-    const xTo = gsap.quickTo(el, "x", { duration: 0.6, ease: "power3" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.6, ease: "power3" });
+    const xTo = gsap.quickTo(el, "x", { duration: 0.7, ease: "power3" });
+    const yTo = gsap.quickTo(el, "y", { duration: 0.7, ease: "power3" });
     const move = (e: PointerEvent) => {
       xTo(e.clientX);
       yTo(e.clientY);
@@ -67,26 +71,25 @@ export function Work() {
     <section
       ref={root}
       id="work"
-      className="relative rounded-t-[2rem] bg-ink px-4 py-28 text-paper sm:px-6 md:rounded-t-[3rem] md:py-36"
+      className="chapter relative rounded-t-[2rem] px-4 py-28 sm:px-6 md:rounded-t-[3rem] md:py-36"
     >
       <div className="mx-auto max-w-[100rem]">
         <div className="grid gap-10 md:grid-cols-12">
-          <SectionLabel index="۰۲" className="text-paper/80 md:col-span-3">
-            نمونه‌کارها
+          <SectionLabel index={n("02")} className="md:col-span-3">
+            {t.work.label}
           </SectionLabel>
           <div className="md:col-span-9">
-            <h2 className="font-display text-[clamp(3rem,8vw,8.5rem)] leading-[0.9]">
-              <Split as="span" lines={["محصولاتی که"]} className="block" />
+            <h2 className="font-display text-[clamp(3rem,8vw,8.5rem)] leading-[0.92]">
+              <Split as="span" lines={[t.work.heading[0]]} className="block" />
               <Split
                 as="span"
-                lines={["روی صفحه‌ی لمسی زندگی می‌کنند."]}
-                className="block text-paper/45"
+                lines={[t.work.heading[1]]}
+                className={cn("block text-muted-foreground", locale === "en" && "italic")}
                 delay={0.1}
               />
             </h2>
-            <p data-reveal className="mt-8 max-w-xl leading-8 text-paper/60">
-              پروژه‌های نرم‌افزاری در حوزه تجربه کاربری، سامانه‌های هوشمند، کیوسک‌های تعاملی و
-              محصولات مبتنی بر هوش مصنوعی. هر ردیف را باز کنید تا امکانات و تصاویر بیشتر را ببینید.
+            <p data-reveal className="mt-8 max-w-xl leading-8 text-muted-foreground">
+              {t.work.intro}
             </p>
           </div>
         </div>
@@ -94,12 +97,11 @@ export function Work() {
         <div
           data-reveal
           role="toolbar"
-          aria-label="فیلتر دسته‌بندی پروژه‌ها"
+          aria-label={t.work.filterLabel}
           className="mt-20 flex flex-wrap gap-2"
         >
           {projectGroups.map((g) => {
-            const count =
-              g === "همه" ? projects.length : projects.filter((p) => p.group === g).length;
+            const count = g === "all" ? projects.length : projects.filter((p) => p.group === g).length;
             const selected = group === g;
             return (
               <button
@@ -109,33 +111,34 @@ export function Work() {
                 onClick={() => setGroup(g)}
                 className={cn(
                   "relative h-10 cursor-pointer rounded-full px-4 text-sm transition-colors duration-300",
-                  selected ? "text-ink" : "text-paper/70 ring-1 ring-paper/15 hover:text-paper hover:ring-paper/40",
+                  selected
+                    ? "text-accent-foreground"
+                    : "text-foreground-2 ring-1 ring-border hover:text-foreground hover:ring-foreground/30",
                 )}
               >
                 {selected && (
                   <motion.span
                     layoutId="work-filter"
-                    className="absolute inset-0 rounded-full bg-paper"
+                    className="absolute inset-0 rounded-full bg-accent"
                     transition={{ type: "spring", bounce: 0.18, duration: 0.55 }}
                   />
                 )}
                 <span className="relative">
-                  {g}
-                  <sup aria-hidden className="ms-1 font-mono text-[0.6rem] opacity-60">{toFa(count)}</sup>
+                  {t.work.groups[g]}
+                  <sup aria-hidden className="ms-1 font-mono text-[0.6rem] opacity-60">
+                    {n(count)}
+                  </sup>
                 </span>
               </button>
             );
           })}
         </div>
 
-        <ul
-          data-work-list
-          className="mt-10 border-t border-paper/15"
-          onPointerLeave={() => setHovered(null)}
-        >
+        <ul data-work-list className="mt-10 border-t" onPointerLeave={() => setHovered(null)}>
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((p) => {
               const index = projects.indexOf(p) + 1;
+              const copy = p[locale];
               return (
                 <motion.li
                   key={p.id}
@@ -144,7 +147,7 @@ export function Work() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.7, ease }}
-                  className="border-b border-paper/15"
+                  className="border-b"
                 >
                   <button
                     type="button"
@@ -152,37 +155,52 @@ export function Work() {
                     onPointerEnter={() => setHovered(p)}
                     onFocus={() => setHovered(p)}
                     aria-haspopup="dialog"
-                    className="group grid w-full cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-x-4 gap-y-3 py-6 text-start md:grid-cols-12 md:gap-6 md:py-8"
+                    className="group relative grid w-full cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-x-4 gap-y-3 py-6 text-start md:grid-cols-12 md:gap-6 md:py-8"
                   >
-                    <span className="font-mono text-xs text-paper/40 md:col-span-1">
-                      {toFa(String(index).padStart(2, "0"))}
+                    {/* Row wash that sweeps in from the reading start. */}
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 origin-right scale-x-0 bg-foreground/[0.035] transition-transform duration-700 ease-out-expo group-hover:scale-x-100 ltr:origin-left"
+                    />
+                    <span className="relative font-mono text-xs text-muted-foreground md:col-span-1">
+                      {n(String(index).padStart(2, "0"))}
                     </span>
 
-                    <span className="md:col-span-5">
-                      <span className="block font-display text-[clamp(1.8rem,3.4vw,3.4rem)] leading-tight transition-transform duration-700 ease-out-expo group-hover:-translate-x-3 group-focus-visible:-translate-x-3">
-                        {p.title}
+                    <span className="relative md:col-span-5">
+                      <span className="block font-display text-[clamp(1.8rem,3.4vw,3.4rem)] leading-tight transition-transform duration-700 ease-out-expo group-hover:translate-x-3 group-focus-visible:translate-x-3 rtl:group-hover:-translate-x-3 rtl:group-focus-visible:-translate-x-3">
+                        {copy.title}
                       </span>
-                      <span className="ltr mt-1 block text-end font-serif text-paper/45 italic md:hidden">
-                        {p.eng}
+                      <span className="mt-1 block text-sm text-muted-foreground md:hidden">{copy.category}</span>
+                    </span>
+
+                    <span className="relative hidden text-sm leading-6 text-muted-foreground md:col-span-4 md:block">
+                      {locale === "fa" ? (
+                        <span className="ltr block text-end font-serif text-lg text-foreground-2 italic">{p.eng}</span>
+                      ) : (
+                        <span className="line-clamp-2">{copy.summary}</span>
+                      )}
+                    </span>
+
+                    <span className="relative hidden md:col-span-1 md:block">
+                      <span
+                        className={cn(
+                          "inline-flex items-center gap-1.5 text-xs whitespace-nowrap",
+                          p.live ? "text-accent" : "text-muted-foreground",
+                        )}
+                      >
+                        <span className={cn("size-1.5 rounded-full", p.live ? "bg-accent" : "bg-muted-foreground")} />
+                        {copy.status}
                       </span>
                     </span>
 
-                    <span className="ltr hidden text-end font-serif text-lg text-paper/45 italic md:col-span-3 md:block">
-                      {p.eng}
-                    </span>
-
-                    <span className="hidden text-sm text-paper/60 md:col-span-2 md:block">
-                      {p.category}
-                    </span>
-
-                    <span className="flex justify-end md:col-span-1">
-                      <span className="grid size-10 place-items-center rounded-full ring-1 ring-paper/20 transition-all duration-500 ease-out-expo group-hover:rotate-45 group-hover:bg-vermilion group-focus-visible:bg-vermilion group-hover:ring-vermilion">
-                        <ArrowLeft className="size-4" />
+                    <span className="relative flex justify-end md:col-span-1">
+                      <span className="grid size-10 place-items-center rounded-full ring-1 ring-border transition-all duration-500 ease-out-expo group-hover:bg-accent group-hover:text-accent-foreground group-hover:ring-accent group-focus-visible:bg-accent group-focus-visible:text-accent-foreground">
+                        <ArrowUpRight className="size-4 transition-transform duration-500 ease-out-expo group-hover:rotate-45 rtl:-scale-x-100 rtl:group-hover:-rotate-45" />
                       </span>
                     </span>
 
                     {/* Touch screens get the thumbnail inline instead of a hover preview. */}
-                    <span className="col-span-3 block overflow-hidden rounded-md md:hidden">
+                    <span className="relative col-span-3 block overflow-hidden rounded-lg md:hidden">
                       <Image
                         src={p.images[0]}
                         alt=""
@@ -212,32 +230,32 @@ export function Work() {
           {hovered && (
             <motion.div
               key="frame"
-              initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
+              initial={{ opacity: 0, scale: 0.85, rotate: -3 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.45, ease }}
-              className="-translate-x-1/2 -translate-y-[115%] overflow-hidden rounded-md bg-ink-2 shadow-2xl ring-1 ring-paper/10"
-              style={{ width: 340 }}
+              className="translate-x-10 -translate-y-1/2 overflow-hidden rounded-xl bg-card shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] ring-1 ring-border rtl:-translate-x-[calc(100%+2.5rem)]"
+              style={{ width: 360 }}
             >
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
                   key={hovered.id}
-                  initial={{ clipPath: "inset(100% 0 0 0)" }}
-                  animate={{ clipPath: "inset(0% 0 0 0)" }}
+                  initial={{ clipPath: "inset(100% 0 0 0)", scale: 1.1 }}
+                  animate={{ clipPath: "inset(0% 0 0 0)", scale: 1 }}
                   exit={{ opacity: 0.6 }}
-                  transition={{ duration: 0.6, ease }}
+                  transition={{ duration: 0.7, ease }}
                 >
                   <Image
                     src={hovered.images[0]}
                     alt=""
-                    sizes="340px"
+                    sizes="360px"
                     className="aspect-[16/10] w-full object-cover object-top"
                   />
                 </motion.div>
               </AnimatePresence>
-              <div className="flex items-center justify-between px-3 py-2 text-[0.7rem] text-paper/70">
-                <span>{hovered.status}</span>
-                <span>مشاهده جزئیات</span>
+              <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 text-[0.72rem]">
+                <span className="truncate text-foreground-2">{hovered[locale].category}</span>
+                <span className="text-accent">{t.work.view}</span>
               </div>
             </motion.div>
           )}

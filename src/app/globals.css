@@ -1,84 +1,111 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Palette: warm paper, soft ink, one vermilion accent.
- * Variables follow shadcn/ui naming so ui/ components stay drop-in.
+ * Palette — "obsidian & champagne".
+ * Dark is the signature; light is warm bone with a bronze accent.
+ * `.chapter` re-scopes the tokens so a band of the page can sit on the
+ * deep surface in either theme. Variables follow shadcn/ui naming.
  */
+:root,
+[data-theme="dark"] {
+  --background: #0b0b0c;
+  --foreground: #ede8df;
+  --foreground-2: #c4beb3;
+  --muted-foreground: #8d877c;
+  --card: #131314;
+  --accent: #d8bb8a;
+  --accent-strong: #e8cfa3;
+  --accent-foreground: #16130e;
+  --border: rgb(237 232 223 / 0.1);
+  --glow: rgb(216 187 138 / 0.16);
+  --dot: #ede8df;
+  --grain-blend: soft-light;
+  --grain-opacity: 0.16;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --background: #f3efe8;
+  --foreground: #141413;
+  --foreground-2: #3b3833;
+  --muted-foreground: #6c665c;
+  --card: #ece7de;
+  --accent: #8c6635;
+  --accent-strong: #6f4f25;
+  --accent-foreground: #fbf7f0;
+  --border: rgb(20 20 19 / 0.12);
+  --glow: rgb(176 135 76 / 0.16);
+  --dot: #141413;
+  --grain-blend: multiply;
+  --grain-opacity: 0.1;
+  color-scheme: light;
+}
+
+/* Deep band: always dark, slightly lifted from the page in dark mode. */
+.chapter {
+  --background: #121213;
+  --foreground: #ede8df;
+  --foreground-2: #c4beb3;
+  --muted-foreground: #8d877c;
+  --card: #1a1a1b;
+  --accent: #d8bb8a;
+  --accent-strong: #e8cfa3;
+  --accent-foreground: #16130e;
+  --border: rgb(237 232 223 / 0.1);
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+[data-theme="light"] .chapter {
+  --background: #111111;
+}
+
 :root {
-  --paper: #f1ede4;
-  --paper-2: #e8e3d7;
-  --ink: #161512;
-  --ink-2: #2a2824;
-  --stone: #6b665c;
-  --vermilion: #c8461d;
-
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --card: #f6f3ec;
-  --card-foreground: var(--ink);
-  --popover: var(--paper);
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--paper);
-  --secondary: var(--paper-2);
-  --secondary-foreground: var(--ink);
-  --muted: var(--paper-2);
-  --muted-foreground: var(--stone);
-  --accent: var(--vermilion);
-  --accent-foreground: #fff8f2;
-  --border: rgb(22 21 18 / 0.14);
-  --input: rgb(22 21 18 / 0.2);
-  --ring: var(--vermilion);
-  --radius: 0.25rem;
-
+  --radius: 0.75rem;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
+  --color-foreground-2: var(--foreground-2);
   --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--background);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--foreground);
+  --color-primary-foreground: var(--background);
   --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
-  --color-stone: var(--stone);
-  --color-vermilion: var(--vermilion);
+  --color-ring: var(--accent);
 
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
 
-  --font-sans: var(--font-vazir), system-ui, sans-serif;
-  --font-display: var(--font-markazi), var(--font-vazir), serif;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-head);
   --font-serif: var(--font-instrument), Georgia, serif;
+  --font-fa: var(--font-markazi), var(--font-vazir), serif;
   --font-mono: var(--font-jetbrains), var(--font-vazir), ui-monospace, monospace;
 
   --ease-out-expo: var(--ease-out-expo);
+}
 
-  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
-
-  @keyframes marquee {
-    to {
-      transform: translate3d(50%, 0, 0);
-    }
-  }
+/* Per-language type: Persian reads in Vazirmatn + Markazi, English in Geist + Instrument Serif. */
+html[lang="fa"] {
+  --font-body: var(--font-vazir), system-ui, sans-serif;
+  --font-head: var(--font-markazi), var(--font-vazir), serif;
+}
+html[lang="en"] {
+  --font-body: var(--font-geist), system-ui, sans-serif;
+  --font-head: var(--font-instrument), Georgia, serif;
 }
 
 @layer base {
@@ -91,22 +118,29 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scrollbar-color: var(--stone) transparent;
+    scrollbar-color: var(--muted-foreground) transparent;
+    background: var(--background);
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    font-feature-settings: "ss01";
-    line-height: 1.75;
+    @apply bg-background font-sans text-foreground;
+    line-height: 1.7;
+    transition:
+      background-color 0.6s var(--ease-out-expo),
+      color 0.6s var(--ease-out-expo);
+  }
+
+  html[lang="en"] body {
+    letter-spacing: -0.005em;
   }
 
   ::selection {
-    background: var(--vermilion);
-    color: #fff8f2;
+    background: var(--accent);
+    color: var(--accent-foreground);
   }
 
   :focus-visible {
-    outline: 2px solid var(--ring);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
   }
 
@@ -141,15 +175,15 @@ html.lenis body {
   overflow: clip;
 }
 
-/* Paper grain: a tiny SVG turbulence tile, multiplied over everything. */
+/* Film grain over everything; blend mode follows the theme. */
 .grain {
   pointer-events: none;
   position: fixed;
-  inset: -50%;
-  z-index: 60;
-  opacity: 0.11;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  inset: 0;
+  z-index: 70;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Motion system: hide only when JS has opted in, so no-JS stays readable. */
@@ -161,10 +195,10 @@ html.has-motion [data-split] {
 .split-mask {
   display: inline-block;
   overflow: clip;
-  overflow-clip-margin: 0.2em;
+  overflow-clip-margin: 0.25em;
   vertical-align: top;
-  padding-block: 0.08em;
-  margin-block: -0.08em;
+  padding-block: 0.1em;
+  margin-block: -0.1em;
 }
 
 .split-word {
@@ -172,32 +206,77 @@ html.has-motion [data-split] {
   will-change: transform;
 }
 
-/* Underline that draws from the reading start (right in RTL). */
+/* Underline that draws from the reading start. */
 .link-draw {
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
-  background-position: 100% 100%;
+  background-position: 0 100%;
   background-size: 0% 1px;
-  transition: background-size 0.5s var(--ease-out-expo);
+  transition: background-size 0.6s var(--ease-out-expo);
+}
+[dir="rtl"] .link-draw {
+  background-position: 100% 100%;
 }
 .link-draw:hover,
 .link-draw:focus-visible {
   background-size: 100% 1px;
 }
 
+/* Hairline gradient border (pseudo-element mask). */
+.edge {
+  position: relative;
+  isolation: isolate;
+}
+.edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--foreground) 22%, transparent),
+    color-mix(in oklab, var(--foreground) 4%, transparent) 40%,
+    color-mix(in oklab, var(--accent) 40%, transparent)
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Champagne foil text. Applied per word when the text is split, since
+   background-clip: text does not reach transformed descendants. */
+.foil:not([data-split]),
+.foil .split-word {
+  background: linear-gradient(
+    100deg,
+    var(--accent-strong) 0%,
+    var(--accent) 35%,
+    color-mix(in oklab, var(--accent) 55%, var(--foreground)) 55%,
+    var(--accent) 75%,
+    var(--accent-strong) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foil 9s ease-in-out infinite alternate;
+}
+@keyframes foil {
+  to {
+    background-position: 100% 0;
+  }
+}
+
 .ltr {
   direction: ltr;
   unicode-bidi: isolate;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
+.rtl {
+  direction: rtl;
+  unicode-bidi: isolate;
 }
 
 /* shadcn dialog keyframes */
@@ -223,13 +302,33 @@ html.has-motion [data-split] {
     transform: translate(-50%, -48%) scale(0.98);
   }
 }
-@keyframes sheet-in {
+@keyframes sheet-in-left {
   from {
     transform: translate3d(-100%, 0, 0);
   }
 }
-@keyframes sheet-out {
+@keyframes sheet-out-left {
   to {
     transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes sheet-in-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+@keyframes sheet-out-right {
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

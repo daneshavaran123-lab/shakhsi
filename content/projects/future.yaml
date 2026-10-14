@@ -1,0 +1,62 @@
+title: آزمایشگاه آینده
+order: 60
+eng: FutureLab — AI Photo Experience
+group: ai
+url: https://aipic.liara.run/
+live: true
+images:
+- /images/projects/future/images/0.webp
+- /images/projects/future/images/1.webp
+fa:
+  category: تجربه هوش مصنوعی
+  status: نسخه آنلاین
+  summary: تجربه نمایشگاهی ساخت تصویر شخصی‌سازی‌شده با هوش مصنوعی؛ ثبت تصویر با رضایت کاربر، انتخاب قالب، تولید تصویر علمی و تحویل با QR Code.
+  intro: 'آزمایشگاه آینده یک تجربه نمایشگاهی تعاملی است: کاربر با رضایت خود تصویرش را ثبت می‌کند و سامانه نسخه‌ای بازآفرینی‌شده از او در محیط آزمایشگاه آینده می‌سازد؛ سپس نتیجه را با کد QR تحویل می‌دهد.'
+  value: جذب مخاطب به غرفه با هدیه دیجیتال شخصی‌سازی‌شده.
+  hardware: کیوسک دوربین‌دار / استند تعاملی
+  services:
+  - ساخت هدیه تصویری شخصی‌سازی‌شده در غرفه
+  - بازآفرینی پوشش و محیط علمی با حفظ چهره در حد توان مدل
+  - نمایش مقایسه قبل و بعد و تحویل به موبایل
+  features:
+  - مرحله اعلام رضایت برای دسترسی به دوربین
+  - انتخاب قالب زن یا مرد
+  - نشانگر پیشرفت تولید تصویر
+  - اسلایدر مقایسه قبل و بعد
+  - نمایش QR برای دریافت عکس
+  tech:
+  - وب‌اپلیکیشن متصل به دوربین
+  - پردازش تصویر با سرویس هوش مصنوعی
+  - دسترسی امن به دوربین و شبکه پایدار
+  - در رابط، حذف تصاویر با شروع مجدد جلسه ذکر شده است
+  uses:
+  - غرفه‌های نمایشگاهی
+  - رویدادهای علمی و دانشگاهی
+  - تجربه برند و کمپین‌های مشارکتی
+en:
+  title: FutureLab — AI Photo Experience
+  category: AI experience
+  status: Live
+  summary: An exhibition experience that creates a personalised AI portrait — consent-first capture, template choice, a science-themed image and delivery by QR code.
+  intro: Visitors consent, take a photo, and the system reimagines them inside the lab of the future — then hands over the result through a QR code.
+  value: Draws visitors to the booth with a personalised digital gift.
+  hardware: Camera kiosk / interactive stand
+  services:
+  - A personalised image gift at the booth
+  - Reimagined outfit and lab setting while keeping the face
+  - Before/after comparison and delivery to mobile
+  features:
+  - Consent step before camera access
+  - Template selection
+  - Generation progress indicator
+  - Before/after slider
+  - QR code to download the photo
+  tech:
+  - Camera-connected web application
+  - Image processing via an AI service
+  - Secure camera access and a stable network
+  - Images cleared when a new session starts
+  uses:
+  - Exhibition booths
+  - Science and university events
+  - Brand experiences and participatory campaigns

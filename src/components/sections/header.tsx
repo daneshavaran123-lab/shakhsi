@@ -2,15 +2,92 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { Moon, Sun } from "lucide-react";
 
-import { nav, site } from "@/data/site";
+import { navKeys } from "@/data/site";
+import { useContent } from "@/content/provider";
+import { locales } from "@/i18n/config";
+import { useI18n } from "@/i18n/provider";
 import { TehranClock } from "@/components/tehran-clock";
 import { useLenis } from "@/components/providers/smooth-scroll";
-import { cn, toFa } from "@/lib/utils";
+import { useTheme } from "@/components/providers/theme";
+import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+function LanguageSwitch({ className }: { className?: string }) {
+  const { locale, t } = useI18n();
+  return (
+    <div
+      role="group"
+      aria-label={t.langSwitch}
+      className={cn("relative flex h-9 items-center rounded-full p-0.5 ring-1 ring-border", className)}
+    >
+      {locales.map((l) => {
+        const current = l === locale;
+        return (
+          <a
+            key={l}
+            href={`/${l}`}
+            hrefLang={l}
+            lang={l}
+            aria-current={current ? "page" : undefined}
+            onClick={(e) => {
+              // Keep the reader's place when switching language.
+              if (!current && location.hash) {
+                e.preventDefault();
+                location.href = `/${l}${location.hash}`;
+              }
+            }}
+            className={cn(
+              "relative grid h-8 w-10 place-items-center rounded-full font-mono text-[0.7rem] tracking-wider uppercase transition-colors",
+              current ? "text-background" : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {current && (
+              <motion.span
+                layoutId="lang-pill"
+                className="absolute inset-0 rounded-full bg-foreground"
+                transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+              />
+            )}
+            <span className="relative">{l === "fa" ? "فا" : "EN"}</span>
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const { t } = useI18n();
+  const next = theme === "dark" ? "light" : "dark";
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(next)}
+      aria-label={next === "light" ? t.theme.toLight : t.theme.toDark}
+      className="relative grid size-9 cursor-pointer place-items-center overflow-hidden rounded-full ring-1 ring-border transition-colors hover:bg-foreground/5"
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={theme}
+          initial={{ y: 18, rotate: -90, opacity: 0 }}
+          animate={{ y: 0, rotate: 0, opacity: 1 }}
+          exit={{ y: -18, rotate: 90, opacity: 0 }}
+          transition={{ duration: 0.45, ease }}
+        >
+          {theme === "dark" ? <Moon className="size-4" /> : <Sun className="size-4" />}
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+}
+
 export function Header() {
+  const { t, n } = useI18n();
+  const { profile } = useContent();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -34,43 +111,46 @@ export function Header() {
     <>
       <motion.header
         initial={{ y: -24, opacity: 0 }}
-        animate={{ y: hidden ? "-110%" : 0, opacity: 1 }}
+        animate={{ y: hidden ? "-120%" : 0, opacity: 1 }}
         transition={{ duration: 0.7, ease }}
-        className="fixed inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6"
+        className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-5"
       >
         <div
           className={cn(
-            "mx-auto flex h-14 max-w-[100rem] items-center justify-between rounded-full ps-5 pe-2 transition-[background-color,box-shadow,backdrop-filter] duration-500",
-            scrolled && !open && "bg-paper/75 shadow-[0_0_0_1px_var(--border)] backdrop-blur-md",
+            "relative mx-auto flex h-14 max-w-[100rem] items-center justify-between rounded-full ps-2.5 pe-2.5 transition-[background-color,box-shadow,backdrop-filter] duration-500",
+            scrolled && !open && "bg-background/70 shadow-[0_0_0_1px_var(--border),0_10px_40px_-12px_rgb(0_0_0/0.35)] backdrop-blur-xl",
           )}
         >
           <a
             href="#top"
-            className="group relative z-50 flex items-baseline gap-2 text-[0.95rem] font-semibold tracking-tight"
+            className="group relative z-50 flex items-center gap-2.5 text-[0.95rem] font-medium tracking-tight"
             onClick={() => toggleMenu(false)}
           >
-            <span className="relative">
-              نرگس طباطبایی
-              <span className="absolute -start-2.5 top-0.5 size-1.5 rounded-full bg-vermilion transition-transform duration-500 ease-out-expo group-hover:scale-150" />
+            <span className="relative grid size-7 place-items-center rounded-full bg-accent text-[0.7rem] font-semibold text-accent-foreground transition-transform duration-500 ease-out-expo group-hover:rotate-[-12deg]">
+              {t.name.short.charAt(0)}
             </span>
+            {t.name.short}
           </a>
 
-          <nav aria-label="ناوبری اصلی" className="hidden md:block">
-            <ul className="flex items-center" onMouseLeave={() => setHovered(null)}>
-              {nav.map((item) => (
-                <li key={item.href} className="relative">
+          <nav aria-label={t.nav.label} className="absolute start-1/2 hidden -translate-x-1/2 rtl:translate-x-1/2 md:block">
+            <ul
+              className="flex items-center rounded-full p-1 ring-1 ring-border"
+              onMouseLeave={() => setHovered(null)}
+            >
+              {navKeys.map((key) => (
+                <li key={key} className="relative">
                   <a
-                    href={item.href}
-                    onMouseEnter={() => setHovered(item.href)}
-                    onFocus={() => setHovered(item.href)}
-                    className="relative z-10 block px-4 py-2 text-sm text-ink-2 transition-colors hover:text-ink"
+                    href={`#${key}`}
+                    onMouseEnter={() => setHovered(key)}
+                    onFocus={() => setHovered(key)}
+                    className="relative z-10 block px-4 py-1.5 text-sm text-foreground-2 transition-colors hover:text-foreground"
                   >
-                    {item.label}
+                    {t.nav[key]}
                   </a>
-                  {hovered === item.href && (
+                  {hovered === key && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-ink/[0.06]"
+                      className="absolute inset-0 rounded-full bg-foreground/[0.08]"
                       transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                     />
                   )}
@@ -79,24 +159,26 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-3">
-            <TehranClock className="hidden font-mono text-xs text-stone sm:inline" />
-            <a
-              href={`mailto:${site.email}`}
-              className="hidden h-10 items-center gap-2 rounded-full bg-ink px-4 text-sm text-paper transition-colors hover:bg-vermilion md:inline-flex"
+          <div className="flex items-center gap-2">
+            <TehranClock className="hidden pe-2 font-mono text-xs text-muted-foreground xl:inline" />
+            <LanguageSwitch className="hidden sm:flex" />
+            <ThemeToggle />
+            {profile.available && <a
+              href={`mailto:${profile.email}`}
+              className="hidden h-9 items-center gap-2 rounded-full bg-foreground px-4 text-sm text-background transition-colors duration-300 hover:bg-accent hover:text-accent-foreground lg:inline-flex"
             >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#7fd18b] opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-[#7fd18b]" />
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#7fd18b] opacity-70" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-[#7fd18b]" />
               </span>
-              آماده همکاری
-            </a>
+              {t.available}
+            </a>}
             <button
               type="button"
-              className="relative z-50 grid size-11 cursor-pointer place-items-center rounded-full md:hidden"
+              className="relative z-50 grid size-10 cursor-pointer place-items-center rounded-full md:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
-              aria-label={open ? "بستن منو" : "باز کردن منو"}
+              aria-label={open ? t.nav.close : t.nav.open}
               onClick={() => toggleMenu(!open)}
             >
               <span className="relative block h-3 w-6">
@@ -120,18 +202,18 @@ export function Header() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-30 flex flex-col justify-between bg-paper px-6 pt-28 pb-10 md:hidden"
+            className="fixed inset-0 z-30 flex flex-col justify-between bg-background px-6 pt-28 pb-10 md:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.7, ease }}
           >
-            <nav aria-label="منوی موبایل">
+            <nav aria-label={t.nav.label}>
               <ul className="space-y-1">
-                {nav.map((item, i) => (
-                  <li key={item.href} className="overflow-hidden">
+                {navKeys.map((key, i) => (
+                  <li key={key} className="overflow-hidden">
                     <motion.a
-                      href={item.href}
+                      href={`#${key}`}
                       onClick={() => toggleMenu(false)}
                       className="flex items-baseline justify-between border-b py-3 font-display text-5xl"
                       initial={{ y: "100%" }}
@@ -139,8 +221,8 @@ export function Header() {
                       exit={{ y: "100%" }}
                       transition={{ duration: 0.7, ease, delay: 0.15 + i * 0.06 }}
                     >
-                      {item.label}
-                      <span className="font-mono text-xs text-stone">{toFa(`0${i + 1}`)}</span>
+                      {t.nav[key]}
+                      <span className="font-mono text-xs text-accent">{n(`0${i + 1}`)}</span>
                     </motion.a>
                   </li>
                 ))}
@@ -150,12 +232,15 @@ export function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.5 } }}
               exit={{ opacity: 0 }}
-              className="space-y-2 text-sm"
+              className="flex items-end justify-between gap-4 text-sm"
             >
-              <a href={`mailto:${site.email}`} className="block font-mono text-ink">
-                {site.email}
-              </a>
-              <TehranClock className="block font-mono text-xs text-stone" />
+              <div className="space-y-2">
+                <a href={`mailto:${profile.email}`} className="ltr block font-mono text-xs">
+                  {profile.email}
+                </a>
+                <TehranClock className="block font-mono text-xs text-muted-foreground" />
+              </div>
+              <LanguageSwitch />
             </motion.div>
           </motion.div>
         )}

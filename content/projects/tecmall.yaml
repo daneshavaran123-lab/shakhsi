@@ -1,0 +1,61 @@
+title: تک‌مال | TECMALL
+order: 80
+eng: Interactive mall wayfinding
+group: retail
+live: false
+images:
+- /images/projects/tecmall/images/0.webp
+- /images/projects/tecmall/images/1.webp
+fa:
+  category: مسیریابی و خدمات
+  status: نسخه نمایشی
+  summary: راهنمای هوشمند مجتمع‌های تجاری با نقشه‌های دوبعدی و سه‌بعدی، مسیریابی در طبقات، جست‌وجوی فروشگاه‌ها و نمایش خدمات و پیشنهادهای ویژه.
+  intro: تک‌مال یک سامانه راهنمای دیجیتال مراکز خرید است که خدمات جست‌وجوی فروشگاه، مسیریابی داخلی، نمایش مدل سه‌بعدی مجتمع و اطلاع‌رسانی رفاهی را در یک تجربه واحد کنار هم قرار می‌دهد.
+  value: تبدیل کیوسک به راهنمای دیجیتال مجموعه و تسهیل تجربه بازدید و خرید.
+  hardware: کیوسک و نمایشگر لمسی؛ رایانه مجهز به شتاب‌دهی سه‌بعدی
+  services:
+  - راهنمای پیدا کردن فروشگاه‌ها و واحدهای تجاری
+  - محاسبه مسیر از ورودی تا مقصد روی نقشه
+  - معرفی رستوران‌ها، امکانات، تخفیف‌ها و سرگرمی‌ها
+  features:
+  - جست‌وجو با فیلتر صنف و طبقه
+  - نقشه‌های 2D و 3D چندطبقه
+  - نمایش مسیر و شبیه‌سازی حرکت در مدل سه‌بعدی
+  - پنل جزئیات فروشگاه، اطلاعات تماس و گزینه QR
+  - دستیار گفت‌وگوی ShopAvatar و بخش بازی‌ها
+  tech:
+  - وب‌اپلیکیشن تعاملی سازگار با مرورگر
+  - نمایش گرافیک سه‌بعدی؛ GPU سازگار با WebGL توصیه می‌شود
+  - رابط فارسی RTL و کنترل با لمس
+  - پنل مدیریت محتوا با صفحه ورود
+  uses:
+  - مراکز خرید و مجتمع‌های چندطبقه
+  - کیوسک راهنمای لابی و ورودی
+  - پایانه تبلیغات و خدمات بازدیدکننده
+en:
+  title: TECMALL — Mall Wayfinding
+  category: Wayfinding & services
+  status: Demo
+  summary: A smart guide for shopping centres — 2D and 3D maps, multi-floor wayfinding, store search, amenities and featured offers.
+  intro: TECMALL brings store search, indoor wayfinding, a 3D model of the mall and visitor information together into one experience.
+  value: Turns a kiosk into the mall’s digital guide, easing every visit.
+  hardware: Touch kiosk / display; PC with 3D acceleration
+  services:
+  - Finding stores and retail units
+  - Routing from entrance to destination on the map
+  - Restaurants, amenities, offers and entertainment
+  features:
+  - Search filtered by category and floor
+  - Multi-floor 2D and 3D maps
+  - Route display with motion through the 3D model
+  - Store details, contact and QR option
+  - ShopAvatar chat assistant and games
+  tech:
+  - Browser-based interactive web app
+  - 3D graphics — WebGL-capable GPU recommended
+  - Persian RTL interface with touch control
+  - Content admin panel with sign-in
+  uses:
+  - Shopping malls and multi-storey complexes
+  - Lobby and entrance guide kiosks
+  - Advertising and visitor-service terminals

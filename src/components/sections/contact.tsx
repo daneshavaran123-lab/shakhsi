@@ -4,15 +4,19 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUp, Check, Copy } from "lucide-react";
 
-import { site } from "@/data/site";
+import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
 import { SectionLabel } from "@/components/section-label";
 import { TehranClock } from "@/components/tehran-clock";
 import { useLenis } from "@/components/providers/smooth-scroll";
 import { useSectionMotion } from "@/hooks/use-section-motion";
+import { useI18n } from "@/i18n/provider";
+import { cn } from "@/lib/utils";
 
 export function Contact() {
+  const { t, n, locale } = useI18n();
+  const { profile } = useContent();
   const root = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
   const lenis = useLenis();
@@ -20,11 +24,11 @@ export function Contact() {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(site.email);
+      await navigator.clipboard.writeText(profile.email);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      window.location.href = `mailto:${site.email}`;
+      window.location.href = `mailto:${profile.email}`;
     }
   };
 
@@ -37,36 +41,44 @@ export function Contact() {
     <section
       ref={root}
       id="contact"
-      className="relative -mt-8 rounded-t-[2rem] bg-paper px-4 pt-28 pb-8 sm:px-6 md:-mt-12 md:rounded-t-[3rem] md:pt-40"
+      className="relative -mt-8 overflow-hidden rounded-t-[2rem] bg-background px-4 pt-28 pb-8 sm:px-6 md:-mt-12 md:rounded-t-[3rem] md:pt-40"
     >
-      <div className="mx-auto max-w-[100rem]">
-        <SectionLabel index="۰۴">ارتباط</SectionLabel>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-1/3 start-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] rtl:translate-x-1/2"
+      />
+      <div className="relative mx-auto max-w-[100rem]">
+        <SectionLabel index={n("04")}>{t.contact.label}</SectionLabel>
 
-        <h2 className="mt-12 font-display text-[clamp(3.4rem,11vw,12rem)] leading-[0.88]">
-          <Split as="span" lines={["برای گفتگو"]} className="block" />
-          <Split as="span" lines={["درباره همکاری."]} className="block ps-[10vw] text-vermilion" delay={0.1} />
+        <h2 className="mt-12 font-display text-[clamp(3.4rem,11vw,12rem)] leading-[0.9]">
+          <Split as="span" lines={[t.contact.heading[0]]} className="block" />
+          <Split
+            as="span"
+            lines={[t.contact.heading[1]]}
+            className={cn("foil block ps-[10vw]", locale === "en" && "italic")}
+            delay={0.1}
+          />
         </h2>
 
         <div className="mt-16 grid gap-10 md:grid-cols-12 md:items-end">
-          <p data-reveal className="max-w-md leading-8 text-ink-2 md:col-span-5">
-            برای معرفی پروژه، همکاری یا دریافت جزئیات بیشتر درباره هر یک از نمونه‌کارها، یک ایمیل
-            کافی است.
+          <p data-reveal className="max-w-md leading-8 text-foreground-2 md:col-span-5">
+            {t.contact.body}
           </p>
 
           <div data-reveal className="flex flex-wrap items-center gap-3 md:col-span-7 md:justify-end">
             <Magnetic strength={0.15}>
               <a
-                href={`mailto:${site.email}`}
-                className="link-draw ltr inline-block font-mono text-[clamp(1rem,2.2vw,1.6rem)] text-ink"
+                href={`mailto:${profile.email}`}
+                className="link-draw ltr inline-block font-mono text-[clamp(1rem,2.2vw,1.6rem)]"
               >
-                {site.email}
+                {profile.email}
               </a>
             </Magnetic>
             <button
               type="button"
               onClick={copy}
-              className="relative grid size-11 cursor-pointer place-items-center rounded-full ring-1 ring-ink/15 transition-colors hover:bg-ink hover:text-paper"
-              aria-label="کپی نشانی ایمیل"
+              className="relative grid size-11 cursor-pointer place-items-center rounded-full ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground"
+              aria-label={t.contact.copy}
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -76,7 +88,7 @@ export function Contact() {
                   exit={{ scale: 0.4, opacity: 0 }}
                   transition={{ type: "spring", bounce: 0.35, duration: 0.4 }}
                 >
-                  {copied ? <Check className="size-4 text-[#2f8f4e]" /> : <Copy className="size-4" />}
+                  {copied ? <Check className="size-4 text-[#7fd18b]" /> : <Copy className="size-4" />}
                 </motion.span>
               </AnimatePresence>
               <AnimatePresence>
@@ -86,9 +98,9 @@ export function Contact() {
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
-                    className="absolute -top-9 rounded-full bg-ink px-3 py-1 text-xs whitespace-nowrap text-paper"
+                    className="absolute -top-9 rounded-full bg-foreground px-3 py-1 text-xs whitespace-nowrap text-background"
                   >
-                    کپی شد
+                    {t.contact.copied}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -96,16 +108,16 @@ export function Contact() {
           </div>
         </div>
 
-        <footer className="mt-32 flex flex-col gap-6 border-t pt-6 text-xs text-stone sm:flex-row sm:items-center sm:justify-between">
-          <p>© ۲۰۲۶ — {site.name}</p>
+        <footer className="mt-32 flex flex-col gap-6 border-t pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>{t.contact.rights}</p>
           <TehranClock className="font-mono" />
           <button
             type="button"
             onClick={toTop}
-            className="group inline-flex cursor-pointer items-center gap-2 self-start text-ink sm:self-auto"
+            className="group inline-flex cursor-pointer items-center gap-2 self-start text-foreground sm:self-auto"
           >
-            بازگشت به بالا
-            <span className="grid size-8 place-items-center rounded-full ring-1 ring-ink/15 transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
+            {t.contact.top}
+            <span className="grid size-8 place-items-center rounded-full ring-1 ring-border transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
               <ArrowUp className="size-3.5" />
             </span>
           </button>

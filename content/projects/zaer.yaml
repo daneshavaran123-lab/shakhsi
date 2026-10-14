@@ -1,0 +1,59 @@
+title: دستیار هوشمند زائر
+order: 70
+eng: ZAER — Conversational AI Guide
+group: ai
+live: false
+images:
+- /images/projects/zaer/images/0.webp
+- /images/projects/zaer/images/1.webp
+fa:
+  category: دستیار هوشمند
+  status: نمونه رابط کاربری
+  summary: راهنمای گفت‌وگومحور ویژه زائران حرم مطهر رضوی با پرسش‌وپاسخ صوتی و متنی، نمایش متن مکالمه و امکان ارائه پاسخ از طریق آواتار تصویری.
+  intro: دستیار هوشمند زائر، یک راهنمای مکالمه‌ای ویژه زائران حرم مطهر رضوی است. کاربر می‌تواند پرسش را با صدا یا متن مطرح کند و پاسخ را در قالب گفت‌وگو با یک آواتار تصویری دریافت کند.
+  value: تبدیل کیوسک به راهنمای دیجیتال تعاملی برای مراجعه‌کنندگان.
+  hardware: کیوسک راهنما / نمایشگر لمسی + میکروفون
+  services:
+  - پاسخ‌گویی به پرسش‌های عمومی درباره حرم و خدمات زائر
+  - راهنمایی درباره فضاها و مسیرهای شناخته‌شده
+  - گفت‌وگوی صوتی و متنی همراه با نمایش متن مکالمه
+  features:
+  - نمایش آواتار سخنگو و وضعیت ارتباط
+  - ورود متن و آغاز گفت‌وگو با میکروفون
+  - پنل متن گفت‌وگو
+  - فیلدهای دریافت ایمیل و شماره تماس
+  tech:
+  - وب‌اپلیکیشن تعاملی با رابط فارسی
+  - معماری پیشنهادی گفت‌وگوی بلادرنگ بر بستر LiveKit و آواتار Tavus
+  - نیازمند اینترنت و تجهیزات صوتی مناسب
+  - دسترسی به پایگاه دانش باید در استقرار نهایی پیکربندی شود
+  uses:
+  - کیوسک راهنمای حرم
+  - مراکز اطلاع‌رسانی زیارتی
+  - پایانه‌های راهنمای گردشگری و اماکن عمومی
+en:
+  title: ZAER — Conversational AI Guide
+  category: AI assistant
+  status: UI prototype
+  summary: A conversational guide for pilgrims of the Imam Reza shrine — voice and text Q&A, a live transcript and answers delivered by a video avatar.
+  intro: A conversational guide for pilgrims of the Imam Reza shrine. Visitors ask by voice or text and receive answers in a dialogue with a visual avatar.
+  value: Turns a kiosk into an interactive digital guide for visitors.
+  hardware: Guide kiosk / touch display + microphone
+  services:
+  - Answering general questions about the shrine and pilgrim services
+  - Guidance on known spaces and routes
+  - Voice and text conversation with a live transcript
+  features:
+  - Talking avatar with connection status
+  - Text input and microphone conversation
+  - Conversation transcript panel
+  - Email and phone capture fields
+  tech:
+  - Interactive web application, Persian UI
+  - 'Proposed real-time stack: LiveKit + Tavus avatar'
+  - Requires internet and suitable audio hardware
+  - Knowledge base configured at deployment
+  uses:
+  - Shrine guide kiosks
+  - Pilgrim information centres
+  - Tourism and public-space guide terminals

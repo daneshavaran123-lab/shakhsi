@@ -1,0 +1,62 @@
+title: موزه‌یار | خدمات موزه
+order: 50
+eng: MuseumYar — Ticketing & Visitor Services
+group: culture
+url: https://koshtyticket.liara.run/
+live: true
+images:
+- /images/projects/ticket/images/0.webp
+- /images/projects/ticket/images/1.webp
+fa:
+  category: فروش و خدمات
+  status: نسخه آنلاین
+  summary: پرتال خدمات موزه کشتی برای معرفی انواع بلیت، فروشگاه کتاب و یادبود، کافه، عضویت سالانه، رویدادها، حمایت مالی و نظرسنجی بازدیدکنندگان.
+  intro: موزه‌یار، میز خدمات دیجیتال موزه کشتی است که معرفی انواع بلیت و خدمات جانبی مجموعه را در یک محیط لمسی گرد هم می‌آورد و امکان ثبت حمایت و دریافت نظر بازدیدکنندگان را فراهم می‌کند.
+  value: تبدیل کیوسک به پایانه سلف‌سرویس خدمات و فروش موزه.
+  hardware: کیوسک فروش خدمات / نمایشگر لمسی
+  services:
+  - معرفی و انتخاب بلیت عادی، راهنمادار و VIP
+  - دسترسی به فروشگاه کتاب، یادبود و کافه موزه
+  - ثبت حمایت مالی و نظرسنجی بازدیدکننده
+  - معرفی عضویت و رویدادهای موزه
+  features:
+  - انتخاب انواع بلیت همراه شرح و قیمت
+  - سبد خرید و بخش فروشگاه‌های موزه
+  - فرم حمایت با مبلغ پیشنهادی یا دلخواه
+  - امتیازدهی ستاره‌ای و ثبت دیدگاه
+  - گزینه تغییر زبان و نصب برنامه
+  tech:
+  - وب‌اپلیکیشن سلف‌سرویس با رابط فارسی
+  - مناسب مرورگر کیوسک لمسی
+  - فرم‌ها و ماژول‌های خدماتی مستقل
+  uses:
+  - ورودی و گیشه موزه
+  - فروش محصولات فرهنگی
+  - بخش ارتباط با بازدیدکنندگان
+en:
+  title: MuseumYar — Visitor Services
+  category: Sales & services
+  status: Live
+  summary: 'A service portal for the wrestling museum: tickets, book and souvenir shop, café, annual membership, events, donations and visitor feedback.'
+  intro: MuseumYar is the museum’s digital service desk — tickets and visitor services gathered on one touch screen, with donations and feedback built in.
+  value: Turns a kiosk into a self-service terminal for museum services and sales.
+  hardware: Service kiosk / touch display
+  services:
+  - Standard, guided and VIP tickets
+  - Book shop, souvenirs and museum café
+  - Donations and visitor surveys
+  - Membership and museum events
+  features:
+  - Ticket types with descriptions and prices
+  - Cart and museum shops
+  - Donation form with suggested or custom amounts
+  - Star ratings and comments
+  - Language switch and app install
+  tech:
+  - Self-service web application, Persian UI
+  - Built for touch-kiosk browsers
+  - Independent forms and service modules
+  uses:
+  - Museum entrance and ticket desk
+  - Cultural merchandise sales
+  - Visitor relations

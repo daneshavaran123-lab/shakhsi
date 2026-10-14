@@ -11,9 +11,9 @@ export function SectionLabel({
 }) {
   return (
     <div data-reveal className={cn("flex items-center gap-3 self-start text-sm", className)}>
-      <span className="font-mono text-xs text-stone">({index})</span>
-      <span className="h-px w-8 bg-current/30" />
-      <span>{children}</span>
+      <span className="font-mono text-xs text-accent">({index})</span>
+      <span className="h-px w-8 bg-current/25" />
+      <span className="text-foreground-2">{children}</span>
     </div>
   );
 }
