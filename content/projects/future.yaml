@@ -9,6 +9,8 @@ images:
 - /images/projects/future/images/1.webp
 fa:
   category: تجربه هوش مصنوعی
+  client: نمایشگاه تجهیزات پزشکی، برج میلاد
+  role: طراحی و ساخت
   status: نسخه آنلاین
   summary: تجربه نمایشگاهی ساخت تصویر شخصی‌سازی‌شده با هوش مصنوعی؛ ثبت تصویر با رضایت کاربر، انتخاب قالب، تولید تصویر علمی و تحویل با QR Code.
   intro: 'آزمایشگاه آینده یک تجربه نمایشگاهی تعاملی است: کاربر با رضایت خود تصویرش را ثبت می‌کند و سامانه نسخه‌ای بازآفرینی‌شده از او در محیط آزمایشگاه آینده می‌سازد؛ سپس نتیجه را با کد QR تحویل می‌دهد.'
@@ -36,6 +38,8 @@ fa:
 en:
   title: FutureLab — AI Photo Experience
   category: AI experience
+  client: Medical Equipment Exhibition, Milad Tower
+  role: Design & build
   status: Live
   summary: An exhibition experience that creates a personalised AI portrait — consent-first capture, template choice, a science-themed image and delivery by QR code.
   intro: Visitors consent, take a photo, and the system reimagines them inside the lab of the future — then hands over the result through a QR code.

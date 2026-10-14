@@ -9,6 +9,8 @@ images:
 - /images/projects/fava/images/1.webp
 fa:
   category: اطلاع‌رسانی و نمایشگاه
+  client: پارک فناوری فاوا
+  role: طراحی و ساخت
   status: نسخه آنلاین
   summary: پلتفرم معرفی و جست‌وجوی شرکت‌های فناور همراه با نمایشگاه مجازی، شاخه‌های تخصصی فناوری، نقشه پارک‌ها و مدیریت اطلاعات شرکت‌ها.
   intro: اطلس شرکت‌های پارک فناوری، یک نمایشگاه دیجیتال برای معرفی شرکت‌های فناور، ظرفیت پارک‌ها و حوزه‌های تخصصی است. بازدیدکننده می‌تواند به‌جای مراجعه به فهرست‌های پراکنده، اطلاعات را در قالبی منظم جست‌وجو کند.
@@ -35,6 +37,8 @@ fa:
 en:
   title: Technology Park Atlas
   category: Exhibition & information
+  client: Fava Technology Park
+  role: Design & build
   status: Live
   summary: A platform to discover and search technology companies — with a virtual exhibition, technology verticals, park maps and company data management.
   intro: The atlas is a digital exhibition of technology companies, park capacities and specialist fields. Instead of scattered lists, visitors search everything in one organised, browsable format.

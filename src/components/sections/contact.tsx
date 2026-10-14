@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUp, Check, Copy } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Check, Copy, Phone } from "lucide-react";
 
 import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
@@ -13,6 +13,7 @@ import { useLenis } from "@/components/providers/smooth-scroll";
 import { useSectionMotion } from "@/hooks/use-section-motion";
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
+import { formatPhone } from "@/lib/phone";
 
 export function Contact() {
   const { t, n, locale } = useI18n();
@@ -20,6 +21,8 @@ export function Contact() {
   const root = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
   const lenis = useLenis();
+
+  const phone = formatPhone(profile.phone, locale);
   useSectionMotion(root);
 
   const copy = async () => {
@@ -48,7 +51,7 @@ export function Contact() {
         className="pointer-events-none absolute -bottom-1/3 start-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] rtl:translate-x-1/2"
       />
       <div className="relative mx-auto max-w-[100rem]">
-        <SectionLabel index={n("04")}>{t.contact.label}</SectionLabel>
+        <SectionLabel index={n("05")}>{t.contact.label}</SectionLabel>
 
         <h2 className="mt-12 font-display text-[clamp(3.4rem,11vw,12rem)] leading-[0.9]">
           <Split as="span" lines={[t.contact.heading[0]]} className="block" />
@@ -105,6 +108,45 @@ export function Contact() {
                 )}
               </AnimatePresence>
             </button>
+            {phone && (
+              <a
+                href={phone.href}
+                aria-label={`${t.contact.call}: ${phone.display}`}
+                className="group inline-flex h-11 basis-full items-center justify-start gap-3 md:justify-end"
+              >
+                <span className="grid size-11 place-items-center rounded-full ring-1 ring-border transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
+                  <Phone className="size-4" />
+                </span>
+                <span className="link-draw ltr font-mono text-[clamp(1rem,2.2vw,1.6rem)]">{phone.display}</span>
+              </a>
+            )}
+            {/* Social and company links share one compact row. */}
+            <ul className="flex basis-full flex-wrap gap-2 md:justify-end">
+              {[
+                profile.telegram && { href: `https://t.me/${profile.telegram}`, label: t.contact.telegram, hint: `@${profile.telegram}` },
+                profile.linkedin && { href: profile.linkedin, label: t.contact.linkedin },
+                profile.companyUrl && {
+                  href: profile.companyUrl,
+                  label: t.contact.company,
+                  hint: profile.companyUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""),
+                },
+              ]
+                .filter((l): l is { href: string; label: string; hint?: string } => !!l)
+                .map((l) => (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer me"
+                      className="group inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground hover:ring-accent"
+                    >
+                      {l.label}
+                      {l.hint && <span className="ltr font-mono text-xs opacity-60">{l.hint}</span>}
+                      <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45 rtl:-scale-x-100" />
+                    </a>
+                  </li>
+                ))}
+            </ul>
           </div>
         </div>
 

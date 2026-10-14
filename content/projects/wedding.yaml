@@ -9,6 +9,8 @@ images:
 - /images/projects/wedding/images/1.webp
 fa:
   category: رزرو و خدمات
+  client: ''
+  role: طراحی و ساخت
   status: نسخه آنلاین
   summary: سامانه سفارش‌گیری مرحله‌ای برای انتخاب نوع مراسم، سالن، تاریخ و سانس، غذا و خدمات تشریفاتی همراه با نمایش خلاصه سفارش و پیش‌فاکتور.
   intro: تشریفات‌یار مسیر انتخاب و سفارش خدمات برگزاری مراسم را در یک رابط مرحله‌ای ساده می‌کند. مشتری نوع مراسم، سالن، تاریخ، پذیرایی و خدمات جانبی را انتخاب کرده و در پایان ریز هزینه‌ها را مشاهده می‌کند.
@@ -35,6 +37,8 @@ fa:
 en:
   title: TashrifatYar — Ceremony Booking
   category: Booking & services
+  client: ''
+  role: Design & build
   status: Live
   summary: A step-by-step ordering flow to choose the ceremony type, hall, date and session, catering and services — ending in an order summary and quote.
   intro: TashrifatYar simplifies booking an event into one guided flow. Guests pick the ceremony, hall, date, catering and extras, and see a clear cost breakdown at the end.

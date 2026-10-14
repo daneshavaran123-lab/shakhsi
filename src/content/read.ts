@@ -8,7 +8,7 @@ import { imageSize } from "image-size";
 import sharp from "sharp";
 
 import keystaticConfig from "../../keystatic.config";
-import type { Certificate, Img, Profile, Project, SiteContent } from "./types";
+import type { Certificate, Img, Profile, Project, Services, ServicesCopy, SiteContent } from "./types";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
@@ -25,13 +25,17 @@ async function toImg(src: string | null | undefined): Promise<Img | null> {
   }
 }
 
+const linksOf = (links: readonly { label: string; url: string | null }[]) =>
+  links.filter((l): l is { label: string; url: string } => !!l.url).map((l) => ({ ...l }));
+
 const byOrder = <T extends { order: number | null }>(a: T, b: T) => (a.order ?? 999) - (b.order ?? 999);
 
 export const getContent = cache(async (): Promise<SiteContent> => {
-  const [projectEntries, certEntries, profileEntry] = await Promise.all([
+  const [projectEntries, certEntries, profileEntry, servicesEntry] = await Promise.all([
     reader.collections.projects.all(),
     reader.collections.certificates.all(),
     reader.singletons.profile.read(),
+    reader.singletons.services.read(),
   ]);
 
   const projects: Project[] = await Promise.all(
@@ -45,8 +49,8 @@ export const getContent = cache(async (): Promise<SiteContent> => {
         url: p.url || undefined,
         live: p.live,
         images: (await Promise.all(p.images.map(toImg))).filter((i): i is Img => i !== null),
-        fa: { title: p.title, ...p.fa, services: [...p.fa.services], features: [...p.fa.features], tech: [...p.fa.tech], uses: [...p.fa.uses] },
-        en: { ...p.en, title: p.en.title || p.title, services: [...p.en.services], features: [...p.en.features], tech: [...p.en.tech], uses: [...p.en.uses] },
+        fa: { title: p.title, ...p.fa, services: [...p.fa.services], features: [...p.fa.features], tech: [...p.fa.tech], uses: [...p.fa.uses], links: linksOf(p.fa.links) },
+        en: { ...p.en, title: p.en.title || p.title, services: [...p.en.services], features: [...p.en.features], tech: [...p.en.tech], uses: [...p.en.uses], links: linksOf(p.en.links) },
       })),
   );
 
@@ -74,16 +78,41 @@ export const getContent = cache(async (): Promise<SiteContent> => {
   const copy = (p: typeof profileEntry.fa) => ({
     tagline: p.tagline,
     about: [...p.about],
+    bio: p.bio,
     principles: p.principles.map((x) => ({ ...x })),
+    experience: p.experience.map((x) => ({ ...x, url: x.url || undefined })),
+    education: p.education.map((x) => ({ ...x })),
+    languages: p.languages.map((x) => ({ ...x })),
     fields: p.fields,
   });
   const profile: Profile = {
+    portrait: (await toImg(profileEntry.portrait)) ?? undefined,
     email: profileEntry.email,
+    phone: profileEntry.phone,
+    linkedin: profileEntry.linkedin || undefined,
+    telegram: profileEntry.telegram?.replace(/^@/, "") || undefined,
+    companyUrl: profileEntry.companyUrl || undefined,
+    resume: {
+      fa: profileEntry.resumeFa || undefined,
+      en: profileEntry.resumeEn || undefined,
+    },
+    stack: profileEntry.stack.map((g) => ({ ...g, items: [...g.items] })),
     available: profileEntry.available,
     specialistFields: profileEntry.specialistFields ?? 6,
     fa: copy(profileEntry.fa),
     en: copy(profileEntry.en),
   };
 
-  return { projects, certificates, profile };
+  if (!servicesEntry) throw new Error("content/services.yaml is missing");
+  const servicesCopy = (c: typeof servicesEntry.fa): ServicesCopy => ({
+    heading: [...c.heading],
+    intro: c.intro,
+    items: c.items.map((i) => ({ ...i, points: [...i.points] })),
+    packagesTitle: c.packagesTitle,
+    packages: c.packages.map((p) => ({ ...p, projects: [...p.projects] })),
+    cta: c.cta,
+  });
+  const services: Services = { fa: servicesCopy(servicesEntry.fa), en: servicesCopy(servicesEntry.en) };
+
+  return { projects, certificates, profile, services };
 });

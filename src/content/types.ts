@@ -2,12 +2,14 @@ import type { Locale } from "@/i18n/config";
 
 export type Img = { src: string; width: number; height: number; blurDataURL: string };
 
-export const projectGroups = ["all", "management", "culture", "retail", "ai"] as const;
+export const projectGroups = ["all", "kids", "management", "culture", "retail", "ai"] as const;
 export type ProjectGroup = (typeof projectGroups)[number];
 
 export type ProjectCopy = {
   title: string;
   category: string;
+  client: string;
+  role: string;
   status: string;
   summary: string;
   intro: string;
@@ -17,6 +19,7 @@ export type ProjectCopy = {
   features: string[];
   tech: string[];
   uses: string[];
+  links: { label: string; url: string }[];
 };
 
 export type Project = {
@@ -47,18 +50,41 @@ export type Certificate = {
 export type ProfileCopy = {
   tagline: string;
   about: string[];
+  bio: string;
   principles: { title: string; body: string }[];
+  experience: { title: string; org: string; period: string; url?: string }[];
+  education: { degree: string; school: string }[];
+  languages: { name: string; level: string }[];
   fields: string;
 };
 
 export type Profile = {
+  portrait?: Img;
   email: string;
+  phone: string;
+  linkedin?: string;
+  telegram?: string;
+  companyUrl?: string;
+  resume: Partial<Record<Locale, string>>;
+  stack: { group: string; groupEn: string; items: string[] }[];
   available: boolean;
   specialistFields: number;
 } & Record<Locale, ProfileCopy>;
+
+export type ServicesCopy = {
+  heading: string[];
+  intro: string;
+  items: { title: string; body: string; points: string[] }[];
+  packagesTitle: string;
+  packages: { title: string; body: string; projects: string[] }[];
+  cta: string;
+};
+
+export type Services = Record<Locale, ServicesCopy>;
 
 export type SiteContent = {
   projects: Project[];
   certificates: Certificate[];
   profile: Profile;
+  services: Services;
 };

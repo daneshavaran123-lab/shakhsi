@@ -119,6 +119,23 @@ export function ProjectSheet({
                 )}
               </motion.div>
 
+              {(copy.client || copy.role) && (
+                <motion.dl variants={item} className="mt-6 flex flex-wrap gap-x-10 gap-y-3 text-sm">
+                  {copy.client && (
+                    <div>
+                      <dt className="text-[0.72rem] text-accent">{t.sheet.client}</dt>
+                      <dd className="mt-1 text-foreground">{copy.client}</dd>
+                    </div>
+                  )}
+                  {copy.role && (
+                    <div>
+                      <dt className="text-[0.72rem] text-accent">{t.sheet.role}</dt>
+                      <dd className="mt-1 text-foreground">{copy.role}</dd>
+                    </div>
+                  )}
+                </motion.dl>
+              )}
+
               <motion.div variants={item}>
                 <DialogDescription id="project-intro" className="mt-8 max-w-2xl text-lg leading-9 text-foreground-2">
                   {copy.intro}
@@ -154,6 +171,27 @@ export function ProjectSheet({
                   </motion.div>
                 ))}
               </div>
+
+              {copy.links.length > 0 && (
+                <motion.div variants={item} className="mt-12">
+                  <h3 className="border-b pb-3 text-sm font-semibold">{t.sheet.links}</h3>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {copy.links.map((l) => (
+                      <li key={l.url}>
+                        <a
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm ring-1 ring-border transition-colors hover:bg-accent hover:text-accent-foreground hover:ring-accent"
+                        >
+                          {l.label}
+                          <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45 rtl:-scale-x-100" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              )}
 
               <motion.div variants={item} className="mt-14 flex flex-wrap items-center gap-4 border-t pt-8">
                 {p.url ? (

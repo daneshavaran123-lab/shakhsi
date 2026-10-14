@@ -9,6 +9,8 @@ images:
 - /images/projects/museum/images/1.webp
 fa:
   category: فرهنگی و موزه‌ای
+  client: فدراسیون کشتی ایران
+  role: طراحی و ساخت
   status: نسخه آنلاین
   summary: موزه دیجیتال تعاملی برای معرفی قهرمانان، تاریخچه و تألیفات کشتی. آواتار و کلیپ معرفی هر کشتی‌گیر، روایت اول‌شخص از زندگی و افتخارات او ارائه می‌کند.
   intro: موزه افتخارات کشتی ایران، روایت دیجیتال تاریخ و افتخارات این ورزش است. پروفایل قهرمانان در کنار تصاویر و آثار تاریخی، کلیپ‌های معرفی اول‌شخص با آواتار سخنگو را در اختیار بازدیدکننده قرار می‌دهد.
@@ -35,6 +37,8 @@ fa:
 en:
   title: Iran Wrestling Hall of Fame
   category: Culture & museums
+  client: Iran Wrestling Federation
+  role: Design & build
   status: Live
   summary: An interactive digital museum of wrestling champions, history and literature. Each champion’s avatar clip tells their life and achievements in the first person.
   intro: A digital narrative of the history and glory of Iranian wrestling. Champion profiles sit alongside historic images and artefacts, with first-person introduction clips voiced by talking avatars.

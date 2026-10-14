@@ -1,0 +1,22 @@
+title: DevOps Fundamentals
+order: 15
+image: /images/certificates/devops/image.webp
+skills:
+- DevOps
+- CI/CD
+- Automation
+fa:
+  field: دواپس و زیرساخت
+  issuer: فناوران آنیسا — خانه لینوکس ایران
+  summary: آشنایی با مبانی DevOps؛ همکاری تیم‌های توسعه و عملیات، خودکارسازی فرایندها و تحویل پیوسته نرم‌افزار.
+  meta:
+  - سپتامبر ۲۰۲۵
+  - 'کد تأیید: ILH6140742921798'
+en:
+  title: DevOps Fundamentals
+  field: DevOps & infrastructure
+  issuer: Fanavaran Anisa — Iran Linux House
+  summary: The foundations of DevOps — collaboration between development and operations, process automation and continuous software delivery.
+  meta:
+  - September 2025
+  - 'Verification: ILH6140742921798'

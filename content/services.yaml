@@ -1,0 +1,130 @@
+fa:
+  heading:
+  - از ایده تا کیوسکِ
+  - آماده‌ی بهره‌برداری.
+  intro: نرم‌افزار سفارشی می‌سازم، استند و کیوسک لمسی تأمین می‌کنم و هر دو را در قالب یک پکیج کامل تحویل می‌دهم؛ از کشف نیاز اصلی شما تا محصولی که روز اول آماده‌ی استفاده است.
+  items:
+  - title: نرم‌افزار سفارشی
+    body: طراحی و ساخت نرم‌افزار متناسب با فرایند و مخاطب شما؛ برای نمایشگر لمسی، کیوسک یا وب.
+    points:
+    - کشف نیاز و طراحی تجربه کاربری در Figma
+    - توسعه با Next.js، React و TypeScript
+    - پنل مدیریت محتوا و پایگاه داده
+  - title: استند و کیوسک لمسی
+    body: تأمین نمایشگر لمسی، استند و کیوسک از شرکت دانش‌آوران؛ متناسب با فضا و کاربرد شما.
+    points:
+    - میز لمسی کودک با لانچر امن (۲۲، ۳۲ و ۴۳ اینچ)
+    - نمایشگر لمسی ۶۵ اینچ برای اتاق مدیران و لابی
+    - کیوسک ایستاده و استند نمایشگاهی
+    - کیوسک مجهز به دوربین و میکروفون
+  - title: پکیج نرم‌افزار و سخت‌افزار
+    body: 'یک راهکار یکپارچه: سخت‌افزار، نرم‌افزار اختصاصی و محتوا، با هم و آماده‌ی استفاده.'
+    points:
+    - انتخاب سخت‌افزار متناسب با فضا
+    - نرم‌افزار و محتوای اختصاصی
+    - تحویل آماده‌ی بهره‌برداری
+  - title: تجربه‌های هوشمند
+    body: هوش مصنوعی و اتوماسیون در خدمت تجربه‌ای که مخاطب به خاطر می‌سپارد.
+    points:
+    - دستیار گفت‌وگومحور و آواتار سخنگو
+    - عکاسی و تصویرسازی هوشمند برای غرفه
+    - اتوماسیون فرایندها با n8n
+  packagesTitle: پکیج‌ها برای هر فضا
+  packages:
+  - title: کودک و آموزش
+    body: میز و کیوسک لمسی کودک با لانچر امن؛ طراحی‌شده از ایده تا محصول.
+    projects:
+    - kids
+  - title: موزه و فرهنگ
+    body: روایت چندرسانه‌ای، فروش بلیت و خدمات بازدیدکننده.
+    projects:
+    - museum
+    - ticket
+  - title: نمایشگاه و رویداد
+    body: جذب مخاطب به غرفه و معرفی هوشمند مجموعه‌ها.
+    projects:
+    - future
+    - fava
+  - title: اتاق مدیران و سازمان
+    body: میز کار دیجیتال برای جلسات، برنامه‌ریزی و تصمیم‌گیری.
+    projects:
+    - mora
+  - title: تالار و خدمات
+    body: پیشخوان دیجیتال رزرو و فروش خدمات.
+    projects:
+    - wedding
+  - title: مراکز خرید و فروشگاه
+    body: مسیریابی، معرفی فروشگاه‌ها و پرو مجازی.
+    projects:
+    - tecmall
+    - fitly
+  - title: اماکن عمومی و زیارتی
+    body: راهنمای گفت‌وگومحور برای مراجعه‌کنندگان.
+    projects:
+    - zaer
+  cta: برای سفارش نرم‌افزار، تهیه کیوسک یا یک پکیج کامل، تماس بگیرید؛ اول نیازتان را دقیق می‌شنوم.
+en:
+  heading:
+  - From idea to a kiosk
+  - that’s ready on day one.
+  intro: I build custom software, supply touch stands and kiosks, and deliver both as one complete package — from finding your real need to a product that works the day it arrives.
+  items:
+  - title: Custom software
+    body: Software designed and built around your process and your audience — for touch displays, kiosks or the web.
+    points:
+    - Discovery and UX design in Figma
+    - Built with Next.js, React and TypeScript
+    - Content management and database
+  - title: Touch stands & kiosks
+    body: Touch displays, stands and kiosks supplied through Daneshavaran, matched to your space and use.
+    points:
+    - Kids’ touch tables with a safe launcher (22″, 32″, 43″)
+    - 65″ touch displays for boardrooms and lobbies
+    - Free-standing kiosks and exhibition stands
+    - Kiosks with camera and microphone
+  - title: Software + hardware packages
+    body: 'One integrated solution: hardware, bespoke software and content, delivered together and ready to use.'
+    points:
+    - Hardware chosen for the space
+    - Bespoke software and content
+    - Delivered ready to run
+  - title: Smart experiences
+    body: AI and automation in service of an experience people remember.
+    points:
+    - Conversational assistants and talking avatars
+    - AI photo experiences for booths
+    - Process automation with n8n
+  packagesTitle: Packages for every space
+  packages:
+  - title: Kids & learning
+    body: Kids’ touch tables and kiosks with a safe launcher, designed from idea to product.
+    projects:
+    - kids
+  - title: Museums & culture
+    body: Multimedia storytelling, ticketing and visitor services.
+    projects:
+    - museum
+    - ticket
+  - title: Exhibitions & events
+    body: Drawing people to the booth and presenting collections smartly.
+    projects:
+    - future
+    - fava
+  - title: Boardrooms & organisations
+    body: A digital desk for meetings, planning and decisions.
+    projects:
+    - mora
+  - title: Venues & services
+    body: A digital front desk for bookings and service sales.
+    projects:
+    - wedding
+  - title: Malls & retail
+    body: Wayfinding, store discovery and virtual try-on.
+    projects:
+    - tecmall
+    - fitly
+  - title: Public & pilgrimage sites
+    body: A conversational guide for visitors.
+    projects:
+    - zaer
+  cta: To order software, source a kiosk or get a complete package, get in touch — I start by listening closely to what you need.

@@ -8,6 +8,7 @@ import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/rea
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useContent } from "@/content/provider";
 import { useI18n } from "@/i18n/provider";
+import { INTRO_SECONDS, introActive } from "@/components/intro";
 import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
 import { useTheme } from "@/components/providers/theme";
@@ -55,7 +56,8 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: 0.15 });
+        // Wait for the first-visit curtain when it is showing.
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: introActive() ? INTRO_SECONDS : 0.15 });
         tl.fromTo(".hero-canvas", { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 2.6 }, 0)
           .set("[data-split]", { autoAlpha: 1 }, 0)
           .fromTo(
@@ -166,7 +168,7 @@ export function Hero() {
             {profile[locale].tagline}
           </p>
 
-          <dl data-reveal className="flex gap-10 text-xs text-muted-foreground md:col-span-4 md:justify-center">
+          <dl data-reveal className="flex gap-10 text-xs text-muted-foreground md:col-span-3 md:justify-center">
             <div>
               <dt>{t.hero.projects}</dt>
               <dd className="mt-1 font-display text-5xl text-foreground">{n(projects.length)}</dd>
@@ -177,7 +179,7 @@ export function Hero() {
             </div>
           </dl>
 
-          <div data-reveal className="flex items-center gap-3 md:col-span-3 md:justify-end">
+          <div data-reveal className="flex flex-wrap items-center gap-3 md:col-span-4 md:justify-end">
             <Magnetic>
               <a
                 href="#work"
@@ -189,6 +191,12 @@ export function Hero() {
                 </span>
               </a>
             </Magnetic>
+            <a
+              href="#services"
+              className="inline-flex h-12 items-center rounded-full px-5 text-sm ring-1 ring-border transition-colors duration-500 hover:bg-foreground hover:text-background"
+            >
+              {t.hero.order}
+            </a>
           </div>
         </div>
       </div>

@@ -1,29 +1,127 @@
+portrait: /images/profile/portrait.webp
 email: nargestabatabaii679@gmail.com
+phone: '09151236596'
+linkedin: https://www.linkedin.com/in/narges-tabatabaii-a16b48284/
+telegram: nargestabatabaii
+companyUrl: https://www.daneshavaran.ir
+resumeFa: /files/narges-jafar-tabatabaei-resume-fa.pdf
+resumeEn: /files/narges-jafar-tabatabaei-resume-en.pdf
+stack:
+- group: طراحی
+  groupEn: Design
+  items:
+  - Figma
+  - Blender
+- group: فرانت‌اند
+  groupEn: Frontend
+  items:
+  - Next.js
+  - React
+- group: مهندسی
+  groupEn: Engineering
+  items:
+  - TypeScript
+- group: مهندسی طراحی
+  groupEn: Design Engineering
+  items:
+  - Tailwind CSS
+- group: سامانه طراحی
+  groupEn: Design Systems
+  items:
+  - shadcn/ui
+  - Material Design 3
+- group: داده
+  groupEn: Data
+  items:
+  - PostgreSQL
+  - Prisma
+- group: اتوماسیون
+  groupEn: Automation
+  items:
+  - n8n
+- group: توسعه با هوش مصنوعی
+  groupEn: AI Development
+  items:
+  - Cursor
 available: true
-specialistFields: 6
+specialistFields: 7
 fa:
-  tagline: طراح محصول و تجربه‌های دیجیتال تعاملی؛ از نمایشگر لمسی ۶۵ اینچی اتاق مدیران تا کیوسک موزه — طراحی برای مسئله واقعی، با سادگی و کارایی.
+  tagline: مدیر محصول و قائم‌مقام مدیرعامل دانش‌آوران؛ نرم‌افزارهایی می‌سازم که به نمایشگرهای لمسی ارزش افزوده می‌دهند — از اتاق مدیران تا موزه.
   about:
-  - طراحی و توسعه راهکارهای دیجیتال برای مدیریت، خدمات عمومی، موزه‌ها، فروشگاه‌ها و فضاهای تعاملی.
-  - هدف هر پروژه، ساده‌ترکردن یک فرایند و ساختن تجربه‌ای روشن و قابل فهم برای کاربر است.
+  - نرگس جعفر طباطبایی هستم؛ قائم‌مقام مدیرعامل شرکت دانش‌آوران و مدرس دانشگاه.
+  - نرم‌افزارهایی می‌سازم که نمایشگر لمسی را از یک سخت‌افزار، به ابزاری کاربردی تبدیل می‌کنند.
+  bio: سه‌چهار سال است در حوزه نرم‌افزار و مدیریت محصول کار می‌کنم. شرکت دانش‌آوران نمایشگرهای لمسی عرضه می‌کند و کار من ساختن نرم‌افزارهایی است که روی همین نمایشگرها ارزش افزوده ایجاد می‌کنند. اپلیکیشن‌های این سایت را خودم و به سفارش کارفرمایان مختلف طراحی و ساخته‌ام — از فدراسیون کشتی تا پارک فناوری فاوا. میزها و کیوسک‌های لمسی کودک دانش‌آوران را هم، از ایده تا طراحی محصول و هم سخت‌افزار و هم نرم‌افزار، خودم طراحی کرده‌ام. مدتی هم برندینگ شرکت را بر عهده داشتم و شش سال است در دانشگاه تدریس می‌کنم.
   principles:
-  - title: مسئله واقعی
-    body: هر پروژه از یک گره مشخص شروع می‌شود؛ جلسه‌ای که آماده نیست، بازدیدکننده‌ای که مسیر را گم کرده، سفارشی که پیچیده است.
-  - title: سادگی
-    body: رابطی که روی نمایشگر عمومی کار می‌کند باید در چند ثانیه فهمیده شود — بدون راهنما، بدون حدس.
-  - title: کارایی
-    body: از ایده تا نسخه قابل استفاده؛ محصولی که روی سخت‌افزار واقعی، در فضای واقعی اجرا می‌شود.
+  - title: تفکر عمیق
+    body: پیش از طراحی، مسئله را از چند زاویه می‌کاوم و تا وقتی تصویر روشنی از آن نداشته باشم، سراغ راه‌حل نمی‌روم.
+  - title: کشف نیاز اصلی مخاطب
+    body: آنچه مخاطب می‌گوید با آنچه واقعاً لازم دارد همیشه یکی نیست؛ کار من پیدا کردن همان نیاز اصلی است.
+  - title: از ایده تا اجرا
+    body: محصول را تا جایی پیش می‌برم که روی نمایشگر واقعی، در فضای واقعی و برای کاربر واقعی کار کند.
+  experience:
+  - title: قائم‌مقام مدیرعامل
+    org: شرکت دانش‌آوران
+    period: اکنون
+    url: https://www.daneshavaran.ir
+  - title: نرم‌افزار و مدیریت محصول
+    org: شرکت دانش‌آوران
+    period: ۳ تا ۴ سال
+  - title: برندینگ
+    org: شرکت دانش‌آوران
+    period: ''
+  - title: مدرس دانشگاه
+    org: ''
+    period: ۶ سال
+  education:
+  - degree: دکترا
+    school: دانشگاه پیام نور
+  - degree: کارشناسی ارشد
+    school: دانشگاه علامه طباطبایی
+  - degree: کارشناسی
+    school: دانشگاه فردوسی مشهد
+  languages:
+  - name: انگلیسی
+    level: متوسط
+  - name: عربی
+    level: متوسط
   fields: 'حوزه‌های کاری: نرم‌افزارهای تحت وب، طراحی رابط و تجربه کاربری، هوش مصنوعی کاربردی، راهکارهای نمایشگر لمسی، کیوسک‌های اطلاع‌رسانی و سامانه‌های خدماتی. در پروژه‌های مرتبط، سخت‌افزارهای تعاملی KARAKO بستر اجرای محصول هستند.'
 en:
-  tagline: Product and interactive experience designer — from 65″ touch displays in boardrooms to museum kiosks. Designing for real problems, with simplicity and purpose.
+  tagline: Product manager and Deputy CEO at Daneshavaran. I build software that turns touch displays into genuinely useful tools — from boardrooms to museums.
   about:
-  - Designing and building digital solutions for management, public services, museums, retail and interactive spaces.
-  - Every project sets out to simplify one process and leave the user with a clear, understandable experience.
+  - I’m Narges Jafar Tabatabaei — Deputy CEO at Daneshavaran and a university lecturer.
+  - I build software that turns a touch display from a piece of hardware into a tool people actually use.
+  bio: For the past three to four years I’ve worked in software and product management. Daneshavaran supplies touch displays, and my work is building the software that adds value on top of them. I designed and built the apps on this site myself, commissioned by a range of clients — from the Iran Wrestling Federation to Fava Technology Park. I also designed Daneshavaran’s kids’ touch tables and kiosks from idea to product, hardware and software alike. I also led the company’s branding for a time, and I’ve been teaching at university for six years.
   principles:
-  - title: Real problems
-    body: Each project starts from a concrete knot — a meeting nobody prepared for, a visitor who lost their way, an order that got complicated.
-  - title: Simplicity
-    body: An interface on a public screen has to make sense in seconds — no manual, no guessing.
-  - title: Usefulness
-    body: From idea to a working release — products that run on real hardware, in real spaces.
+  - title: Deep thinking
+    body: Before designing anything I look at the problem from several angles, and I don’t reach for a solution until the picture is clear.
+  - title: Finding the real need
+    body: What people ask for and what they actually need aren’t always the same. My job is to find that core need.
+  - title: From idea to install
+    body: I take a product all the way to running on a real display, in a real space, for real users.
+  experience:
+  - title: Deputy CEO
+    org: Daneshavaran
+    period: Present
+    url: https://www.daneshavaran.ir
+  - title: Software & product management
+    org: Daneshavaran
+    period: 3–4 years
+  - title: Branding
+    org: Daneshavaran
+    period: ''
+  - title: University lecturer
+    org: ''
+    period: 6 years
+  education:
+  - degree: PhD
+    school: Payame Noor University
+  - degree: MSc
+    school: Allameh Tabataba’i University
+  - degree: BSc
+    school: Ferdowsi University of Mashhad
+  languages:
+  - name: English
+    level: Intermediate
+  - name: Arabic
+    level: Intermediate
   fields: 'Fields: web software, UI and UX design, applied AI, touch-display solutions, information kiosks and service systems. Where relevant, KARAKO interactive hardware is the platform the products run on.'

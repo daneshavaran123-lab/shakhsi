@@ -9,6 +9,7 @@ import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
  *  - [data-split="rise"]   words rise out of their masks
  *  - [data-split="scrub"]  words ink in as the paragraph scrolls past
  *  - [data-reveal]         fade/slide up, staggered per [data-reveal-group]
+ *  - [data-portrait]       clip-path curtain reveal
  *  - [data-parallax]       slow drift, speed from the attribute value
  */
 export function useSectionMotion(scope: RefObject<HTMLElement | null>) {
@@ -89,6 +90,20 @@ export function useSectionMotion(scope: RefObject<HTMLElement | null>) {
                 ease: "power4.out",
                 stagger: 0.08,
                 scrollTrigger: { trigger, start: "top 86%", once: true },
+              },
+            );
+          });
+
+          // Portraits and other framed media open like a curtain, from the bottom.
+          gsap.utils.toArray<HTMLElement>("[data-portrait]", root).forEach((el) => {
+            gsap.fromTo(
+              el,
+              { clipPath: "inset(100% 0% 0% 0% round 1rem)" },
+              {
+                clipPath: "inset(0% 0% 0% 0% round 1rem)",
+                duration: 1.4,
+                ease: "expo.out",
+                scrollTrigger: { trigger: el, start: "top 85%", once: true },
               },
             );
           });
