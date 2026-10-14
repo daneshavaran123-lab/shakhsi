@@ -9,6 +9,8 @@ images:
 - /images/projects/mora/images/1.webp
 fa:
   category: مدیریت هوشمند
+  client: دکتر کرباسی — تجهیزات پزشکی ورید
+  role: طراحی و ساخت
   status: نسخه آنلاین
   summary: محیط دیجیتال یکپارچه برای برنامه‌ریزی فردی و سازمانی، مدیریت جلسات، وظایف، پروژه‌ها و دسترسی سریع مدیران به اطلاعات موردنیاز تصمیم‌گیری.
   intro: مُورا یک فضای کاری متمرکز برای مدیرانی است که تصمیم‌ها، جلسات، وظایف و اطلاعات سازمانی را در چند ابزار متفاوت مدیریت می‌کنند. محیط واحد آن برای مرور روزانه امور و آماده‌سازی جلسات طراحی شده است.
@@ -34,6 +36,8 @@ fa:
 en:
   title: MORA — Executive Second Brain
   category: Smart management
+  client: Dr. Karbasi — Varid Medical Equipment
+  role: Design & build
   status: Live
   summary: A unified digital workspace for personal and organisational planning — meetings, tasks, projects and the information executives need to make decisions, in one place.
   intro: MORA is a focused workspace for executives who juggle decisions, meetings, tasks and organisational knowledge across too many tools. One environment for the daily review and for walking into every meeting prepared.

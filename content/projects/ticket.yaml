@@ -9,6 +9,8 @@ images:
 - /images/projects/ticket/images/1.webp
 fa:
   category: فروش و خدمات
+  client: فدراسیون کشتی ایران
+  role: طراحی و ساخت
   status: نسخه آنلاین
   summary: پرتال خدمات موزه کشتی برای معرفی انواع بلیت، فروشگاه کتاب و یادبود، کافه، عضویت سالانه، رویدادها، حمایت مالی و نظرسنجی بازدیدکنندگان.
   intro: موزه‌یار، میز خدمات دیجیتال موزه کشتی است که معرفی انواع بلیت و خدمات جانبی مجموعه را در یک محیط لمسی گرد هم می‌آورد و امکان ثبت حمایت و دریافت نظر بازدیدکنندگان را فراهم می‌کند.
@@ -36,6 +38,8 @@ fa:
 en:
   title: MuseumYar — Visitor Services
   category: Sales & services
+  client: Iran Wrestling Federation
+  role: Design & build
   status: Live
   summary: 'A service portal for the wrestling museum: tickets, book and souvenir shop, café, annual membership, events, donations and visitor feedback.'
   intro: MuseumYar is the museum’s digital service desk — tickets and visitor services gathered on one touch screen, with donations and feedback built in.

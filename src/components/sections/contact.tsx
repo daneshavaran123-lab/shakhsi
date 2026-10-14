@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUp, Check, Copy } from "lucide-react";
+import { ArrowUp, Check, Copy, Phone } from "lucide-react";
 
 import { useContent } from "@/content/provider";
 import { Split } from "@/components/motion/split";
@@ -20,6 +20,21 @@ export function Contact() {
   const root = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
   const lenis = useLenis();
+
+  // 0915… → +98915… for the tel: link; grouped digits for display.
+  const digits = profile.phone.replace(/\D/g, "");
+  const phone = digits
+    ? {
+        intl: digits.startsWith("0") ? `+98${digits.slice(1)}` : `+${digits}`,
+        display:
+          locale === "fa"
+            ? n(digits.replace(/^(\d{4})(\d{3})(\d{4})$/, "$1 $2 $3"))
+            : (digits.startsWith("0") ? `+98 ${digits.slice(1)}` : `+${digits}`).replace(
+                /^(\+98) (\d{3})(\d{3})(\d{4})$/,
+                "$1 $2 $3 $4",
+              ),
+      }
+    : null;
   useSectionMotion(root);
 
   const copy = async () => {
@@ -105,6 +120,18 @@ export function Contact() {
                 )}
               </AnimatePresence>
             </button>
+            {phone && (
+              <a
+                href={`tel:${phone.intl}`}
+                aria-label={`${t.contact.call}: ${phone.display}`}
+                className="group inline-flex h-11 basis-full items-center justify-start gap-3 md:justify-end"
+              >
+                <span className="grid size-11 place-items-center rounded-full ring-1 ring-border transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
+                  <Phone className="size-4" />
+                </span>
+                <span className="link-draw ltr font-mono text-[clamp(1rem,2.2vw,1.6rem)]">{phone.display}</span>
+              </a>
+            )}
           </div>
         </div>
 

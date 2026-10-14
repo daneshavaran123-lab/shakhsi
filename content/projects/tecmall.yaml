@@ -8,6 +8,8 @@ images:
 - /images/projects/tecmall/images/1.webp
 fa:
   category: مسیریابی و خدمات
+  client: ''
+  role: طراحی و ساخت
   status: نسخه نمایشی
   summary: راهنمای هوشمند مجتمع‌های تجاری با نقشه‌های دوبعدی و سه‌بعدی، مسیریابی در طبقات، جست‌وجوی فروشگاه‌ها و نمایش خدمات و پیشنهادهای ویژه.
   intro: تک‌مال یک سامانه راهنمای دیجیتال مراکز خرید است که خدمات جست‌وجوی فروشگاه، مسیریابی داخلی، نمایش مدل سه‌بعدی مجتمع و اطلاع‌رسانی رفاهی را در یک تجربه واحد کنار هم قرار می‌دهد.
@@ -35,6 +37,8 @@ fa:
 en:
   title: TECMALL — Mall Wayfinding
   category: Wayfinding & services
+  client: ''
+  role: Design & build
   status: Demo
   summary: A smart guide for shopping centres — 2D and 3D maps, multi-floor wayfinding, store search, amenities and featured offers.
   intro: TECMALL brings store search, indoor wayfinding, a 3D model of the mall and visitor information together into one experience.

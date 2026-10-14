@@ -27,6 +27,8 @@ const projectCopy = (lang: "fa" | "en") => {
     {
       ...(fa ? {} : { title: fields.text({ label: "Title", validation: { isRequired: true } }) }),
       category: fields.text({ label: fa ? "دسته" : "Category" }),
+      client: fields.text({ label: fa ? "کارفرما (اختیاری)" : "Client (optional)" }),
+      role: fields.text({ label: fa ? "نقش من در پروژه" : "My role" }),
       status: fields.text({ label: fa ? "وضعیت (مثلاً نسخه آنلاین)" : "Status (e.g. Live)" }),
       summary: fields.text({ label: fa ? "خلاصه یک‌خطی" : "One-line summary", multiline: true }),
       intro: fields.text({ label: fa ? "معرفی" : "Introduction", multiline: true }),
@@ -52,6 +54,48 @@ const certCopy = (lang: "fa" | "en") => {
       meta: list(fa ? "برچسب‌ها (مدت، تاریخ، ...)" : "Tags (duration, date, …)", fa ? "برچسب" : "Tag"),
     },
     { label: fa ? "محتوای فارسی" : "English content" },
+  );
+};
+
+const profileCopy = (lang: "fa" | "en") => {
+  const fa = lang === "fa";
+  return fields.object(
+    {
+      tagline: fields.text({ label: fa ? "متن معرفی زیر نام" : "Tagline", multiline: true }),
+      about: list(fa ? "جمله‌های بزرگ بخش درباره" : "Large About statements", fa ? "جمله" : "Sentence"),
+      bio: fields.text({ label: fa ? "معرفی کامل (درباره من)" : "Bio (About me)", multiline: true }),
+      principles: fields.array(
+        fields.object({
+          title: fields.text({ label: fa ? "عنوان" : "Title" }),
+          body: fields.text({ label: fa ? "متن" : "Body", multiline: true }),
+        }),
+        { label: fa ? "شیوه کار من (کارت‌ها)" : "How I work (cards)", itemLabel: (p) => p.fields.title.value || "—" },
+      ),
+      experience: fields.array(
+        fields.object({
+          title: fields.text({ label: fa ? "سمت" : "Role" }),
+          org: fields.text({ label: fa ? "سازمان" : "Organisation" }),
+          period: fields.text({ label: fa ? "مدت یا بازه" : "Period" }),
+        }),
+        { label: fa ? "سوابق" : "Experience", itemLabel: (p) => p.fields.title.value || "—" },
+      ),
+      education: fields.array(
+        fields.object({
+          degree: fields.text({ label: fa ? "مقطع" : "Degree" }),
+          school: fields.text({ label: fa ? "دانشگاه" : "University" }),
+        }),
+        { label: fa ? "تحصیلات" : "Education", itemLabel: (p) => p.fields.degree.value || "—" },
+      ),
+      languages: fields.array(
+        fields.object({
+          name: fields.text({ label: fa ? "زبان" : "Language" }),
+          level: fields.text({ label: fa ? "سطح" : "Level" }),
+        }),
+        { label: fa ? "زبان‌ها" : "Languages", itemLabel: (p) => p.fields.name.value || "—" },
+      ),
+      fields: fields.text({ label: fa ? "حوزه‌های کاری" : "Fields of work", multiline: true }),
+    },
+    { label: fa ? "فارسی" : "English" },
   );
 };
 
@@ -148,38 +192,12 @@ export default config({
           publicPath: "/images/profile/",
         }),
         email: fields.text({ label: "ایمیل", validation: { isRequired: true } }),
+        phone: fields.text({ label: "شماره تماس", description: "مثلاً 09151236596" }),
+        tools: list("ابزارها", "ابزار"),
         available: fields.checkbox({ label: "نشان «آماده همکاری» نمایش داده شود", defaultValue: true }),
         specialistFields: fields.integer({ label: "تعداد حوزه‌های تخصصی (آمار بخش آموزش)", defaultValue: 6 }),
-        fa: fields.object(
-          {
-            tagline: fields.text({ label: "متن معرفی زیر نام", multiline: true }),
-            about: list("پاراگراف‌های درباره", "جمله"),
-            principles: fields.array(
-              fields.object({
-                title: fields.text({ label: "عنوان" }),
-                body: fields.text({ label: "متن", multiline: true }),
-              }),
-              { label: "اصول کاری (کارت‌ها)", itemLabel: (p) => p.fields.title.value || "کارت" },
-            ),
-            fields: fields.text({ label: "حوزه‌های کاری", multiline: true }),
-          },
-          { label: "فارسی" },
-        ),
-        en: fields.object(
-          {
-            tagline: fields.text({ label: "Tagline", multiline: true }),
-            about: list("About paragraphs", "Sentence"),
-            principles: fields.array(
-              fields.object({
-                title: fields.text({ label: "Title" }),
-                body: fields.text({ label: "Body", multiline: true }),
-              }),
-              { label: "Principles (cards)", itemLabel: (p) => p.fields.title.value || "Card" },
-            ),
-            fields: fields.text({ label: "Fields of work", multiline: true }),
-          },
-          { label: "English" },
-        ),
+        fa: profileCopy("fa"),
+        en: profileCopy("en"),
       },
     }),
   },

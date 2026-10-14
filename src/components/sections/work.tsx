@@ -170,7 +170,12 @@ export function Work() {
                       <span className="block font-display text-[clamp(1.8rem,3.4vw,3.4rem)] leading-tight transition-transform duration-700 ease-out-expo group-hover:translate-x-3 group-focus-visible:translate-x-3 rtl:group-hover:-translate-x-3 rtl:group-focus-visible:-translate-x-3">
                         {copy.title}
                       </span>
-                      <span className="mt-1 block text-sm text-muted-foreground md:hidden">{copy.category}</span>
+                      <span className="mt-1 block text-sm text-muted-foreground md:hidden">
+                        {copy.client || copy.category}
+                      </span>
+                      {copy.client && (
+                        <span className="mt-1 hidden text-sm text-muted-foreground md:block">{copy.client}</span>
+                      )}
                     </span>
 
                     <span className="relative hidden text-sm leading-6 text-muted-foreground md:col-span-4 md:block">

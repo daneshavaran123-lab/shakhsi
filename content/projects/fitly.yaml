@@ -8,6 +8,8 @@ images:
 - /images/projects/fitly/images/1.webp
 fa:
   category: مد و خرده‌فروشی
+  client: پروژه مشترک — پرودمی
+  role: طراحی و ساخت
   status: نسخه نمایشی
   summary: تجربه پرو مجازی پوشاک و انتخاب استایل با پشتیبانی از کمد دیجیتال، ثبت تصویر، پیشنهاد ست لباس و مشاوره تعاملی.
   intro: فیتلی یک دستیار دیجیتال انتخاب پوشاک است که کمد لباس شخصی، پیشنهاد ترکیب‌های پوششی، مشاوره استایل و مسیر پرو مجازی را در کنار هم قرار می‌دهد.
@@ -34,6 +36,8 @@ fa:
 en:
   title: FITLY — Virtual Try-on
   category: Fashion & retail
+  client: Joint project — Prodemy
+  role: Design & build
   status: Demo
   summary: A virtual try-on and styling experience — a digital wardrobe, photo capture, outfit suggestions and interactive styling advice.
   intro: FITLY is a digital styling assistant that brings a personal wardrobe, outfit suggestions, style advice and a virtual try-on flow together.

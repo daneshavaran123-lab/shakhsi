@@ -119,6 +119,23 @@ export function ProjectSheet({
                 )}
               </motion.div>
 
+              {(copy.client || copy.role) && (
+                <motion.dl variants={item} className="mt-6 flex flex-wrap gap-x-10 gap-y-3 text-sm">
+                  {copy.client && (
+                    <div>
+                      <dt className="text-[0.72rem] text-accent">{t.sheet.client}</dt>
+                      <dd className="mt-1 text-foreground">{copy.client}</dd>
+                    </div>
+                  )}
+                  {copy.role && (
+                    <div>
+                      <dt className="text-[0.72rem] text-accent">{t.sheet.role}</dt>
+                      <dd className="mt-1 text-foreground">{copy.role}</dd>
+                    </div>
+                  )}
+                </motion.dl>
+              )}
+
               <motion.div variants={item}>
                 <DialogDescription id="project-intro" className="mt-8 max-w-2xl text-lg leading-9 text-foreground-2">
                   {copy.intro}

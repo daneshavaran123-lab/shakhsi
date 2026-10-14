@@ -58,7 +58,45 @@ export function About() {
             lines={copy.about}
           />
 
-          <div data-reveal-group className="mt-20 grid gap-4 sm:grid-cols-3">
+          {copy.bio && (
+            <p data-reveal className="mt-12 max-w-3xl text-lg leading-9 text-foreground-2 md:text-xl md:leading-10">
+              {copy.bio}
+            </p>
+          )}
+
+          {/* At-a-glance facts: experience, education, tools, languages. */}
+          <div data-reveal-group className="mt-16 grid gap-4 lg:grid-cols-2">
+            <FactCard title={t.about.experience}>
+              {copy.experience.map((e) => (
+                <FactRow key={e.title + e.org} primary={e.title} secondary={e.org} aside={e.period} />
+              ))}
+            </FactCard>
+            <FactCard title={t.about.education}>
+              {copy.education.map((e) => (
+                <FactRow key={e.degree} primary={e.degree} secondary={e.school} />
+              ))}
+            </FactCard>
+            <FactCard title={t.about.tools}>
+              <li className="flex flex-wrap gap-2 py-3">
+                {profile.tools.map((tool) => (
+                  <span key={tool} className="ltr rounded-full bg-foreground/[0.07] px-3 py-1.5 text-sm">
+                    {tool}
+                  </span>
+                ))}
+              </li>
+            </FactCard>
+            <FactCard title={t.about.languages}>
+              {copy.languages.map((l) => (
+                <FactRow key={l.name} primary={l.name} aside={l.level} />
+              ))}
+            </FactCard>
+          </div>
+
+          <h3 data-reveal className="mt-20 flex items-center gap-3 text-sm text-foreground-2">
+            <span className="h-px w-8 bg-accent" />
+            {t.about.approach}
+          </h3>
+          <div data-reveal-group className="mt-6 grid gap-4 sm:grid-cols-3">
             {copy.principles.map((p, i) => (
               <article
                 key={p.title}
@@ -82,5 +120,26 @@ export function About() {
         </div>
       </div>
     </section>
+  );
+}
+
+function FactCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section data-reveal className="edge rounded-xl bg-card/60 p-6 md:p-7">
+      <h3 className="text-xs text-accent">{title}</h3>
+      <ul className="mt-3 divide-y divide-border">{children}</ul>
+    </section>
+  );
+}
+
+function FactRow({ primary, secondary, aside }: { primary: string; secondary?: string; aside?: string }) {
+  return (
+    <li className="flex items-baseline justify-between gap-4 py-3">
+      <span>
+        <span className="block font-display text-2xl leading-tight">{primary}</span>
+        {secondary && <span className="mt-0.5 block text-sm text-muted-foreground">{secondary}</span>}
+      </span>
+      {aside && <span className="shrink-0 font-mono text-xs text-muted-foreground">{aside}</span>}
+    </li>
   );
 }

@@ -74,12 +74,18 @@ export const getContent = cache(async (): Promise<SiteContent> => {
   const copy = (p: typeof profileEntry.fa) => ({
     tagline: p.tagline,
     about: [...p.about],
+    bio: p.bio,
     principles: p.principles.map((x) => ({ ...x })),
+    experience: p.experience.map((x) => ({ ...x })),
+    education: p.education.map((x) => ({ ...x })),
+    languages: p.languages.map((x) => ({ ...x })),
     fields: p.fields,
   });
   const profile: Profile = {
     portrait: (await toImg(profileEntry.portrait)) ?? undefined,
     email: profileEntry.email,
+    phone: profileEntry.phone,
+    tools: [...profileEntry.tools],
     available: profileEntry.available,
     specialistFields: profileEntry.specialistFields ?? 6,
     fa: copy(profileEntry.fa),

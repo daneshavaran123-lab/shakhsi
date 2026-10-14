@@ -8,6 +8,8 @@ export type ProjectGroup = (typeof projectGroups)[number];
 export type ProjectCopy = {
   title: string;
   category: string;
+  client: string;
+  role: string;
   status: string;
   summary: string;
   intro: string;
@@ -47,13 +49,19 @@ export type Certificate = {
 export type ProfileCopy = {
   tagline: string;
   about: string[];
+  bio: string;
   principles: { title: string; body: string }[];
+  experience: { title: string; org: string; period: string }[];
+  education: { degree: string; school: string }[];
+  languages: { name: string; level: string }[];
   fields: string;
 };
 
 export type Profile = {
   portrait?: Img;
   email: string;
+  phone: string;
+  tools: string[];
   available: boolean;
   specialistFields: number;
 } & Record<Locale, ProfileCopy>;
