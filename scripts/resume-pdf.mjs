@@ -43,6 +43,12 @@ mkdirSync(outDir, { recursive: true });
 const browser = await chromium.launch({ executablePath });
 for (const locale of ["fa", "en"]) {
   const page = await browser.newPage({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 2 });
+  // The site opens at night; the résumé is printed (and previewed) on paper.
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem("theme", "light");
+    } catch {}
+  });
   await page.goto(pathToFileURL(path.join(root, "html", `${locale}-resume.html`)).href, { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
   const pdf = path.join(outDir, `narges-jafar-tabatabaei-resume-${locale}.pdf`);

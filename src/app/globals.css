@@ -97,21 +97,21 @@
 
   --font-sans: var(--font-body);
   --font-display: var(--font-head);
-  --font-serif: var(--font-instrument), Georgia, serif;
-  --font-fa: var(--font-markazi), var(--font-vazir), serif;
-  --font-mono: var(--font-jetbrains), var(--font-vazir), ui-monospace, monospace;
+  --font-serif: var(--font-bodoni), Georgia, serif;
+  --font-fa: var(--font-naskh), var(--font-estedad), serif;
+  --font-mono: var(--font-plex-mono), var(--font-estedad), ui-monospace, monospace;
 
   --ease-out-expo: var(--ease-out-expo);
 }
 
 /* Per-language type: Persian reads in Vazirmatn + Markazi, English in Geist + Instrument Serif. */
 html[lang="fa"] {
-  --font-body: var(--font-vazir), system-ui, sans-serif;
-  --font-head: var(--font-markazi), var(--font-vazir), serif;
+  --font-body: var(--font-estedad), system-ui, sans-serif;
+  --font-head: var(--font-naskh), var(--font-estedad), serif;
 }
 html[lang="en"] {
-  --font-body: var(--font-geist), system-ui, sans-serif;
-  --font-head: var(--font-instrument), Georgia, serif;
+  --font-body: var(--font-schibsted), system-ui, sans-serif;
+  --font-head: var(--font-bodoni), Georgia, serif;
 }
 
 @layer base {
@@ -209,8 +209,10 @@ html.has-motion [data-image-reveal] {
   overflow: clip;
   overflow-clip-margin: 0.25em;
   vertical-align: top;
-  padding-block: 0.1em;
-  margin-block: -0.1em;
+  /* Room for tall Naskh ascenders and Bodoni italic overhangs; the negative
+     margins cancel it out so lines and words keep their spacing. */
+  padding: 0.22em 0.12em 0.12em;
+  margin: -0.22em -0.12em -0.12em;
 }
 
 .split-word {
@@ -275,6 +277,13 @@ html.has-motion [data-image-reveal] {
   background-clip: text;
   color: transparent;
   animation: foil 9s ease-in-out infinite alternate;
+}
+/* The gradient only paints inside each word's box; extend the box (and
+   cancel it with margins) so tall ascenders, descenders and italic
+   overhangs are filled too. */
+.foil .split-word {
+  padding: 0.24em 0.14em 0.2em;
+  margin: -0.24em -0.14em -0.2em;
 }
 @keyframes foil {
   to {

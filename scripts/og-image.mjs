@@ -56,23 +56,22 @@ const copy = {
 };
 
 const page = (l) => `<!doctype html><html lang="${l}"><head><meta charset="utf-8"><style>
-@font-face{font-family:Markazi;src:url(${font("markazi-text-arabic-wght-normal.woff2")});font-weight:400 700}
-@font-face{font-family:Markazi;src:url(${font("markazi-text-latin-wght-normal.woff2")});font-weight:400 700}
-@font-face{font-family:Vazir;src:url(${font("vazirmatn-arabic-wght-normal.woff2")});font-weight:100 900}
-@font-face{font-family:Vazir;src:url(${font("vazirmatn-latin-wght-normal.woff2")});font-weight:100 900}
-@font-face{font-family:Instrument;src:url(${font("instrument-serif-latin-400-normal.woff2")})}
-@font-face{font-family:Instrument;font-style:italic;src:url(${font("instrument-serif-latin-400-italic.woff2")})}
-@font-face{font-family:Geist;src:url(${font("geist-variable.woff2")});font-weight:100 900}
+@font-face{font-family:OgNaskh;src:url(${font("noto-naskh-arabic-arabic-wght-normal.woff2")});font-weight:400 700}
+@font-face{font-family:Estedad;src:url(${font("estedad-arabic-wght-normal.woff2")});font-weight:100 900}
+@font-face{font-family:Estedad;src:url(${font("estedad-latin-wght-normal.woff2")});font-weight:100 900}
+@font-face{font-family:Bodoni;src:url(${font("bodoni-moda-latin-wght-normal.woff2")});font-weight:400 900}
+@font-face{font-family:Bodoni;font-style:italic;src:url(${font("bodoni-moda-latin-wght-italic.woff2")});font-weight:400 900}
+@font-face{font-family:Schibsted;src:url(${font("schibsted-grotesk-latin-wght-normal.woff2")});font-weight:400 900}
 *{margin:0;box-sizing:border-box}
 body{width:1200px;height:630px;overflow:hidden}
-.card{position:relative;width:1200px;height:630px;overflow:hidden;background:#0b0b0c;color:#ede8df;font-family:${l === "fa" ? "Vazir" : "Geist"},sans-serif}
+.card{position:relative;width:1200px;height:630px;overflow:hidden;background:#0b0b0c;color:#ede8df;font-family:${l === "fa" ? "Estedad" : "Schibsted"},sans-serif}
 .glow{position:absolute;inset:auto;width:900px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(216,187,138,.22),transparent);${l === "fa" ? "left" : "right"}:-250px;top:-300px}
 .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(237,232,223,.12) 1px,transparent 1.4px);background-size:22px 22px;mask-image:linear-gradient(${l === "fa" ? "to left" : "to right"},black,transparent 70%)}
 .wrap{position:relative;height:100%;display:flex;align-items:center;gap:64px;padding:72px 80px}
 .text{flex:1;min-width:0}
 .tag{display:flex;align-items:center;gap:14px;font-size:22px;color:#d8bb8a}
 .tag i{display:block;width:44px;height:1px;background:#d8bb8a}
-h1{margin-top:28px;font-family:${l === "fa" ? "Markazi" : "Instrument"},serif;font-weight:${l === "fa" ? 600 : 400};font-size:${l === "fa" ? 118 : 104}px;line-height:.92}
+h1{margin-top:28px;font-family:${l === "fa" ? "OgNaskh" : "Bodoni"},serif;font-weight:${l === "fa" ? 500 : 400};font-size:${l === "fa" ? 118 : 104}px;line-height:.92}
 h1 span{display:block;background:linear-gradient(100deg,#ede8df,#d8bb8a 55%,#f3e2c2);-webkit-background-clip:text;color:transparent;${l === "en" ? "font-style:italic;" : ""}}
 .role{margin-top:30px;font-size:28px;color:#c4beb3}
 .line{margin-top:40px;padding-top:24px;border-top:1px solid rgba(237,232,223,.12);font-size:20px;color:#8d877c}
@@ -89,6 +88,10 @@ const browser = await chromium.launch({ executablePath });
 const tab = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 for (const l of ["fa", "en"]) {
   await tab.setContent(page(l), { waitUntil: "load" });
+  // Load the heading faces explicitly; fonts.ready alone can resolve first.
+  await tab.evaluate(() =>
+    Promise.all(["500 118px OgNaskh", "400 104px Bodoni", "italic 400 104px Bodoni"].map((f) => document.fonts.load(f, "نرگس Narges"))),
+  );
   await tab.evaluate(() => document.fonts.ready);
   await tab.screenshot({ path: path.join(outDir, `${l}.png`) });
   console.log(`public/og/${l}.png`);
