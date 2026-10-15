@@ -13,44 +13,50 @@ import { I18nProvider } from "@/i18n/provider";
 import { siteUrl } from "@/lib/site";
 import "../globals.css";
 
-const vazir = localFont({
+// Type: Persian pairs a classical Naskh for headings with Estedad for text;
+// English pairs Bodoni Moda with Schibsted Grotesk. IBM Plex Mono for labels.
+const estedad = localFont({
   src: [
-    { path: "../../fonts/vazirmatn-arabic-wght-normal.woff2", weight: "100 900" },
-    { path: "../../fonts/vazirmatn-latin-wght-normal.woff2", weight: "100 900" },
+    { path: "../../fonts/estedad-arabic-wght-normal.woff2", weight: "100 900" },
+    { path: "../../fonts/estedad-latin-wght-normal.woff2", weight: "100 900" },
   ],
-  variable: "--font-vazir",
+  variable: "--font-estedad",
   display: "swap",
 });
 
-const markazi = localFont({
+const naskh = localFont({
   src: [
-    { path: "../../fonts/markazi-text-arabic-wght-normal.woff2", weight: "400 700" },
-    { path: "../../fonts/markazi-text-latin-wght-normal.woff2", weight: "400 700" },
+    { path: "../../fonts/noto-naskh-arabic-arabic-wght-normal.woff2", weight: "400 700" },
+    { path: "../../fonts/noto-naskh-arabic-latin-wght-normal.woff2", weight: "400 700" },
   ],
-  variable: "--font-markazi",
+  variable: "--font-naskh",
   display: "swap",
 });
 
-const geist = localFont({
-  src: "../../fonts/geist-variable.woff2",
-  variable: "--font-geist",
-  weight: "100 900",
-  display: "swap",
-});
-
-const instrument = localFont({
+const bodoni = localFont({
   src: [
-    { path: "../../fonts/instrument-serif-latin-400-normal.woff2", style: "normal" },
-    { path: "../../fonts/instrument-serif-latin-400-italic.woff2", style: "italic" },
+    { path: "../../fonts/bodoni-moda-latin-wght-normal.woff2", weight: "400 900", style: "normal" },
+    { path: "../../fonts/bodoni-moda-latin-wght-italic.woff2", weight: "400 900", style: "italic" },
   ],
-  variable: "--font-instrument",
+  variable: "--font-bodoni",
   display: "swap",
 });
 
-const jetbrains = localFont({
-  src: "../../fonts/jetbrains-mono-latin-wght-normal.woff2",
-  variable: "--font-jetbrains",
-  weight: "100 800",
+const schibsted = localFont({
+  src: [
+    { path: "../../fonts/schibsted-grotesk-latin-wght-normal.woff2", weight: "400 900", style: "normal" },
+    { path: "../../fonts/schibsted-grotesk-latin-wght-italic.woff2", weight: "400 900", style: "italic" },
+  ],
+  variable: "--font-schibsted",
+  display: "swap",
+});
+
+const plexMono = localFont({
+  src: [
+    { path: "../../fonts/ibm-plex-mono-latin-400-normal.woff2", weight: "400" },
+    { path: "../../fonts/ibm-plex-mono-latin-500-normal.woff2", weight: "500" },
+  ],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -105,7 +111,7 @@ export default async function RootLayout({
       lang={lang}
       dir={dirOf(lang)}
       data-theme="dark"
-      className={`${vazir.variable} ${markazi.variable} ${geist.variable} ${instrument.variable} ${jetbrains.variable}`}
+      className={`${estedad.variable} ${naskh.variable} ${bodoni.variable} ${schibsted.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>
