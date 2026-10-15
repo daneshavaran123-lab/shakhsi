@@ -78,9 +78,9 @@ export function Manifesto() {
   const all = touched.length >= projects.length && projects.length > 0;
 
   return (
-    <section ref={root} id="manifesto" className="chapter relative px-4 py-28 sm:px-6 md:py-36">
+    <section ref={root} id="manifesto" data-curtain className="chapter relative rounded-t-[2rem] px-4 py-28 sm:px-6 md:rounded-t-[3rem] md:py-36">
       <div className="mx-auto max-w-[100rem]">
-        <div className="grid gap-10 md:grid-cols-12">
+        <div data-exit className="grid gap-10 md:grid-cols-12">
           <SectionLabel className="md:col-span-4 lg:col-span-3">{t.manifesto.label}</SectionLabel>
           <div className="md:col-span-8 lg:col-span-9">
             <Split

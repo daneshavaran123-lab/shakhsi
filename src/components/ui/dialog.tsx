@@ -48,16 +48,20 @@ function DialogContent({
   children,
   variant = "center",
   closeLabel = "بستن",
+  enter = "slide",
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   variant?: "center" | "sheet";
   closeLabel?: string;
+  /** "fade" lets a shared-element transition carry the entrance instead of a slide. */
+  enter?: "slide" | "fade";
 }) {
   return (
     <DialogPortal>
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
+        data-enter={enter}
         className={cn(
           "fixed z-50 bg-background text-foreground outline-none",
           variant === "center" &&

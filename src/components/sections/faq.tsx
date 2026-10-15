@@ -42,7 +42,7 @@ export function Faq() {
         )}
 
         {faq.length > 0 && (
-          <div className="grid gap-10 md:grid-cols-12">
+          <div data-exit className="grid gap-10 md:grid-cols-12">
             <div className="md:col-span-4 lg:col-span-3">
               <SectionLabel index={n("08")}>{t.faq.label}</SectionLabel>
             </div>

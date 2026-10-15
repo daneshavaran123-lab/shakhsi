@@ -51,7 +51,7 @@ export function Process() {
   return (
     <section ref={root} id="process" className="px-4 pb-28 sm:px-6 md:pb-40">
       <div className="mx-auto max-w-[100rem]">
-        <div className="grid gap-10 md:grid-cols-12">
+        <div data-exit className="grid gap-10 md:grid-cols-12">
           <SectionLabel index={n("02")} className="md:col-span-4 lg:col-span-3">
             {t.process.label}
           </SectionLabel>

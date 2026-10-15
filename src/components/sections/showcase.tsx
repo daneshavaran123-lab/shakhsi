@@ -71,7 +71,7 @@ export function Showcase() {
   });
 
   return (
-    <section ref={root} id="showcase" className="chapter relative rounded-t-[2rem] md:rounded-t-[3rem]">
+    <section ref={root} id="showcase" data-curtain className="chapter relative rounded-t-[2rem] md:rounded-t-[3rem]">
       <div className="mx-auto grid max-w-[100rem] gap-10 px-4 pt-28 sm:px-6 md:grid-cols-12 md:pt-40">
         <SectionLabel index={n("04")} className="md:col-span-4 lg:col-span-3">
           {t.showcase.label}

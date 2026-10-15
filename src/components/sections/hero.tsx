@@ -13,6 +13,7 @@ import { Split } from "@/components/motion/split";
 import { Magnetic } from "@/components/motion/magnetic";
 import { useTheme } from "@/components/providers/theme";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { useMouseDepth } from "@/hooks/use-mouse-depth";
 import { cn } from "@/lib/utils";
 
 const Fluid = dynamic(() => import("@/components/three/fluid"), { ssr: false });
@@ -29,6 +30,7 @@ export function Hero() {
   const root = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(true);
   const reduced = useReducedMotion();
+  useMouseDepth(root);
 
   // Soft champagne light that drifts toward the pointer.
   const gx = useSpring(useMotionValue(70), { stiffness: 40, damping: 20 });
@@ -66,7 +68,16 @@ export function Hero() {
             { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.2, stagger: 0.07, ease: "power4.out" },
             0.7,
           )
-          .fromTo(".hero-rule", { scaleX: 0 }, { scaleX: 1, duration: 1.8 }, 0.6);
+          .fromTo(".hero-rule", { scaleX: 0 }, { scaleX: 1, duration: 1.8 }, 0.6)
+          // Light streaks draw down from the top, one after another.
+          .fromTo(".hero-streak", { scaleY: 0, autoAlpha: 0 }, { scaleY: 1, autoAlpha: 1, duration: 2.2, stagger: 0.18, ease: "expo.inOut" }, 0.15);
+
+        // Depth on scroll: the backdrop sinks slower than the type above it.
+        gsap.to(".hero-depth", {
+          yPercent: 14,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 1.2 },
+        });
 
         gsap.to(".hero-name", {
           yPercent: -16,
@@ -79,7 +90,7 @@ export function Hero() {
         return afterIntro(() => tl.delay(delay).play());
       });
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(["[data-split]", "[data-reveal]", ".hero-canvas"], { autoAlpha: 1 });
+        gsap.set(["[data-split]", "[data-reveal]", ".hero-canvas", ".hero-streak"], { autoAlpha: 1 });
       });
     },
     { scope: root },
@@ -99,12 +110,31 @@ export function Hero() {
       }}
       className="relative flex min-h-[100svh] flex-col overflow-hidden px-4 pt-24 pb-6 sm:px-6"
     >
-      <motion.div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: glow }} />
-      <div
-        className="hero-canvas pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black_0%,black_75%,transparent_100%)]"
-        style={{ visibility: "hidden" }}
-      >
-        <Fluid active={inView} still={reduced} colors={inks[theme]} light={theme === "light"} eventSource={root} />
+      {/* Layers, back to front: glow, ink, light streaks — each with its own depth. */}
+      <div aria-hidden className="hero-depth pointer-events-none absolute inset-0">
+        <motion.div data-mouse-depth="-0.02" className="absolute -inset-8" style={{ background: glow }} />
+        <div
+          data-mouse-depth="-0.008"
+          className="hero-canvas absolute inset-0 [mask-image:linear-gradient(to_bottom,black_0%,black_75%,transparent_100%)]"
+          style={{ visibility: "hidden" }}
+        >
+          <Fluid active={inView} still={reduced} colors={inks[theme]} light={theme === "light"} eventSource={root} />
+        </div>
+        <div data-mouse-depth="0.03" className="absolute -inset-10 overflow-hidden">
+          {[
+            "start-[16%] via-accent/30",
+            "start-[44%] via-foreground/12",
+            "start-[74%] via-accent/20",
+          ].map((cls) => (
+            <span
+              key={cls}
+              className={cn(
+                "hero-streak absolute -top-[10%] h-[120%] w-px origin-top rotate-[22deg] bg-gradient-to-b from-transparent to-transparent invisible",
+                cls,
+              )}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="relative mx-auto flex w-full max-w-[100rem] flex-1 flex-col">
@@ -115,6 +145,7 @@ export function Hero() {
 
         <div className="mt-auto pt-16">
           <h1
+            data-mouse-depth="0.012"
             className={cn(
               "hero-name font-display font-normal",
               // Line height goes last: tailwind-merge drops `leading-*` that precedes a font size.

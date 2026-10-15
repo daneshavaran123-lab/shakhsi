@@ -21,8 +21,10 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     if (prefersReducedMotion()) return;
 
     const instance = new Lenis({
-      lerp: 0.09,
-      wheelMultiplier: 0.95,
+      // Weighted but never sluggish: ~0.085 lerp reads as momentum, not lag.
+      lerp: 0.085,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.1,
       anchors: { offset: -24 },
     });
     instance.on("scroll", ScrollTrigger.update);

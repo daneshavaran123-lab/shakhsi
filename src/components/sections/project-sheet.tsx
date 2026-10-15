@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { Button } from "@/components/ui/button";
 import { useLenis } from "@/components/providers/smooth-scroll";
 import { useI18n } from "@/i18n/provider";
+import { flyImage, type FlipOrigin } from "@/lib/flip";
 import { hasCaseStudies, pageHref } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
@@ -24,9 +25,12 @@ const item = {
 
 export function ProjectSheet({
   project,
+  origin = null,
   onClose,
 }: {
   project: Project | null;
+  /** Card image to fly in from (shared-element transition); null slides the sheet in. */
+  origin?: FlipOrigin | null;
   onClose: () => void;
 }) {
   const { t, n, locale } = useI18n();
@@ -34,6 +38,26 @@ export function ProjectSheet({
   const [slide, setSlide] = useState(0);
   // Keep the last project mounted while the sheet animates out.
   const [shown, setShown] = useState<Project | null>(project);
+  const cover = useRef<HTMLDivElement>(null);
+  const [flying, setFlying] = useState(false);
+
+  // Shared element: the card's picture travels to the sheet's first image.
+  useEffect(() => {
+    if (!project || !origin) return;
+    setFlying(true);
+    let cancel: (() => void) | undefined;
+    const frame = requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        const img = cover.current?.querySelector("img");
+        if (!img) return setFlying(false);
+        cancel = flyImage(origin, img, project.images[0], () => setFlying(false));
+      }),
+    );
+    return () => {
+      cancelAnimationFrame(frame);
+      cancel?.();
+    };
+  }, [project, origin]);
 
   useEffect(() => {
     if (project) {
@@ -51,12 +75,21 @@ export function ProjectSheet({
   return (
     <Dialog open={!!project} onOpenChange={(o) => !o && onClose()}>
       {p && copy && (
-        <DialogContent variant="sheet" closeLabel={t.sheet.close} aria-describedby="project-intro">
+        <DialogContent
+          variant="sheet"
+          enter={origin ? "fade" : "slide"}
+          closeLabel={t.sheet.close}
+          aria-describedby="project-intro"
+        >
           <div data-lenis-prevent className="h-full overflow-y-auto overscroll-contain">
             {/* Gallery */}
             <div className="relative bg-card p-3 pt-20 sm:p-6 sm:pt-20">
               <div
-                className="relative overflow-hidden rounded-lg bg-foreground/5"
+                ref={cover}
+                className={cn(
+                  "relative overflow-hidden rounded-lg bg-foreground/5 transition-opacity duration-150",
+                  flying && slide === 0 && "opacity-0",
+                )}
                 // Carries over to the case-study page's cover (see globals.css).
                 style={slide === 0 ? { viewTransitionName: `project-${p.id}`, viewTransitionClass: "cover" } : undefined}
               >

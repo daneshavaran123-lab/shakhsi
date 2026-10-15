@@ -14,10 +14,11 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useI18n } from "@/i18n/provider";
 import { formatPhone } from "@/lib/phone";
 import { pageHref } from "@/lib/routes";
+import { ease as motionEase } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const Fluid = dynamic(() => import("@/components/three/fluid"), { ssr: false });
-const ease = [0.16, 1, 0.3, 1] as const;
+const { out: ease, inOut: curtain } = motionEase;
 const inks = ["#d8bb8a", "#ede8df", "#c0884a"];
 
 /**
@@ -51,18 +52,35 @@ export function Menu({ onNavigate }: { onNavigate: (hash?: string) => void }) {
 
   return (
     <motion.div
-      ref={root}
-      id="site-menu"
-      role="dialog"
-      aria-modal="true"
-      aria-label={t.nav.label}
-      data-lenis-prevent
-      className="chapter fixed inset-0 z-[45] overflow-y-auto bg-background text-foreground"
-      initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
-      animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
-      exit={{ clipPath: "inset(100% 0% 0% 0%)" }}
-      transition={{ duration: 0.9, ease }}
+      className="fixed inset-0 z-[45]"
+      initial="closed"
+      animate="open"
+      exit="closed"
+      variants={{ open: {}, closed: { transition: { when: "afterChildren" } } }}
     >
+      {/* Layered curtain: an accent sheet leads, the dark panel follows it in
+          and leaves first on the way out. */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 bg-accent"
+        variants={{
+          open: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 0.75, ease: curtain } },
+          closed: { clipPath: "inset(0% 0% 100% 0%)", transition: { duration: 0.6, ease: curtain, delay: 0.12 } },
+        }}
+      />
+      <motion.div
+        ref={root}
+        id="site-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.nav.label}
+        data-lenis-prevent
+        className="chapter absolute inset-0 overflow-y-auto bg-background text-foreground"
+        variants={{
+          open: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 0.85, ease: curtain, delay: 0.12 } },
+          closed: { clipPath: "inset(0% 0% 100% 0%)", transition: { duration: 0.6, ease: curtain } },
+        }}
+      >
       <div aria-hidden className="pointer-events-none fixed inset-0 opacity-90">
         <Fluid active still={reduced} colors={inks} light={false} eventSource={root} />
       </div>
@@ -81,10 +99,10 @@ export function Menu({ onNavigate }: { onNavigate: (hash?: string) => void }) {
                   }}
                   onMouseEnter={() => setHovered(l.key)}
                   onFocus={() => setHovered(l.key)}
-                  initial={{ y: "105%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "-105%", transition: { duration: 0.5, ease, delay: i * 0.02 } }}
-                  transition={{ duration: 0.9, ease, delay: 0.25 + i * 0.05 }}
+                  initial={{ y: "105%", filter: "blur(6px)" }}
+                  animate={{ y: 0, filter: "blur(0px)" }}
+                  exit={{ y: "-105%", transition: { duration: 0.45, ease: curtain, delay: i * 0.02 } }}
+                  transition={{ duration: 0.95, ease, delay: 0.4 + i * 0.05 }}
                   className={cn(
                     "group flex items-baseline gap-4 py-2 transition-opacity duration-500 md:gap-8 md:py-3",
                     hovered && hovered !== l.key && "opacity-30",
@@ -103,7 +121,7 @@ export function Menu({ onNavigate }: { onNavigate: (hash?: string) => void }) {
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0, transition: { delay: 0.7, duration: 0.8, ease } }}
+          animate={{ opacity: 1, y: 0, transition: { delay: 0.85, duration: 0.8, ease } }}
           exit={{ opacity: 0, transition: { duration: 0.2 } }}
           className="mt-14 grid gap-8 text-sm sm:grid-cols-2 lg:grid-cols-4"
         >
@@ -139,6 +157,7 @@ export function Menu({ onNavigate }: { onNavigate: (hash?: string) => void }) {
           </div>
         </motion.div>
       </div>
+      </motion.div>
     </motion.div>
   );
 }
