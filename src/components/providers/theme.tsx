@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useSyncExternalStore } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 export type Theme = "dark" | "light";
 
@@ -35,23 +35,7 @@ export function useTheme() {
 }
 
 /**
- * Runs before paint: a saved choice wins, otherwise follow the device's
- * day/night setting (dark when the device expresses no preference).
+ * Runs before paint: a saved choice wins; otherwise the site opens at night,
+ * like the scene it was designed as.
  */
-export const themeScript = `(function(){var d=document.documentElement,t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';d.dataset.theme=t;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('has-motion');try{if(!sessionStorage.getItem('intro')&&!location.hash&&!/resume/.test(location.pathname))d.classList.add('intro')}catch(e){}}})()`;
-
-/** Follow live changes of the device setting until the visitor picks a theme. */
-export function useSystemThemeSync(setTheme: (t: Theme, persist?: boolean) => void) {
-  useEffect(() => {
-    const mql = matchMedia("(prefers-color-scheme: light)");
-    const onChange = () => {
-      let saved: string | null = null;
-      try {
-        saved = localStorage.getItem("theme");
-      } catch {}
-      if (!saved) setTheme(mql.matches ? "light" : "dark", false);
-    };
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, [setTheme]);
-}
+export const themeScript = `(function(){var d=document.documentElement,t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t='dark';d.dataset.theme=t;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('has-motion');try{if(!sessionStorage.getItem('intro')&&!location.hash&&!/resume/.test(location.pathname))d.classList.add('intro')}catch(e){}}})()`;

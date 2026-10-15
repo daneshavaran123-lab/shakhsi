@@ -31,6 +31,9 @@ const projectCopy = (lang: "fa" | "en") => {
       role: fields.text({ label: fa ? "نقش من در پروژه" : "My role" }),
       status: fields.text({ label: fa ? "وضعیت (مثلاً نسخه آنلاین)" : "Status (e.g. Live)" }),
       summary: fields.text({ label: fa ? "خلاصه یک‌خطی" : "One-line summary", multiline: true }),
+      challenge: fields.text({ label: fa ? "مسئله (صفحه پروژه)" : "Challenge (case study)", multiline: true }),
+      process: list(fa ? "فرایند (مراحل کار)" : "Process (steps)", fa ? "مرحله" : "Step"),
+      outcome: fields.text({ label: fa ? "نتیجه (صفحه پروژه)" : "Outcome (case study)", multiline: true }),
       intro: fields.text({ label: fa ? "معرفی" : "Introduction", multiline: true }),
       value: fields.text({ label: fa ? "ارزش کاربردی" : "Value", multiline: true }),
       hardware: fields.text({ label: fa ? "بستر پیشنهادی" : "Recommended setup" }),
@@ -131,6 +134,55 @@ const servicesCopy = (lang: "fa" | "en") => {
         { label: fa ? "پکیج‌ها بر اساس فضا" : "Packages by space", itemLabel: (p) => p.fields.title.value || "—" },
       ),
       cta: fields.text({ label: fa ? "دعوت به سفارش" : "Call to action", multiline: true }),
+      process: fields.array(
+        fields.object({
+          title: fields.text({ label: fa ? "مرحله" : "Step" }),
+          body: fields.text({ label: fa ? "توضیح" : "Description", multiline: true }),
+        }),
+        { label: fa ? "فرایند «از ایده تا محصول»" : "Idea-to-product process", itemLabel: (p) => p.fields.title.value || "—" },
+      ),
+      showcase: fields.array(
+        fields.object({
+          project: fields.text({ label: fa ? "شناسه پروژه" : "Project id" }),
+          device: fields.select({
+            label: fa ? "دستگاه" : "Device",
+            options: [
+              { label: fa ? "میز لمسی" : "Touch table", value: "table" },
+              { label: fa ? "نمایشگر ۶۵ اینچ" : "65″ display", value: "display" },
+              { label: fa ? "کیوسک ایستاده" : "Kiosk", value: "kiosk" },
+            ],
+            defaultValue: "display",
+          }),
+          title: fields.text({ label: fa ? "عنوان" : "Title" }),
+          body: fields.text({ label: fa ? "متن" : "Body", multiline: true }),
+        }),
+        { label: fa ? "ویترین سه‌بعدی" : "3D showcase", itemLabel: (p) => p.fields.title.value || "—" },
+      ),
+    },
+    { label: fa ? "فارسی" : "English" },
+  );
+};
+
+const extrasCopy = (lang: "fa" | "en") => {
+  const fa = lang === "fa";
+  return fields.object(
+    {
+      faq: fields.array(
+        fields.object({
+          q: fields.text({ label: fa ? "پرسش" : "Question" }),
+          a: fields.text({ label: fa ? "پاسخ" : "Answer", multiline: true }),
+        }),
+        { label: fa ? "پرسش‌های متداول" : "FAQ", itemLabel: (p) => p.fields.q.value || "—" },
+      ),
+      testimonials: fields.array(
+        fields.object({
+          quote: fields.text({ label: fa ? "متن نظر" : "Quote", multiline: true }),
+          name: fields.text({ label: fa ? "نام" : "Name" }),
+          role: fields.text({ label: fa ? "سمت / سازمان" : "Role / organisation" }),
+        }),
+        { label: fa ? "نظر کارفرمایان" : "Testimonials", itemLabel: (p) => p.fields.name.value || "—" },
+      ),
+      clients: list(fa ? "کارفرمایان (نوار اعتماد)" : "Clients (trust strip)", fa ? "نام" : "Name"),
     },
     { label: fa ? "فارسی" : "English" },
   );
@@ -142,7 +194,7 @@ export default config({
     brand: { name: "پنل مدیریت سایت" },
     navigation: {
       "محتوا": ["projects", "certificates"],
-      "تنظیمات": ["profile", "services"],
+      "تنظیمات": ["profile", "services", "extras"],
     },
   },
   collections: {
@@ -175,6 +227,12 @@ export default config({
           defaultValue: "management",
         }),
         url: fields.url({ label: "لینک نسخه آنلاین (اختیاری)" }),
+        video: fields.file({
+          label: "ویدئوی کوتاه (MP4، اختیاری)",
+          description: "۱۰ تا ۱۵ ثانیه، بدون صدا؛ در صفحه پروژه پخش می‌شود",
+          directory: "public/videos/projects",
+          publicPath: "/videos/projects/",
+        }),
         live: fields.checkbox({ label: "نسخه آنلاین فعال است", defaultValue: false }),
         images: fields.array(
           fields.image({
@@ -218,6 +276,15 @@ export default config({
   },
 
   singletons: {
+    extras: singleton({
+      label: "پرسش‌ها، نظرات و کارفرمایان",
+      path: "content/extras",
+      format: { data: "yaml" },
+      schema: {
+        fa: extrasCopy("fa"),
+        en: extrasCopy("en"),
+      },
+    }),
     services: singleton({
       label: "خدمات",
       path: "content/services",

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useI18n } from "@/i18n/provider";
 
 /** Live Tehran time; renders a stable placeholder until mounted. */
-export function TehranClock({ className }: { className?: string }) {
+export function TehranClock({ className, bare }: { className?: string; bare?: boolean }) {
   const { locale, t } = useI18n();
   const [now, setNow] = useState<string | null>(null);
 
@@ -24,7 +24,7 @@ export function TehranClock({ className }: { className?: string }) {
 
   return (
     <span className={className} suppressHydrationWarning>
-      {t.tehran} <span className="tabular-nums">{now ?? "—:—"}</span>
+      {!bare && `${t.tehran} `}<span className="tabular-nums">{now ?? "—:—"}</span>
     </span>
   );
 }

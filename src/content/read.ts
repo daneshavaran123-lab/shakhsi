@@ -8,7 +8,7 @@ import { imageSize } from "image-size";
 import sharp from "sharp";
 
 import keystaticConfig from "../../keystatic.config";
-import type { Certificate, Img, Profile, Project, Services, ServicesCopy, SiteContent } from "./types";
+import type { Certificate, Extras, ExtrasCopy, Img, Profile, Project, Services, ServicesCopy, SiteContent } from "./types";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
@@ -31,11 +31,12 @@ const linksOf = (links: readonly { label: string; url: string | null }[]) =>
 const byOrder = <T extends { order: number | null }>(a: T, b: T) => (a.order ?? 999) - (b.order ?? 999);
 
 export const getContent = cache(async (): Promise<SiteContent> => {
-  const [projectEntries, certEntries, profileEntry, servicesEntry] = await Promise.all([
+  const [projectEntries, certEntries, profileEntry, servicesEntry, extrasEntry] = await Promise.all([
     reader.collections.projects.all(),
     reader.collections.certificates.all(),
     reader.singletons.profile.read(),
     reader.singletons.services.read(),
+    reader.singletons.extras.read(),
   ]);
 
   const projects: Project[] = await Promise.all(
@@ -47,10 +48,11 @@ export const getContent = cache(async (): Promise<SiteContent> => {
         eng: p.eng,
         group: p.group,
         url: p.url || undefined,
+        video: p.video || undefined,
         live: p.live,
         images: (await Promise.all(p.images.map(toImg))).filter((i): i is Img => i !== null),
-        fa: { title: p.title, ...p.fa, services: [...p.fa.services], features: [...p.fa.features], tech: [...p.fa.tech], uses: [...p.fa.uses], links: linksOf(p.fa.links) },
-        en: { ...p.en, title: p.en.title || p.title, services: [...p.en.services], features: [...p.en.features], tech: [...p.en.tech], uses: [...p.en.uses], links: linksOf(p.en.links) },
+        fa: { title: p.title, ...p.fa, services: [...p.fa.services], features: [...p.fa.features], tech: [...p.fa.tech], uses: [...p.fa.uses], links: linksOf(p.fa.links), process: [...p.fa.process] },
+        en: { ...p.en, title: p.en.title || p.title, services: [...p.en.services], features: [...p.en.features], tech: [...p.en.tech], uses: [...p.en.uses], links: linksOf(p.en.links), process: [...p.en.process] },
       })),
   );
 
@@ -111,8 +113,17 @@ export const getContent = cache(async (): Promise<SiteContent> => {
     packagesTitle: c.packagesTitle,
     packages: c.packages.map((p) => ({ ...p, projects: [...p.projects] })),
     cta: c.cta,
+    process: c.process.map((x) => ({ ...x })),
+    showcase: c.showcase.map((x) => ({ ...x })),
   });
   const services: Services = { fa: servicesCopy(servicesEntry.fa), en: servicesCopy(servicesEntry.en) };
 
-  return { projects, certificates, profile, services };
+  const extrasCopy = (c?: { faq: readonly { q: string; a: string }[]; testimonials: readonly { quote: string; name: string; role: string }[]; clients: readonly string[] }): ExtrasCopy => ({
+    faq: c?.faq.map((x) => ({ ...x })) ?? [],
+    testimonials: c?.testimonials.map((x) => ({ ...x })) ?? [],
+    clients: [...(c?.clients ?? [])],
+  });
+  const extras: Extras = { fa: extrasCopy(extrasEntry?.fa), en: extrasCopy(extrasEntry?.en) };
+
+  return { projects, certificates, profile, services, extras };
 });

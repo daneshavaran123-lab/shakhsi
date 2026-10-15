@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
 
 import { navKeys } from "@/data/site";
 import { useI18n } from "@/i18n/provider";
@@ -18,6 +18,13 @@ export function SectionRail() {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
   const [active, setActive] = useState<string | null>(null);
+  const pct = useRef<HTMLSpanElement>(null);
+  const hud = useRef<HTMLParagraphElement>(null);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    // Out of the way while the hero (and its buttons) fill the screen.
+    if (hud.current) hud.current.style.opacity = v > 0.04 ? "1" : "0";
+    if (pct.current) pct.current.textContent = n(String(Math.round(v * 100)).padStart(3, "0"));
+  });
 
   useEffect(() => {
     const sections = navKeys
@@ -47,6 +54,18 @@ export function SectionRail() {
         className="fixed inset-x-0 top-0 z-50 h-[2px] origin-right bg-accent ltr:origin-left"
         style={{ scaleX: progress }}
       />
+      {/* Corner readout, in the spirit of an instrument panel. */}
+      <p
+        aria-hidden
+        ref={hud}
+        className="fixed end-5 bottom-5 z-30 hidden font-mono text-[0.68rem] text-white opacity-0 mix-blend-difference transition-opacity duration-500 xl:block"
+      >
+        <span className="opacity-60 ltr:tracking-[0.16em] ltr:uppercase">{t.hud.scroll}</span>{" "}
+        <span ref={pct} className="tabular-nums">
+          {n("000")}
+        </span>
+        <span className="opacity-60">%</span>
+      </p>
       <nav
         aria-label={t.nav.label}
         // Difference blending keeps the rail legible over light pages and dark chapters alike.

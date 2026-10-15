@@ -1,0 +1,40 @@
+fa:
+  faq:
+  - q: چه نوع پروژه‌هایی را می‌پذیرید؟
+    a: نرم‌افزار سفارشی برای نمایشگر لمسی، کیوسک و وب؛ تأمین استند، کیوسک و میز لمسی از شرکت دانش‌آوران؛ و پکیج کامل سخت‌افزار و نرم‌افزار.
+  - q: می‌شود فقط نرم‌افزار یا فقط سخت‌افزار سفارش داد؟
+    a: بله. هر کدام جداگانه قابل سفارش است؛ و اگر هر دو را با هم بخواهید، به‌صورت یک پکیج یکپارچه طراحی می‌شوند.
+  - q: کار از کجا شروع می‌شود؟
+    a: از کشف نیاز. پیش از هر طراحی، دقیق می‌شنوم که مخاطب شما واقعاً به چه چیزی نیاز دارد؛ بعد طراحی تجربه، سخت‌افزار و نرم‌افزار و در نهایت تحویل.
+  - q: هزینه و زمان پروژه چقدر است؟
+    a: به دامنه کار بستگی دارد. بعد از جلسه کشف نیاز، برآورد دقیق زمان و هزینه را ارائه می‌کنم.
+  - q: بدنه کیوسک یا میز را می‌شود متناسب با فضا طراحی کرد؟
+    a: بله؛ همان‌طور که در میزهای لمسی کودک، از میز چوبی تا میز فیلی، فرم بدنه متناسب با فضا و مخاطب طراحی شده است.
+  testimonials: []
+  clients:
+  - فدراسیون کشتی ایران
+  - پارک فناوری فاوا
+  - نمایشگاه تجهیزات پزشکی برج میلاد
+  - تجهیزات پزشکی ورید
+  - پرودمی
+  - شرکت دانش‌آوران
+en:
+  faq:
+  - q: What kinds of projects do you take on?
+    a: Custom software for touch displays, kiosks and the web; touch stands, kiosks and tables supplied through Daneshavaran; and complete hardware + software packages.
+  - q: Can I order only software, or only hardware?
+    a: Yes. Each can be ordered on its own — and if you need both, they’re designed together as one integrated package.
+  - q: Where does the work start?
+    a: With discovery. Before any design, I listen closely to what your audience really needs; then come experience design, hardware and software, and delivery.
+  - q: How much does a project cost, and how long does it take?
+    a: It depends on the scope. After a discovery session I give you an accurate estimate of time and cost.
+  - q: Can a kiosk or table body be designed for my space?
+    a: Yes — just as the kids’ touch tables were, from a wooden table to an elephant, each body is shaped for its space and audience.
+  testimonials: []
+  clients:
+  - Iran Wrestling Federation
+  - Fava Technology Park
+  - Medical Equipment Exhibition, Milad Tower
+  - Varid Medical Equipment
+  - Prodemy
+  - Daneshavaran

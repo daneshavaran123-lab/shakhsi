@@ -1,19 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Moon, Search, Sun } from "lucide-react";
 
-import { navKeys } from "@/data/site";
+import { Scramble } from "@/components/motion/scramble";
 import { useContent } from "@/content/provider";
 import { locales } from "@/i18n/config";
 import { useI18n } from "@/i18n/provider";
 import { TehranClock } from "@/components/tehran-clock";
 import { useLenis } from "@/components/providers/smooth-scroll";
-import { useSystemThemeSync, useTheme } from "@/components/providers/theme";
+import { useTheme } from "@/components/providers/theme";
 import { cn } from "@/lib/utils";
 import { pageHref, type Page } from "@/lib/routes";
 import { useOpenCommandMenu } from "@/components/command-menu";
+import { Menu } from "@/components/menu";
+import { useSound } from "@/components/providers/sound";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -82,7 +84,6 @@ function CommandTrigger() {
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const { t } = useI18n();
-  useSystemThemeSync(setTheme);
   const next = theme === "dark" ? "light" : "dark";
 
   // Day ↔ night as a circle of light spreading from the button (View
@@ -128,14 +129,42 @@ export function ThemeToggle() {
   );
 }
 
+export function SoundToggle({ className }: { className?: string }) {
+  const { on, toggle } = useSound();
+  const { t } = useI18n();
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-pressed={on}
+      aria-label={on ? t.sound.off : t.sound.on}
+      title={on ? t.sound.off : t.sound.on}
+      className={cn(
+        "grid size-9 cursor-pointer place-items-center rounded-full ring-1 ring-border transition-colors hover:bg-foreground/5",
+        className,
+      )}
+    >
+      <span aria-hidden className="flex h-3.5 items-end gap-[2px]">
+        {[0.55, 1, 0.7, 0.4].map((h, i) => (
+          <span
+            key={i}
+            className={cn("sound-bar w-[2px] rounded-full bg-current", on && "is-on")}
+            style={{ height: `${h * 100}%`, animationDelay: `${i * -0.23}s` }}
+          />
+        ))}
+      </span>
+    </button>
+  );
+}
+
 export function Header() {
-  const { t, n } = useI18n();
+  const { t, locale } = useI18n();
   const { profile } = useContent();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hovered, setHovered] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [hoverMenu, setHoverMenu] = useState(false);
   const lenis = useLenis();
 
   useMotionValueEvent(scrollY, "change", (y) => {
@@ -144,11 +173,25 @@ export function Header() {
     setScrolled(y > 24);
   });
 
-  const toggleMenu = (next: boolean) => {
-    setOpen(next);
-    if (next) lenis?.stop();
-    else lenis?.start();
-  };
+  const toggleMenu = useCallback(
+    (next: boolean, hash?: string) => {
+      setOpen(next);
+      if (next) {
+        lenis?.stop();
+        return;
+      }
+      lenis?.start();
+      if (hash) {
+        // Let the menu start closing, then travel to the section.
+        window.setTimeout(() => {
+          if (lenis) lenis.scrollTo(hash, { offset: -24, duration: 1.6 });
+          else document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+        }, 250);
+      }
+    },
+    [lenis],
+  );
+  const closeMenu = useCallback((hash?: string) => toggleMenu(false, hash), [toggleMenu]);
 
   return (
     <>
@@ -156,76 +199,58 @@ export function Header() {
         initial={{ y: -24, opacity: 0 }}
         animate={{ y: hidden ? "-120%" : 0, opacity: 1 }}
         transition={{ duration: 0.7, ease }}
-        className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-5"
+        className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5"
       >
         <div
           className={cn(
-            "relative mx-auto flex h-14 max-w-[100rem] items-center justify-between rounded-full ps-2.5 pe-2.5 transition-[background-color,box-shadow,backdrop-filter] duration-500",
+            "relative mx-auto flex h-14 max-w-[100rem] items-center justify-between rounded-full ps-2.5 pe-2 transition-[background-color,box-shadow,backdrop-filter] duration-500",
             scrolled && !open && "bg-background/70 shadow-[0_0_0_1px_var(--border),0_10px_40px_-12px_rgb(0_0_0/0.35)] backdrop-blur-xl",
+            open && "chapter bg-transparent text-foreground",
           )}
         >
           <a
             href="#top"
-            className="group relative z-50 flex items-center gap-2.5 text-[0.95rem] font-medium tracking-tight"
-            onClick={() => toggleMenu(false)}
+            className="group relative flex items-center gap-2.5 text-[0.95rem] font-medium tracking-tight"
+            onClick={() => open && toggleMenu(false)}
           >
             <span className="relative grid size-7 place-items-center rounded-full bg-accent text-[0.7rem] font-semibold text-accent-foreground transition-transform duration-500 ease-out-expo group-hover:rotate-[-12deg]">
               {t.name.short.charAt(0)}
             </span>
-            {t.name.short}
+            <span className="hidden sm:inline">{t.name.short}</span>
           </a>
-
-          <nav aria-label={t.nav.label} className="absolute start-1/2 hidden -translate-x-1/2 rtl:translate-x-1/2 md:block">
-            <ul
-              className="flex items-center rounded-full p-1 ring-1 ring-border"
-              onMouseLeave={() => setHovered(null)}
-            >
-              {navKeys.map((key) => (
-                <li key={key} className="relative">
-                  <a
-                    href={`#${key}`}
-                    onMouseEnter={() => setHovered(key)}
-                    onFocus={() => setHovered(key)}
-                    className="relative z-10 block px-4 py-1.5 text-sm text-foreground-2 transition-colors hover:text-foreground"
-                  >
-                    {t.nav[key]}
-                  </a>
-                  {hovered === key && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-foreground/[0.08]"
-                      transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                    />
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
 
           <div className="flex items-center gap-2">
             <TehranClock className="hidden pe-2 font-mono text-xs text-muted-foreground xl:inline" />
             <CommandTrigger />
+            <SoundToggle />
             <LanguageSwitch className="hidden sm:flex" />
             <ThemeToggle />
-            {profile.available && <a
-              href={`mailto:${profile.email}`}
-              className="hidden h-9 items-center gap-2 rounded-full bg-foreground px-4 text-sm text-background transition-colors duration-300 hover:bg-accent hover:text-accent-foreground lg:inline-flex"
-            >
-              <span className="relative flex size-1.5">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#7fd18b] opacity-70" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-[#7fd18b]" />
-              </span>
-              {t.available}
-            </a>}
+            {profile.available && (
+              <a
+                href="#order"
+                className="hidden h-9 items-center gap-2 rounded-full bg-foreground px-4 text-sm text-background transition-colors duration-300 hover:bg-accent hover:text-accent-foreground lg:inline-flex"
+              >
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#7fd18b] opacity-70" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-[#7fd18b]" />
+                </span>
+                {t.available}
+              </a>
+            )}
             <button
               type="button"
-              className="relative z-50 grid size-10 cursor-pointer place-items-center rounded-full md:hidden"
+              className="group relative flex h-9 cursor-pointer items-center gap-3 rounded-full ps-3 pe-2 text-sm ring-1 ring-border transition-colors hover:bg-foreground/5"
               aria-expanded={open}
-              aria-controls="mobile-menu"
+              aria-controls="site-menu"
               aria-label={open ? t.nav.close : t.nav.open}
               onClick={() => toggleMenu(!open)}
+              onMouseEnter={() => setHoverMenu(true)}
+              onMouseLeave={() => setHoverMenu(false)}
             >
-              <span className="relative block h-3 w-6">
+              <span className="hidden sm:inline">
+                <Scramble text={open ? t.menu.close : t.menu.open} active={hoverMenu} locale={locale} />
+              </span>
+              <span className="relative block h-2.5 w-5">
                 <motion.span
                   className="absolute inset-x-0 top-0 h-px bg-current"
                   animate={open ? { top: "50%", rotate: 45 } : { top: "0%", rotate: 0 }}
@@ -242,53 +267,7 @@ export function Header() {
         </div>
       </motion.header>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-menu"
-            className="fixed inset-0 z-30 flex flex-col justify-between bg-background px-6 pt-28 pb-10 md:hidden"
-            initial={{ clipPath: "inset(0 0 100% 0)" }}
-            animate={{ clipPath: "inset(0 0 0% 0)" }}
-            exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: 0.7, ease }}
-          >
-            <nav aria-label={t.nav.label}>
-              <ul className="space-y-1">
-                {navKeys.map((key, i) => (
-                  <li key={key} className="overflow-hidden">
-                    <motion.a
-                      href={`#${key}`}
-                      onClick={() => toggleMenu(false)}
-                      className="flex items-baseline justify-between border-b py-3 font-display text-5xl"
-                      initial={{ y: "100%" }}
-                      animate={{ y: 0 }}
-                      exit={{ y: "100%" }}
-                      transition={{ duration: 0.7, ease, delay: 0.15 + i * 0.06 }}
-                    >
-                      {t.nav[key]}
-                      <span className="font-mono text-xs text-accent">{n(`0${i + 1}`)}</span>
-                    </motion.a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.5 } }}
-              exit={{ opacity: 0 }}
-              className="flex items-end justify-between gap-4 text-sm"
-            >
-              <div className="space-y-2">
-                <a href={`mailto:${profile.email}`} className="ltr block font-mono text-xs">
-                  {profile.email}
-                </a>
-                <TehranClock className="block font-mono text-xs text-muted-foreground" />
-              </div>
-              <LanguageSwitch />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{open && <Menu onNavigate={closeMenu} />}</AnimatePresence>
     </>
   );
 }

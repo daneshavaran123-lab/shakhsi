@@ -382,3 +382,101 @@ html.has-motion [data-split] {
     text-decoration: none;
   }
 }
+
+/* Clients belt: two identical rows slide one row-width in the reading direction. */
+.trust-belt {
+  animation: belt 38s linear infinite;
+}
+[dir="rtl"] .trust-belt {
+  animation-name: belt-rtl;
+}
+@keyframes belt {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes belt-rtl {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* Page transitions (Chromium): pages cross-fade, and a project's cover image
+   carries over between the project sheet, its case study and the next one. */
+@view-transition {
+  navigation: auto;
+  types: page;
+}
+html:active-view-transition-type(page)::view-transition-old(root) {
+  animation: vt-out 0.35s ease both;
+}
+html:active-view-transition-type(page)::view-transition-new(root) {
+  animation: vt-in 0.6s 0.1s var(--ease-out-expo) both;
+}
+::view-transition-group(*.cover) {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* Sound toggle: a resting level meter that starts to move when sound is on. */
+.sound-bar {
+  transform-origin: bottom;
+  opacity: 0.55;
+  transition: opacity 0.4s;
+}
+.sound-bar.is-on {
+  opacity: 1;
+}
+.sound-bar.is-on {
+  animation: sound-bar 0.9s ease-in-out infinite alternate;
+}
+@keyframes sound-bar {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* WebGL redraws these images (gl-media.tsx); the <img> stays for a11y/fallback. */
+.gl-media [data-gl][data-gl-on] img {
+  opacity: 0;
+}

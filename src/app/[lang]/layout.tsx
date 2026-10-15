@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { SoundProvider } from "@/components/providers/sound";
 import { themeScript } from "@/components/providers/theme";
 import { Cursor } from "@/components/cursor";
 import { dirOf, isLocale, locales } from "@/i18n/config";
 import { dictionaries } from "@/i18n/dictionary";
 import { I18nProvider } from "@/i18n/provider";
+import { siteUrl } from "@/lib/site";
 import "../globals.css";
 
 const vazir = localFont({
@@ -66,15 +69,20 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
   const t = dictionaries[lang];
   return {
+    metadataBase: new URL(siteUrl),
     title: t.meta.title,
     description: t.meta.description,
-    alternates: { languages: { fa: "/fa", en: "/en" } },
+    alternates: { canonical: `/${lang}`, languages: { fa: "/fa", en: "/en" } },
     openGraph: {
-      title: t.name.full,
+      title: t.meta.title,
       description: t.meta.description,
+      siteName: t.name.full,
       locale: lang === "fa" ? "fa_IR" : "en_US",
       type: "website",
+      url: `/${lang}`,
+      images: [{ url: `/og/${lang}.png`, width: 1200, height: 630, alt: t.name.full }],
     },
+    twitter: { card: "summary_large_image", title: t.meta.title, description: t.meta.description, images: [`/og/${lang}.png`] },
   };
 }
 
@@ -105,9 +113,13 @@ export default async function RootLayout({
       </head>
       <body>
         <I18nProvider locale={lang}>
-          <SmoothScroll>{children}</SmoothScroll>
+          <SoundProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+          </SoundProvider>
           <Cursor />
         </I18nProvider>
+        {/* Vercel Web Analytics: only in Vercel builds (enable it in the dashboard); skipped elsewhere. */}
+        {process.env.VERCEL && !process.env.NEXT_PUBLIC_STATIC_HTML && <Analytics />}
         <div className="grain" aria-hidden />
       </body>
     </html>

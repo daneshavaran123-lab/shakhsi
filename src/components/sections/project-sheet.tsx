@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { Button } from "@/components/ui/button";
 import { useLenis } from "@/components/providers/smooth-scroll";
 import { useI18n } from "@/i18n/provider";
+import { hasCaseStudies, pageHref } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -54,7 +55,11 @@ export function ProjectSheet({
           <div data-lenis-prevent className="h-full overflow-y-auto overscroll-contain">
             {/* Gallery */}
             <div className="relative bg-card p-3 pt-20 sm:p-6 sm:pt-20">
-              <div className="relative overflow-hidden rounded-lg bg-foreground/5">
+              <div
+                className="relative overflow-hidden rounded-lg bg-foreground/5"
+                // Carries over to the case-study page's cover (see globals.css).
+                style={slide === 0 ? { viewTransitionName: `project-${p.id}`, viewTransitionClass: "cover" } : undefined}
+              >
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.div
                     key={`${p.id}-${slide}`}
@@ -193,18 +198,41 @@ export function ProjectSheet({
                 </motion.div>
               )}
 
+              {p.video && (
+                <motion.div variants={item} className="mt-12">
+                  <h3 className="border-b pb-3 text-sm font-semibold">{t.caseStudy.video}</h3>
+                  <video
+                    src={p.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="mt-4 w-full rounded-lg bg-card ring-1 ring-border"
+                  />
+                </motion.div>
+              )}
+
               <motion.div variants={item} className="mt-14 flex flex-wrap items-center gap-4 border-t pt-8">
+                {hasCaseStudies && (
+                  <Button asChild variant="default" size="lg" className="group">
+                    <a href={pageHref(locale, `work/${p.id}`)}>
+                      {t.caseStudy.read}
+                      <ArrowUpRight className="transition-transform duration-500 ease-out-expo group-hover:rotate-45 rtl:-scale-x-100" />
+                    </a>
+                  </Button>
+                )}
                 {p.url ? (
-                  <Button asChild variant="accent" size="lg" className="group">
+                  <Button asChild variant={hasCaseStudies ? "outline" : "accent"} size="lg" className="group">
                     <a href={p.url} target="_blank" rel="noopener noreferrer">
                       {t.sheet.visit}
                       <ArrowUpRight className="transition-transform duration-500 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
                     </a>
                   </Button>
                 ) : (
-                  <span className="text-sm text-muted-foreground">{t.sheet.noLink}</span>
+                  !hasCaseStudies && <span className="text-sm text-muted-foreground">{t.sheet.noLink}</span>
                 )}
-                <Button variant="outline" size="lg" onClick={onClose}>
+                <Button variant="ghost" size="lg" onClick={onClose}>
                   {t.sheet.back}
                 </Button>
               </motion.div>
