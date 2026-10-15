@@ -11,6 +11,7 @@ import { SectionLabel } from "@/components/section-label";
 import { ProjectSheet } from "@/components/sections/project-sheet";
 import { useSectionMotion } from "@/hooks/use-section-motion";
 import { useI18n } from "@/i18n/provider";
+import { flipOriginOf, type FlipOrigin } from "@/lib/flip";
 import { cn } from "@/lib/utils";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -21,6 +22,7 @@ export function Work() {
   const root = useRef<HTMLElement>(null);
   const [group, setGroup] = useState<ProjectGroup>("all");
   const [active, setActive] = useState<Project | null>(null);
+  const [origin, setOrigin] = useState<FlipOrigin | null>(null);
   useSectionMotion(root);
 
   const visible = projects.filter((p) => group === "all" || p.group === group);
@@ -30,14 +32,19 @@ export function Work() {
     const fromHash = () => {
       const id = decodeURIComponent(location.hash.replace("#project-", ""));
       const match = projects.find((p) => p.id === id);
-      if (match) setActive(match);
+      if (match) {
+        setOrigin(null);
+        setActive(match);
+      }
     };
     fromHash();
     window.addEventListener("hashchange", fromHash);
     return () => window.removeEventListener("hashchange", fromHash);
   }, [projects]);
 
-  const open = useCallback((p: Project) => {
+  // Opening from a card: remember where its picture sits, so it can fly into the sheet.
+  const open = useCallback((p: Project, card?: HTMLElement) => {
+    setOrigin(flipOriginOf(card?.querySelector<HTMLElement>("[data-gl]") ?? null));
     setActive(p);
     history.replaceState(null, "", `#project-${p.id}`);
   }, []);
@@ -51,10 +58,11 @@ export function Work() {
     <section
       ref={root}
       id="work"
+      data-curtain
       className="chapter relative rounded-t-[2rem] px-4 py-28 sm:px-6 md:rounded-t-[3rem] md:py-36"
     >
       <div className="mx-auto max-w-[100rem]">
-        <div className="grid gap-10 md:grid-cols-12">
+        <div data-exit className="grid gap-10 md:grid-cols-12">
           <SectionLabel index={n("05")} className="md:col-span-3">
             {t.work.label}
           </SectionLabel>
@@ -68,7 +76,7 @@ export function Work() {
                 delay={0.1}
               />
             </h2>
-            <p data-reveal className="mt-8 max-w-xl leading-8 text-muted-foreground">
+            <p data-reveal="blur" className="mt-8 max-w-xl leading-8 text-muted-foreground">
               {t.work.intro}
             </p>
           </div>
@@ -134,7 +142,7 @@ export function Work() {
                     type="button"
                     data-gl-host
                     data-cursor={t.work.view}
-                    onClick={() => open(p)}
+                    onClick={(e) => open(p, e.currentTarget)}
                     aria-haspopup="dialog"
                     className="group block w-full cursor-pointer text-start"
                   >
@@ -181,7 +189,7 @@ export function Work() {
         </ul>
       </div>
 
-      <ProjectSheet project={active} onClose={close} />
+      <ProjectSheet project={active} origin={origin} onClose={close} />
     </section>
   );
 }

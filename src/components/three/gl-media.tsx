@@ -8,7 +8,7 @@ import { gsap } from "@/lib/gsap";
 /**
  * One fixed WebGL canvas that redraws every `[data-gl]` image on the page
  * in place: the pictures bend with scroll speed, split their colour channels
- * when moving fast, ripple and lean in under the pointer, and are uncovered
+ * when moving fast, lean toward the pointer under a soft sheen, and are uncovered
  * by an ink-edged wipe the first time they arrive. The DOM <img> stays
  * underneath as the accessible, no-WebGL fallback.
  */
@@ -23,8 +23,10 @@ const vertex = /* glsl */ `
     vUv = uv;
     vec3 p = position;
     p.y -= sin(uv.x * PI) * uVelocity;                         // the middle drags behind
-    float d = distance(uv, uMouse);
-    p.xy += (uv - uMouse) * 0.025 * uHover * smoothstep(0.6, 0.0, d); // swell under the pointer
+    // Hover tilt: the side under the pointer leans toward you (a keystone,
+    // since the camera is orthographic), at most a few percent.
+    vec2 lean = (uMouse - 0.5) * uHover;
+    p.xy *= 1.0 + dot(uv - 0.5, lean) * 0.12;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
   }
 `;
@@ -58,13 +60,10 @@ const fragment = /* glsl */ `
     float rp = uPlane.x / uPlane.y;
     float ri = uImage.x / uImage.y;
     vec2 s = rp > ri ? vec2(1.0, ri / rp) : vec2(rp / ri, 1.0);
-    vec2 k = s * (1.0 - 0.07 * uHover);
+    vec2 k = s * (1.0 - 0.05 * uHover);                        // slow push-in on hover
     vec2 uv = (vUv - 0.5) * k + 0.5;
     uv.y += uTop * (1.0 - k.y) * 0.5;                          // object-position: top
-
-    // Ripple rings around the pointer.
-    float d = distance(vUv, uMouse);
-    uv += (vUv - uMouse) * sin(d * 28.0 - uTime * 5.0) * 0.01 * uHover * smoothstep(0.5, 0.0, d);
+    uv -= (uMouse - 0.5) * 0.025 * uHover;                     // picture drifts inside its frame
 
     // Chromatic split with speed (and a touch on hover).
     float shift = abs(uVelocity) * 0.1 + uHover * 0.002;
@@ -80,6 +79,10 @@ const fragment = /* glsl */ `
     // First-arrival wipe from the bottom, with an inky edge.
     float n = (noise(vUv * vec2(6.0, 3.0) + uTime * 0.2) - 0.5) * 0.18;
     float reveal = smoothstep(0.0, 0.06, uReveal * 1.2 - (vUv.y + n));
+
+    // A soft sheen that follows the pointer, like light across glass.
+    float sheen = smoothstep(0.6, 0.0, distance(vUv, uMouse)) * 0.07 * uHover;
+    c.rgb += sheen;
 
     gl_FragColor = vec4(c.rgb, corners * reveal);
   }

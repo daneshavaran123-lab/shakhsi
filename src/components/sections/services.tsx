@@ -29,7 +29,7 @@ export function Services() {
   return (
     <section ref={root} id="services" className="px-4 pb-28 sm:px-6 md:pb-40">
       <div className="mx-auto max-w-[100rem]">
-        <div className="grid gap-10 md:grid-cols-12">
+        <div data-exit className="grid gap-10 md:grid-cols-12">
           <SectionLabel index={n("03")} className="md:col-span-4 lg:col-span-3">
             {t.services.label}
           </SectionLabel>
@@ -45,7 +45,7 @@ export function Services() {
                 />
               )}
             </h2>
-            <p data-reveal className="mt-8 max-w-2xl text-lg leading-9 text-foreground-2">
+            <p data-reveal="blur" className="mt-8 max-w-2xl text-lg leading-9 text-foreground-2">
               {copy.intro}
             </p>
             {profile.companyUrl && (

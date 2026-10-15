@@ -64,7 +64,13 @@
 
 :root {
   --radius: 0.75rem;
+  /* Motion tokens (mirrored in src/lib/motion.ts). */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-micro: 0.35s;
+  --dur-ui: 0.6s;
+  --dur-reveal: 1s;
 }
 
 @theme inline {
@@ -193,7 +199,8 @@ html:not(.intro) .intro-overlay {
 
 /* Motion system: hide only when JS has opted in, so no-JS stays readable. */
 html.has-motion [data-reveal],
-html.has-motion [data-split] {
+html.has-motion [data-split],
+html.has-motion [data-image-reveal] {
   visibility: hidden;
 }
 
@@ -479,4 +486,10 @@ html:active-view-transition-type(page)::view-transition-new(root) {
 /* WebGL redraws these images (gl-media.tsx); the <img> stays for a11y/fallback. */
 .gl-media [data-gl][data-gl-on] img {
   opacity: 0;
+}
+
+/* A sheet opened by a shared-element flight fades in place instead of sliding,
+   so the flying image has a stable landing spot. */
+[data-slot="dialog-content"][data-enter="fade"][data-state="open"] {
+  animation: overlay-in 0.5s var(--ease-out-expo) !important;
 }
