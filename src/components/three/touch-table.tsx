@@ -29,6 +29,8 @@ type Props = {
   onHover: (index: number | null) => void;
   /** Set to true while a person is interacting; the page fades its prompt. */
   engaged: MutableRefObject<boolean>;
+  /** Called once shaders are compiled and the first frame is drawn. */
+  onReady?: () => void;
 };
 
 type Body = {
@@ -134,19 +136,26 @@ function Scene(props: Props & { fonts: { display: string; body: string } }) {
   const touched = useRef(new Set<number>());
   const bounds = useRef({ x: 6, yMin: -3.5, yMax: 3.5 });
 
-  const materials = useMemo(
+  const materials = useMemo<THREE.Material[]>(
     () => [
-      new THREE.MeshPhysicalMaterial({ color: accent, metalness: 1, roughness: 0.24, clearcoat: 0.5 }),
+      // Gold and bone share one lean shader; clear-coat is kept only where it shows
+      // (lacquer and glass), which keeps first-time shader compilation short.
+      new THREE.MeshStandardMaterial({ color: accent, metalness: 1, roughness: 0.22, envMapIntensity: 1.2 }),
       new THREE.MeshPhysicalMaterial({ color: "#0e0e10", metalness: 0.2, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.05 }),
-      new THREE.MeshPhysicalMaterial({ color: "#ede8df", roughness: 0.32, clearcoat: 0.8, sheen: 0.4 }),
+      new THREE.MeshStandardMaterial({ color: "#ede8df", metalness: 0, roughness: 0.28, envMapIntensity: 1.1 }),
+      // Glass without transmission: a clear-coated, see-through shell lit by
+      // the environment. Transmission would re-render the scene every frame.
       new THREE.MeshPhysicalMaterial({
-        color: "#ffffff",
-        roughness: 0.05,
-        transmission: 1,
-        thickness: 0.8,
+        color: "#f4efe6",
+        roughness: 0.04,
+        metalness: 0,
+        clearcoat: 1,
+        clearcoatRoughness: 0.03,
         ior: 1.45,
-        attenuationColor: new THREE.Color(accent),
-        attenuationDistance: 2.5,
+        transparent: true,
+        opacity: 0.42,
+        envMapIntensity: 1.6,
+        depthWrite: false,
       }),
     ],
     [accent],
@@ -233,6 +242,25 @@ function Scene(props: Props & { fonts: { display: string; body: string } }) {
   }, [eventSource, engaged, invalidate]);
 
   const tmp = useMemo(() => ({ n: new THREE.Vector3(), dir: new THREE.Vector3(), d2: new THREE.Vector3() }), []);
+
+  // Compile every material up front (in parallel where supported), draw one
+  // frame, then let the page fade the table in — no hitch on first sight.
+  const { gl, scene } = useThree();
+  const onReady = props.onReady;
+  useEffect(() => {
+    let alive = true;
+    const done = () => {
+      if (!alive) return;
+      gl.render(scene, camera);
+      onReady?.();
+    };
+    const warm = gl.compileAsync?.(scene, camera);
+    if (warm) warm.then(done, done);
+    else requestAnimationFrame(done);
+    return () => {
+      alive = false;
+    };
+  }, [gl, scene, camera, onReady]);
 
   useMemo(() => {
     for (let s = 0; s < 260; s++) step(1 / 60, null);
