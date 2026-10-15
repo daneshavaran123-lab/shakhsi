@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Hand, X } from "lucide-react";
@@ -11,6 +11,7 @@ import { TehranClock } from "@/components/tehran-clock";
 import { useContent } from "@/content/provider";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useSectionMotion } from "@/hooks/use-section-motion";
+import { num } from "@/i18n/config";
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 import type { TableTile } from "@/components/three/touch-table";
@@ -30,28 +31,51 @@ export function Manifesto() {
   const screen = useRef<HTMLDivElement>(null);
   const engaged = useRef(false);
   const [inView, setInView] = useState(false);
+  const [near, setNear] = useState(false);
+  const [idle, setIdle] = useState(false);
   const [ready, setReady] = useState(false);
+  const [shown, setShown] = useState(false);
   const [narrow, setNarrow] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [touched, setTouched] = useState<number[]>([]);
   const [prompting, setPrompting] = useState(true);
   useSectionMotion(root);
 
-  const tiles: TableTile[] = projects.map((p, i) => ({
-    id: p.id,
-    mono: p.eng.trim().charAt(0).toUpperCase() || p.id.charAt(0).toUpperCase(),
-    name: p[locale].title.split("|")[0].trim(),
-    index: n(String(i + 1).padStart(2, "0")),
-  }));
+  // Stable across renders: the tile faces are textures, rebuilt only when this changes.
+  const tiles: TableTile[] = useMemo(
+    () =>
+      projects.map((p, i) => ({
+        id: p.id,
+        mono: p.eng.trim().charAt(0).toUpperCase() || p.id.charAt(0).toUpperCase(),
+        name: p[locale].title.split("|")[0].trim(),
+        index: num(locale, String(i + 1).padStart(2, "0")),
+      })),
+    [projects, locale],
+  );
 
   useEffect(() => {
     setNarrow(matchMedia("(max-width: 767px)").matches);
     document.fonts.ready.then(() => setReady(true));
     const el = screen.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: "10% 0px" });
-    io.observe(el);
-    return () => io.disconnect();
+
+    // Fetch the 3D code once the browser is idle after load (so the hero keeps
+    // every frame), then build the scene a couple of screens before it
+    // arrives and keep it built; being on screen only decides whether it animates.
+    const prefetch = () => {
+      import("@/components/three/touch-table").then(() => setIdle(true));
+    };
+    const handle = window.requestIdleCallback?.(prefetch, { timeout: 2500 }) ?? window.setTimeout(prefetch, 1200);
+    const approaching = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: "200% 0px" });
+    const visible = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: "10% 0px" });
+    approaching.observe(el);
+    visible.observe(el);
+    return () => {
+      approaching.disconnect();
+      visible.disconnect();
+      if (window.cancelIdleCallback) window.cancelIdleCallback(handle);
+      else window.clearTimeout(handle);
+    };
   }, []);
 
   // Fade the instructions once someone starts touching; bring them back when idle.
@@ -73,6 +97,7 @@ export function Manifesto() {
     [t.manifesto.touch],
   );
   const onSelect = useCallback((i: number | null) => setSelected(i), []);
+  const onReady = useCallback(() => setShown(true), []);
 
   const project = selected !== null ? projects[selected] : null;
   const all = touched.length >= projects.length && projects.length > 0;
@@ -111,8 +136,14 @@ export function Manifesto() {
               className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(closest-side,black,transparent)]"
             />
 
-            <div aria-hidden className="absolute inset-0">
-              {inView && ready && (
+            <div
+              aria-hidden
+              className={cn(
+                "absolute inset-0 transition-opacity duration-1000 ease-out-expo",
+                shown ? "opacity-100" : "opacity-0",
+              )}
+            >
+              {(near || inView) && (idle || inView) && ready && (
                 <TouchTable
                   tiles={tiles}
                   active={inView}
@@ -125,6 +156,7 @@ export function Manifesto() {
                   onTouch={onTouch}
                   onHover={onHover}
                   engaged={engaged}
+                  onReady={onReady}
                 />
               )}
             </div>

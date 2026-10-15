@@ -30,6 +30,7 @@ export function Showcase() {
   const progress = useRef(0);
   const [chapter, setChapter] = useState(0);
   const [inView, setInView] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [accent, setAccent] = useState("#d8bb8a");
   useSectionMotion(root);
 
@@ -40,9 +41,15 @@ export function Showcase() {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
+    // Build the stage well before it arrives and keep it; visibility only pauses it.
+    const near = new IntersectionObserver(([e]) => e.isIntersecting && setMounted(true), { rootMargin: "200% 0px" });
     const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { rootMargin: "20% 0px" });
+    near.observe(el);
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      near.disconnect();
+      io.disconnect();
+    };
   }, []);
 
   useGSAP(
@@ -91,7 +98,7 @@ export function Showcase() {
       <div className="showcase-track relative" style={{ height: `${chapters.length * 90 + 30}svh` }}>
         <div className="sticky top-0 flex h-svh flex-col overflow-hidden md:flex-row md:items-center">
           <div className="relative min-h-0 flex-1 md:order-2 md:ms-[34%] md:h-full">
-            {inView && (
+            {mounted && (
               <ShowcaseStage
                 devices={devices}
                 progress={progress}
